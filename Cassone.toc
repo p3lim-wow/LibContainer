@@ -1,0 +1,8 @@
+﻿## Interface: 30300
+## Author: p3lim
+## Title: Cassone
+## Notes: Minimalistic bag addon based on cargBags2
+
+cargBags\embed.xml
+
+Cassone.lua
