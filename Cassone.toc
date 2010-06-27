@@ -4,6 +4,9 @@
 ## Title: Cassone
 ## Notes: Minimalistic bag addon based on cargBags2
 
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+
 cargBags\embed.xml
 
 Cassone.lua
