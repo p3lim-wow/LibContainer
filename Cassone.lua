@@ -9,7 +9,9 @@
 	mixins\sort
 --]]
 
-local addon = cargBags:NewImplementation(...)
+local parent, ns = ...
+
+local addon = ns.cargBags:NewImplementation(parent)
 local container = addon:GetContainerClass()
 local button = addon:GetItemButtonClass()
 
