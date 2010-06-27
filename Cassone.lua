@@ -1,4 +1,15 @@
-﻿local addon = cargBags:NewImplementation(...)
+﻿--[[
+
+  Adrian L Lange grants anyone the right to use this work for any purpose,
+  without any conditions, unless such conditions are required by law.
+
+  cargBags elements used:
+    mixins\filters
+	mixins\layout
+	mixins\sort
+--]]
+
+local addon = cargBags:NewImplementation(...)
 local container = addon:GetContainerClass()
 local button = addon:GetItemButtonClass()
 
