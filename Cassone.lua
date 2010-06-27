@@ -108,6 +108,8 @@ function button:OnCreate()
 	self.Count:SetFont(font, 8, 'OUTLINE')
 	self.Count:SetPoint('BOTTOMRIGHT', 0, 2)
 
+	self.Border:SetTexture(nil)
+
 	self:HookScript('OnEnter', function()
 		self.colorR, self.colorG, self.colorB = self:GetBackdropBorderColor()
 		self:SetBackdropBorderColor(0, 0.6, 1)
@@ -116,8 +118,6 @@ function button:OnCreate()
 	self:HookScript('OnLeave', function()
 		self:SetBackdropBorderColor(self.colorR, self.colorG, self.colorB)
 	end)
-
-	_G[self:GetName()..'NormalTexture']:SetTexture(nil)
 end
 
 function addon:OnInit()
