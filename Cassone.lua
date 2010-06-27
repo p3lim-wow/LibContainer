@@ -78,6 +78,19 @@ function container:OnCreate(name)
 	end
 end
 
+function button:UpdateQuest(item)
+	local quality = item.rarity
+
+	if(item.questID or item.isQuestItem) then
+		self:SetBackdropBorderColor(1, 1, 0)
+	elseif(quality and quality > 1) then
+		local r, g, b = GetItemQualityColor(quality)
+		self:SetBackdropBorderColor(r, g, b)
+	else
+		self:SetBackdropBorderColor(0, 0, 0)
+	end
+end
+
 function button:OnCreate()
 	self:SetSize(26, 26)
 	self:SetPushedTexture(nil)
@@ -105,7 +118,6 @@ function button:OnCreate()
 	end)
 
 	_G[self:GetName()..'NormalTexture']:SetTexture(nil)
-	_G[self:GetName()..'IconQuestTexture']:SetSize(0.01, 0.01)
 end
 
 function addon:OnInit()
