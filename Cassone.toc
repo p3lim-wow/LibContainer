@@ -1,6 +1,6 @@
 ﻿## Interface: 30300
 ## Author: p3lim
-## Version: 30300.2-Beta
+## Version: 30300.3-Beta
 ## Title: Cassone
 ## Notes: Minimalistic bag addon based on cargBags2
 
