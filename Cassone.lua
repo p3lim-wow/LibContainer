@@ -83,12 +83,12 @@ function button:OnCreate()
 	self.Count:SetPoint('BOTTOMRIGHT', 0, 2)
 
 	self:HookScript('OnEnter', function()
-		self.oldColor = {self:GetBackdropBorderColor()}
+		self.colorR, self.colorG, self.colorB = self:GetBackdropBorderColor()
 		self:SetBackdropBorderColor(0, 0.6, 1)
 	end)
 
 	self:HookScript('OnLeave', function()
-		self:SetBackdropBorderColor(unpack(self.oldColor))
+		self:SetBackdropBorderColor(self.colorR, self.colorG, self.colorB)
 	end)
 
 	_G[self:GetName()..'NormalTexture']:SetTexture(nil)
