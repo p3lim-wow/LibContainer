@@ -4,6 +4,7 @@ local button = addon:GetItemButtonClass()
 
 local font = [=[Interface\AddOns\Cassone\semplice.ttf]=]
 local texture = [=[Interface\ChatFrame\ChatFrameBackground]=]
+local backdrop = {bgFile = texture, edgeFile = texture, edgeSize = 1}
 
 local sorting = {
 	content = function(a, b)
@@ -44,7 +45,7 @@ function container:OnCreate(name)
 	self:SetClampedToScreen(true)
 	self:CreateTitleRegion():SetAllPoints()
 
-	self:SetBackdrop({bgFile = texture, edgeFile = texture, edgeSize = 1})
+	self:SetBackdrop(backdrop)
 	self:SetBackdropColor(0, 0, 0, 0.5)
 	self:SetBackdropBorderColor(0, 0, 0)
 
@@ -69,7 +70,7 @@ function button:OnCreate()
 	self:SetPushedTexture(nil)
 	self:SetHighlightTexture(nil)
 
-	self:SetBackdrop({bgFile = texture, edgeFile = texture, edgeSize = 1})
+	self:SetBackdrop(backdrop)
 	self:SetBackdropColor(0, 0, 0, 0.5)
 	self:SetBackdropBorderColor(0, 0, 0)
 
