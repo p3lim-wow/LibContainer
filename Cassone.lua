@@ -3,10 +3,6 @@
   Adrian L Lange grants anyone the right to use this work for any purpose,
   without any conditions, unless such conditions are required by law.
 
-  cargBags elements used:
-    mixins\filters
-	mixins\layout
-	mixins\sort
 --]]
 
 local parent, ns = ...
@@ -15,9 +11,9 @@ local addon = ns.cargBags:NewImplementation(parent)
 local container = addon:GetContainerClass()
 local button = addon:GetItemButtonClass()
 
-local font = [=[Interface\AddOns\Cassone\semplice.ttf]=]
-local texture = [=[Interface\ChatFrame\ChatFrameBackground]=]
-local backdrop = {bgFile = texture, edgeFile = texture, edgeSize = 1}
+local FONT = [=[Interface\AddOns\Cassone\semplice.ttf]=]
+local TEXTURE = [=[Interface\ChatFrame\ChatFrameBackground]=]
+local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
 
 local sorting = {
 	content = function(a, b)
@@ -46,39 +42,7 @@ local function UpdateMoney(fontstring)
 		copper > 0 and string.format('|cffcc9900%d|r', copper) or '')
 end
 
-function container:OnContentsChanged()
-	local width, height = self:LayoutButtons('grid', self.bank and 11 or 8, 2, 6, -6)
-	self:SetSize(width + 12, height + (self.bank and 12 or 20))
-	self:SortButtons(sorting.content)
-end
-
-function container:OnCreate(name)
-	self:EnableMouse(true)
-	self:SetMovable(true)
-	self:SetClampedToScreen(true)
-	self:CreateTitleRegion():SetAllPoints()
-
-	self:SetBackdrop(backdrop)
-	self:SetBackdropColor(0, 0, 0, 0.5)
-	self:SetBackdropBorderColor(0, 0, 0)
-
-	self:SetFilter(sorting[name], true)
-	self.bank = name == 'bank'
-
-	if(self.bank) then
-		self:Hide()
-	else
-		local money = self:CreateFontString(nil, 'ARTWORK')
-		money:SetPoint('BOTTOMRIGHT', -4, 5)
-		money:SetFont(font, 8, 'OUTLINE')
-		money:SetJustifyH('RIGHT')
-
-		UpdateMoney(money)
-		addon:RegisterCallback('PLAYER_MONEY', money, UpdateMoney)
-	end
-end
-
-function button:UpdateQuest(item)
+local function UpdateQuest(self, item)
 	local quality = item.rarity
 
 	if(item.questID or item.isQuestItem) then
@@ -91,12 +55,44 @@ function button:UpdateQuest(item)
 	end
 end
 
+function container:OnContentsChanged()
+	local width, height = self:LayoutButtons('grid', self.bank and 11 or 8, 2, 6, -6)
+	self:SetSize(width + 12, height + (self.bank and 12 or 20))
+	self:SortButtons(sorting.content)
+end
+
+function container:OnCreate(name)
+	self:EnableMouse(true)
+	self:SetMovable(true)
+	self:SetClampedToScreen(true)
+	self:CreateTitleRegion():SetAllPoints()
+
+	self:SetBackdrop(BACKDROP)
+	self:SetBackdropColor(0, 0, 0, 0.5)
+	self:SetBackdropBorderColor(0, 0, 0)
+
+	self:SetFilter(sorting[name], true)
+	self.bank = name == 'bank'
+
+	if(self.bank) then
+		self:Hide()
+	else
+		local money = self:CreateFontString(nil, 'ARTWORK')
+		money:SetPoint('BOTTOMRIGHT', -5, 5)
+		money:SetFont(FONT, 8, 'MONOCHROMEOUTLINE')
+		money:SetJustifyH('RIGHT')
+
+		UpdateMoney(money)
+		addon:RegisterEvent('PLAYER_MONEY', money, UpdateMoney)
+	end
+end
+
 function button:OnCreate()
 	self:SetSize(26, 26)
 	self:SetPushedTexture(nil)
 	self:SetHighlightTexture(nil)
 
-	self:SetBackdrop(backdrop)
+	self:SetBackdrop(BACKDROP)
 	self:SetBackdropColor(0, 0, 0, 0.5)
 	self:SetBackdropBorderColor(0, 0, 0)
 
@@ -105,10 +101,11 @@ function button:OnCreate()
 	self.Icon:SetPoint('BOTTOMLEFT', 1, 1)
 	self.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 
-	self.Count:SetFont(font, 8, 'OUTLINE')
+	self.Count:SetFont(FONT, 8, 'MONOCHROMEOUTLINE')
 	self.Count:SetPoint('BOTTOMRIGHT', 0, 2)
 
 	self.Border:SetTexture(nil)
+	self.UpdateQuest = UpdateQuest
 
 	self:HookScript('OnEnter', function()
 		self.colorR, self.colorG, self.colorB = self:GetBackdropBorderColor()
@@ -133,4 +130,5 @@ function addon:OnBankClosed()
 	self:GetContainer('bank'):Hide()
 end
 
+button:Scaffold('Default')
 addon:RegisterBlizzard()
