@@ -93,10 +93,12 @@ function container:OnCreate(name)
 		local search = self:SpawnPlugin('SearchBar', searchRegion)
 		search:SetFont(FONT, 8, 'MONOCHROMEOUTLINE')
 		search:SetShadowColor(0, 0, 0, 0)
+		search.isGlobal = true
 
 		search.Left:SetTexture(nil)
 		search.Center:SetTexture(nil)
 		search.Right:SetTexture(nil)
+
 		search.HighlightFunction = function(button, match)
 			button:SetAlpha(match and 1 or 0.1)
 		end
