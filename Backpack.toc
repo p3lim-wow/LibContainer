@@ -1,0 +1,32 @@
+﻿## Interface: 70000
+## Author: p3lim
+## Version: @project-version@
+## Title: Backpack
+## Notes: WIP
+## SavedVariables: BackpackDB, BackpackKnownItems, BackpackCustomCategory
+## SavedVariablesPerChar: BackpackBank
+
+core\Private.lua
+core\EventHandler.lua
+core\Core.lua
+core\Categories.lua
+core\Containers.lua
+core\Slots.lua
+core\Layout.lua
+core\Blizzard.lua
+
+modules\Currencies.lua
+modules\Search.lua
+
+categories\Artifact.lua
+categories\Consumables.lua
+categories\Equipment.lua
+categories\EquipmentSets.lua
+categories\Events.lua
+categories\Inventory.lua
+categories\Junk.lua
+categories\New.lua
+categories\Professions.lua
+categories\Quests.lua
+categories\Teleport.lua
+categories\Tradegoods.lua

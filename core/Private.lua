@@ -1,0 +1,3 @@
+local addonName, private = ...
+private[2] = newproxy(true) -- E: events
+private[1] = {name = addonName} --{name = addonName} -- P. private
