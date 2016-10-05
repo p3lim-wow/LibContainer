@@ -1,9 +1,12 @@
-local categoryName = ITEM_QUALITY6_DESC -- "Artifact"
+-- flavor of the expansion, gets their own category
+
+local categoryName = ARTIFACT_POWER -- "Artifact Power"
 local categoryIndex = 10
 
-local scanTipName = (...) .. 'ScanTip' .. math.floor(GetTime())
-local scanTip = CreateFrame('GameTooltip', scanTipName)
+local scanTip = CreateFrame('GameTooltip', (...) .. 'ScanTip' .. math.floor(GetTime()))
 scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
+
+local lineName = scaneTip:GetName() .. 'TextLeft2'
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackCustomCategory[itemID]
@@ -13,8 +16,8 @@ local categoryFilter = function(bagID, slotID, itemID)
 		scanTip:SetBagItem(bagID, slotID)
 		scanTip:Show()
 
-		local line = _G[scanTipName .. 'TextLeft2']
-		return line and line:GetText() == ARTIFACT_POWER -- "Artifact Power"
+		local line = _G[lineName]
+		return line and line:GetText() == categoryName
 	end
 end
 

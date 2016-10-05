@@ -1,3 +1,5 @@
+-- custom list of any items that provide teleporting, because they deserve their own category
+
 local teleporters = {
 	129276, -- Beginner's Guide to Dimensional Rifting
 	141605, -- Flight Master's Whistle
@@ -5,7 +7,6 @@ local teleporters = {
 	110560, -- Garrison Hearthstone
 	6948, -- Hearthstone
 }
-
 
 -- just so I can list them neater
 local temp = {}

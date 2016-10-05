@@ -6,11 +6,9 @@ local categoryFilter = function(bagID, slotID, itemID)
 	if(custom and custom == gearCategoryIndex) then
 		return true
 	elseif(not custom) then
-		-- don't mark junk as new
-		local _, _, _, quality = GetContainerItemInfo(bagID, slotID)
-		if(quality == LE_ITEM_QUALITY_POOR) then
-			return false
-		else
+		local _, _, _, itemQuality = GetContainerItemInfo(bagID, slotID)
+		if(itemQuality >= LE_ITEM_QUALITY_POOR) then
+			-- don't mark junk as new items
 			return not BackpackKnownItems[itemID]
 		end
 	end

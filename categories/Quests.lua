@@ -1,4 +1,4 @@
-local categoryName = QUESTS_LABEL -- "Quests"
+local categoryName = AUCTION_CATEGORY_QUEST_ITEMS -- "Quests Items"
 local categoryIndex = 20
 
 local categoryFilter = function(bagID, slotID, itemID)
@@ -6,6 +6,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 	if(custom and custom == categoryIndex) then
 		return true
 	elseif(not custom) then
+		-- any item that is part of, or starts, a quest
 		local isQuest, questID = GetContainerItemQuestInfo(bagID, slotID)
 		return questID or isQuest
 	end

@@ -6,11 +6,14 @@ local categoryFilter = function(bagID, slotID, itemID)
 	if(custom and custom == categoryIndex) then
 		return true
 	elseif(not custom) then
-		local itemID = GetContainerItemID(bagID, slotID)
-		if(itemID) then
-			local itemName, _, itemQuality, _, _, _, _, _, _, _, _, itemClass, itemSubClass = GetItemInfo(itemID)
-			if(itemName and itemQuality >= LE_ITEM_QUALITY_COMMON) then
-				return itemClass == 0 and (itemSubClass == 1 or itemSubClass == 5)
+		local cached, _, itemQuality, _, _, _, _, _, _, _, _, itemClass, itemSubClass = GetItemInfo(itemID)
+		if(cached and itemQuality >= LE_ITEM_QUALITY_COMMON) then
+			if(itemClass == LE_ITEM_CLASS_CONSUMABLE and itemSubClass >= 1) then
+				-- consumables other than engineering explosives and devices, they're considered profession related
+				return true
+			elseif(itemClass == LE_ITEM_CLASS_ITEM_ENHANCEMENT) then
+				-- enchants, armor kits etc
+				return true
 			end
 		end
 	end

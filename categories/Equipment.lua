@@ -1,30 +1,22 @@
-local setCategoryName = strsplit(':', EQUIPMENT_SETS) -- "Equipment Sets"
-local setCategoryIndex = 31
+local categoryName = BAG_FILTER_EQUIPMENT -- "Equipment"
+local categoryIndex = 30
 
-local function setCategoryFilter(bagID, slotID, itemID)
-	local isInSet = GetContainerItemEquipmentSetInfo(bagID, slotID)
-	return isInSet
-end
-
-Backpack:AddCategory(setCategoryIndex, setCategoryName, setCategoryFilter)
-
-
-
-local gearCategoryName = BAG_FILTER_EQUIPMENT -- "Equipment"
-local gearCategoryIndex = 30
-
-local gearCategoryFilter = function(bagID, slotID, itemID)
+local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackCustomCategory[itemID]
-	if(custom and custom == gearCategoryIndex) then
+	if(custom and custom == categoryIndex) then
 		return true
 	elseif(not custom) then
-		if(itemID) then
-			local itemName, _, itemQuality, _, _, _, _, _, _, _, _, itemClass = GetItemInfo(itemID)
-			if(itemName and itemQuality >= LE_ITEM_QUALITY_UNCOMMON) then
-				return itemClass == 2 or itemClass == 4
+		local cached, _, itemQuality, _, _, _, _, _, _, _, _, itemClass, itemSubClass = GetItemInfo(itemID)
+		if(cached and itemQuality >= LE_ITEM_QUALITY_UNCOMMON) then
+			if(itemClass == LE_ITEM_CLASS_WEAPON or itemClass == LE_ITEM_CLASS_ARMOR) then
+				-- weapons and armor (including jewelry)
+				return true
+			elseif(itemClass == LE_ITEM_CLASS_GEM and itemSubClass == 11) then
+				-- artifact relics
+				return true
 			end
 		end
 	end
 end
 
-Backpack:AddCategory(gearCategoryIndex, gearCategoryName, gearCategoryFilter)
+Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
