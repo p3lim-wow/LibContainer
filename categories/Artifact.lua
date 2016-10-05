@@ -6,7 +6,7 @@ local categoryIndex = 10
 local scanTip = CreateFrame('GameTooltip', (...) .. 'ScanTip' .. math.floor(GetTime()))
 scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
 
-local lineName = scaneTip:GetName() .. 'TextLeft2'
+local lineName = scanTip:GetName() .. 'TextLeft2'
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackCustomCategory[itemID]
