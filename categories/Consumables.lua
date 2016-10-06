@@ -10,7 +10,10 @@ local categoryFilter = function(bagID, slotID, itemID)
 		if(cached and itemQuality >= LE_ITEM_QUALITY_COMMON) then
 			if(itemClass == LE_ITEM_CLASS_CONSUMABLE and itemSubClass >= 1) then
 				-- consumables other than engineering explosives and devices, they're considered profession related
-				return true
+				if(itemSubClass ~= 8) then
+					-- but not consumables in the "other" subclass
+					return true
+				end
 			elseif(itemClass == LE_ITEM_CLASS_ITEM_ENHANCEMENT) then
 				-- enchants, armor kits etc
 				return true
