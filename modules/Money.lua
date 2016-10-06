@@ -28,7 +28,7 @@ local function Init(self)
 	Button.info = MoneyTypeInfo.PLAYER
 	Money.Button = Button
 
-	P.Fire('PostCreateMoney', Backpack)
+	P.Fire('PostCreateMoney', self)
 	Update()
 end
 

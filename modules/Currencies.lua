@@ -55,7 +55,7 @@ local function Init(self)
 
 	hooksecurefunc('SetCurrencyBackpack', Update)
 
-	P.Fire('PostCreateCurrencies', Backpack)
+	P.Fire('PostCreateCurrencies', self)
 	Update()
 end
 
