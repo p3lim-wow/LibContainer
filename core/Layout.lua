@@ -62,6 +62,8 @@ function P.SkinSlot(Slot)
 
 	Slot.NormalTexture:SetSize(0.1, 0.1)
 
+	Slot.QuestIcon:Hide()
+	Slot.Flash:Hide()
 	Slot.BattlePay:Hide()
 end
 
