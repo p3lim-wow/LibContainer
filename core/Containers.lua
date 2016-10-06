@@ -33,7 +33,7 @@ function P.AddContainerSlot(Slot, Container)
 end
 
 function P.RemoveContainerSlot(Slot)
-	local slots = Slot.Container.Slots
+	local slots = Slot.Container.slots
 	for index = #slots, 1, -1 do
 		local slotData = slots[index]
 		if(slotData[1] == Slot.bagID and slotData[2] == Slot.slotID) then
