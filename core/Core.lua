@@ -56,17 +56,19 @@ end
 -- @param force - Boolean to force open/close the bags
 P.Expose('Toggle', function(self, force)
 	local isShown = self:IsShown()
-	if(isShown or force == false) then
-		self:Hide()
-	elseif(not isShown) then
-		P.UpdateAllSlots('OnShow')
+	if(not isShown and force ~= false) then
+		if(not isShown) then
+			P.UpdateAllSlots('OnShow')
 
-		if(not P.Override('PositionSlots')) then
-			P.PositionSlots()
+			if(not P.Override('PositionSlots')) then
+				P.PositionSlots()
+			end
 		end
-	end
 
-	self:SetShown(not isShown)
+		self:Show()
+	elseif(isShown and not force) then
+		self:Hide()
+	end
 end)
 
 -- @name Backpack:On
