@@ -11,7 +11,7 @@ function P.SkinContainer(Container)
 	Title:SetText(Container.name)
 
 	local Anchor = CreateFrame('Frame', '$parentAnchor', Container)
-	Anchor:SetPoint('TOPLEFT', Title, 'BOTTOMLEFT', -1, -7)
+	Anchor:SetPoint('TOPLEFT', 10, -26)
 	Anchor:SetSize(1, 1) -- needs a size
 	Container.anchor = Anchor
 
