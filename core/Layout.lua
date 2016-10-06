@@ -70,7 +70,6 @@ end
 function P.OnUpdateSlot(Slot, bagID, slotID)
 	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = GetContainerItemInfo(bagID, slotID)
 	local questItem, itemQuestID, itemQuestActive = GetContainerItemQuestInfo(bagID, slotID)
-	local cooldownStart, cooldownDuration, cooldownEnabled = GetContainerItemCooldown(bagID, slotID)
 
 	local Icon = Slot.Icon
 	Icon:SetTexture(itemTexture)
@@ -87,7 +86,14 @@ function P.OnUpdateSlot(Slot, bagID, slotID)
 		Slot:SetBackdropBorderColor(0, 0, 0)
 	end
 
-	CooldownFrame_Set(Slot.Cooldown, cooldownStart, cooldownDuration, cooldownEnabled)
+	P.OnUpdateCooldown(Slot, bagID, slotID)
+end
+
+function P.OnUpdateCooldown(Slot, bagID, slotID)
+	if(Slot and Slot:IsShown()) then
+		local start, duration, enabled = GetContainerItemCooldown(bagID, slotID)
+		CooldownFrame_Set(Slot.Cooldown, start, duration, enabled)
+	end
 end
 
 function P.PositionSlots()

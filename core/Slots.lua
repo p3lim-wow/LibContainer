@@ -164,10 +164,12 @@ function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
 end
 
 function P.BAG_UPDATE_COOLDOWN(event)
-	P.UpdateAllSlots(event)
-
-	if(not P.Override('PositionSlots')) then
-		P.PositionSlots()
+	for bagID = 0, NUM_BAG_FRAMES do
+		for slotID = 1, GetContainerNumSlots(bagID) do
+			if(not P.Override('UpdateCooldown')) then
+				P.OnUpdateCooldown(P.GetSlot(bagID, slotID), bagID, slotID)
+			end
+		end
 	end
 end
 
