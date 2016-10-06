@@ -145,10 +145,14 @@ function P.AddCategorySlot(Slot, category)
 end
 
 function P.RemoveCategorySlot(Slot)
-	for index, categorySlot in next, P.categorySlots[Slot.categoryIndex] do
+	local categorySlots = P.categorySlots[Slot.categoryIndex]
+	for index = #categorySlots, 1, -1 do
+		local categorySlot = categorySlots[index]
 		if(categorySlot == Slot) then
-			P.categorySlots[Slot.categoryIndex][index] = nil
-			return
+			Slot.category = nil
+			Slot.categoryIndex = nil
+
+			table.remove(categorySlots, index)
 		end
 	end
 end
