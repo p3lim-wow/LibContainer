@@ -52,9 +52,8 @@ function P.Expose(name, reference)
 end
 
 -- @name Backpack:Toggle
--- @usage Backpack:Toggle([alsoBank])
--- @param alsoBank - Boolean to also toggle the bank with the rest of the bags
-P.Expose('Toggle', function(self, alsoBank)
+-- @usage Backpack:Toggle()
+P.Expose('Toggle', function(self)
 	local isShown = Backpack:IsShown()
 	if(not isShown) then
 		P.UpdateAllSlots('OnShow')
@@ -65,10 +64,6 @@ P.Expose('Toggle', function(self, alsoBank)
 	end
 
 	self:SetShown(not isShown)
-
-	if(alsoBank) then
-		Bank:SetShown(not isShown)
-	end
 end)
 
 -- @name Backpack:On
