@@ -177,7 +177,7 @@ function P.PositionContainers(visibleContainers)
 
 		for index, Container in next, visibleContainers do
 			Container:ClearAllPoints()
-			Container:SetPoint('BOTTOM', visibleContainers[index - 1] or Container:GetParent(), 'TOP', 0, 10)
+			Container:SetPoint('BOTTOM', visibleContainers[index - 1] or Container:GetParent(), 'TOP', 0, 2)
 		end
 	end
 end
