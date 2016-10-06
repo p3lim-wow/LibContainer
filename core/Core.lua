@@ -26,6 +26,9 @@ function E:ADDON_LOADED(addon)
 		-- Hide on escape
 		table.insert(UISpecialFrames, P.name)
 
+		-- might interfere, disable just in case
+		SetBackpackAutosortDisabled(true)
+
 		return true
 	end
 end
