@@ -54,7 +54,7 @@ end
 -- @name Backpack:Toggle
 -- @usage Backpack:Toggle([alsoBank])
 -- @param alsoBank - Boolean to also toggle the bank with the rest of the bags
-P.Expose('Toggle', function(alsoBank)
+P.Expose('Toggle', function(self, alsoBank)
 	local isShown = Backpack:IsShown()
 	if(not isShown) then
 		P.UpdateAllSlots('OnShow')
@@ -64,7 +64,7 @@ P.Expose('Toggle', function(alsoBank)
 		end
 	end
 
-	Backpack:SetShown(not isShown)
+	self:SetShown(not isShown)
 
 	if(alsoBank) then
 		Bank:SetShown(not isShown)
@@ -75,7 +75,7 @@ end)
 -- @usage Backpack:On(event, callback)
 -- @param event    - Event to listen for
 -- @param callback - Function that will be called when the event happens
-P.Expose('On', function(event, callback)
+P.Expose('On', function(self, event, callback)
 	if(not callbacks[event]) then
 		callbacks[event] = {}
 	end
@@ -87,7 +87,7 @@ end)
 -- @usage Backpack:Override(event, callback)
 -- @param event    - Event to override on
 -- @param callback - Function that will be called when the event happens
-P.Expose('Override', function(event, callback)
+P.Expose('Override', function(self, event, callback)
 	if(overrides[event]) then
 		error(string.format('Override for event "%s" already exists.', event), 2)
 	else
