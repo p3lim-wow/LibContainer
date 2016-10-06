@@ -49,7 +49,7 @@ function P.SkinSlot(Slot)
 	Slot.BattlePay:Hide()
 end
 
-function P.UpdateSlot(Slot, bagID, slotID)
+function P.OnUpdateSlot(Slot, bagID, slotID)
 	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = GetContainerItemInfo(bagID, slotID)
 	local questItem, itemQuestID, itemQuestActive = GetContainerItemQuestInfo(bagID, slotID)
 	local cooldownStart, cooldownDuration, cooldownEnabled = GetContainerItemCooldown(bagID, slotID)

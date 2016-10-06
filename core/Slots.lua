@@ -61,7 +61,7 @@ local function GetSlot(bagID, slotID)
 	return slots[bagID] and slots[bagID][slotID] or P.CreateSlot(bagID, slotID)
 end
 
-local function UpdateSlot(event, bagID, slotID)
+function P.UpdateSlot(bagID, slotID, event)
 	if(GetContainerItemInfo(bagID, slotID)) then
 		local itemID = GetContainerItemID(bagID, slotID)
 
@@ -107,6 +107,18 @@ local function UpdateSlot(event, bagID, slotID)
 	end
 end
 
+function P.UpdateContainer(bagID, event)
+	for slotID = 1, GetContainerNumSlots(bagID) do
+		P.UpdateSlot(bagID, slotID, event)
+	end
+end
+
+function P.UpdateAllSlots(event)
+	for bagID = 0, NUM_BAG_FRAMES do
+		P.UpdateContainer(bagID, event)
+	end
+end
+
 function P.AddCategorySlot(Slot, category)
 	local categoryIndex = category.index
 	Slot.category = category
@@ -128,15 +140,4 @@ function P.RemoveCategorySlot(Slot)
 	end
 end
 
-local initialized
-function P.UpdateAllSlots()
-	for bagID = 0, NUM_BAG_FRAMES do
-		for slotID = 1, GetContainerNumSlots(bagID) do
-			UpdateSlot('Initialize', bagID, slotID)
-		end
-	end
 
-	if(not P.Fire('PositionSlots')) then
-		P.PositionSlots()
-	end
-end
