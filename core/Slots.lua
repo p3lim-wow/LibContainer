@@ -54,6 +54,8 @@ function P.CreateSlot(bagID, slotID)
 		P.SkinSlot(Slot)
 	end
 
+	slots[bagID][slotID] = Slot
+
 	return Slot
 end
 
