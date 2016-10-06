@@ -48,8 +48,18 @@ function P.SkinSlot(Slot)
 	Count:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 	Count:Show()
 
-	Slot.PushedTexture:SetColorTexture(1, 1, 1, 0.3)
-	Slot.HighlightTexture:SetColorTexture(0, 0.6, 1, 0.3)
+	local Pushed = Slot.PushedTexture
+	Pushed:ClearAllPoints()
+	Pushed:SetPoint('TOPLEFT', 1, -1)
+	Pushed:SetPoint('BOTTOMRIGHT', -1, 1)
+	Pushed:SetColorTexture(1, 1, 1, 0.3)
+
+	local Highlight = Slot.HighlightTexture
+	Highlight:ClearAllPoints()
+	Highlight:SetPoint('TOPLEFT', 1, -1)
+	Highlight:SetPoint('BOTTOMRIGHT', -1, 1)
+	Highlight:SetColorTexture(0, 0.6, 1, 0.3)
+
 	Slot.NormalTexture:SetSize(0.1, 0.1)
 
 	Slot.BattlePay:Hide()
