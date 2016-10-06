@@ -57,7 +57,11 @@ end
 P.Expose('Toggle', function(alsoBank)
 	local isShown = Backpack:IsShown()
 	if(not isShown) then
-		P.UpdateAllSlots()
+		P.UpdateAllSlots('OnShow')
+
+		if(not P.Override('PositionSlots')) then
+			P.PositionSlots()
+		end
 	end
 
 	Backpack:SetShown(not isShown)
