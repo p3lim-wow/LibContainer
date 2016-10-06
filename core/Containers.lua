@@ -25,7 +25,7 @@ function P.CreateContainer(category, Parent)
 	Anchor:SetSize(1, 1) -- needs a size
 	Container.Anchor = Anchor
 
-	if(not P.Fire('SkinContainer', Container)) then
+	if(not P.Override('SkinContainer', Container)) then
 		P.SkinContainer(Container)
 	end
 
