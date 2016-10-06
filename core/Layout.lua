@@ -47,8 +47,6 @@ function P.SkinSlot(Slot)
 	Slot.HighlightTexture:SetColorTexture(0, 0.6, 1, 0.3)
 	Slot.NormalTexture:SetTexture(nil)
 
-	Slot.QuestIcon:Hide()
-	Slot.Flash:Hide()
 	Slot.BattlePay:Hide()
 end
 
