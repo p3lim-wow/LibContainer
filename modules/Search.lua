@@ -16,7 +16,6 @@ local function OpenSearch(self)
 	self:SetScript('OnEnter', nil)
 	self:SetScript('OnLeave', nil)
 	self:SetAlpha(1)
-	self.Icon:Hide()
 
 	local Editbox = self.Editbox
 	Editbox:SetText('')
@@ -31,7 +30,6 @@ local function CloseSearch(self)
 	local Parent = self:GetParent()
 	Parent:SetScript('OnEnter', OnEnter)
 	Parent:SetScript('OnLeave', OnLeave)
-	Parent.Icon:Show()
 
 	if(not MouseIsOver(Parent)) then
 		Parent:SetAlpha(0)
@@ -56,7 +54,7 @@ local function OnChar(self)
 
 		if(repeatChar) then
 			-- break out of the search if the player is repeating chars (trying to move or something)
-			CloseSearch(self)
+			self:GetScript('OnEscapePressed')(self)
 		end
 	end
 end
@@ -78,40 +76,29 @@ local function Update()
 end
 
 local function Init(self)
-	local Frame = CreateFrame('Button', '$parentSearch', self)
-	Frame:SetPoint('BOTTOMLEFT', 4, 4)
-	Frame:SetPoint('BOTTOMRIGHT', -4, 4)
-	Frame:SetHeight(20)
-	Frame:SetAlpha(0)
-	Frame:SetBackdrop(BACKDROP)
-	Frame:SetBackdropColor(0, 0, 0, 0.9)
-	Frame:SetBackdropBorderColor(0, 0, 0)
-	Frame:RegisterForClicks('AnyUp')
-	Frame:SetScript('OnClick', OpenSearch)
-	Frame:SetScript('OnEnter', OnEnter)
-	Frame:SetScript('OnLeave', OnLeave)
+	local SearchBox = CreateFrame('Button', '$parentSearch', self)
+	SearchBox:SetPoint('BOTTOMLEFT', 4, 4)
+	SearchBox:SetPoint('BOTTOMRIGHT', -4, 4)
+	SearchBox:SetHeight(20)
+	SearchBox:SetAlpha(0)
+	SearchBox:RegisterForClicks('AnyUp')
+	SearchBox:SetScript('OnClick', OpenSearch)
+	SearchBox:SetScript('OnEnter', OnEnter)
+	SearchBox:SetScript('OnLeave', OnLeave)
+	self.SearchBox = SearchBox
 
-	local FrameIcon = Frame:CreateTexture('$parentIcon', 'OVERLAY')
-	FrameIcon:SetPoint('CENTER')
-	FrameIcon:SetSize(14, 14)
-	FrameIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
-	Frame.Icon = FrameIcon
-
-	local Editbox = CreateFrame('EditBox', '$parentEditBox', Frame)
+	local Editbox = CreateFrame('EditBox', '$parentEditBox', SearchBox)
 	Editbox:SetPoint('TOPLEFT', 25, 0)
 	Editbox:SetPoint('BOTTOMRIGHT', -5, 0)
-	Editbox:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	Editbox:SetFontObject(GameFontHighlightSmall)
 	Editbox:SetScript('OnChar', OnChar)
 	Editbox:SetScript('OnTextChanged', OnTextChanged)
 	Editbox:SetScript('OnEscapePressed', CloseSearch)
 	Editbox:SetAutoFocus(true)
 	Editbox:Hide()
-	Frame.Editbox = Editbox
+	SearchBox.Editbox = Editbox
 
-	local EditboxIcon = Editbox:CreateTexture('$parentIcon', 'OVERLAY')
-	EditboxIcon:SetPoint('RIGHT', Editbox, 'LEFT', -4, 0)
-	EditboxIcon:SetSize(14, 14)
-	EditboxIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
+	P.Fire('PostCreateSearch', self)
 end
 
 P.AddModule(Init, Update, 'INVENTORY_SEARCH_UPDATE')

@@ -196,3 +196,36 @@ Backpack:On('PostCreateCurrencies', function(self)
 		Currency:SetShadowOffset(0, 0)
 	end
 end)
+
+local function OnSearchOpen(self)
+	self.Icon:Hide()
+end
+
+local function OnSearchClosed(self)
+	self:GetParent().Icon:Show()
+end
+
+Backpack:On('PostCreateSearch', function(self)
+	local SearchBox = self.SearchBox
+	SearchBox:SetBackdrop(BACKDROP)
+	SearchBox:SetBackdropColor(0, 0, 0, 0.9)
+	SearchBox:SetBackdropBorderColor(0, 0, 0)
+	SearchBox:HookScript('OnClick', OnSearchOpen)
+
+	local SearchBoxIcon = SearchBox:CreateTexture('$parentIcon', 'OVERLAY')
+	SearchBoxIcon:SetPoint('CENTER')
+	SearchBoxIcon:SetSize(14, 14)
+	SearchBoxIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
+	SearchBox.Icon = SearchBoxIcon
+
+	local Editbox = SearchBox.Editbox
+	Editbox:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	Editbox:SetShadowOffset(0, 0)
+	Editbox:HookScript('OnEscapePressed', OnSearchClosed)
+
+	local EditboxIcon = Editbox:CreateTexture('$parentIcon', 'OVERLAY')
+	EditboxIcon:SetPoint('RIGHT', Editbox, 'LEFT', -4, 0)
+	EditboxIcon:SetSize(14, 14)
+	EditboxIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
+	Editbox.Icon = EditboxIcon
+end)
