@@ -1,7 +1,7 @@
 local P = unpack(select(2, ...))
 P.categories = {}
 
-local MAX_INDEX = 1e3
+local MAX_INDEX = 1001
 local MIN_INDEX = 0
 local ASSIGN_INDEX = 1e2
 
