@@ -1,7 +1,5 @@
 local P = unpack(select(2, ...))
 
-local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
-
 local function UpdateMoney()
 	local money = GetMoney()
 	local gold = math.floor(money / 1e4)
@@ -13,6 +11,8 @@ local function UpdateMoney()
 	output = string.format('%s.|cffcc9900%d|r', output, copper)
 
 	Backpack.Money:SetText(output)
+
+	P.Fire('UpdateMoney', Backpack, money)
 end
 
 local function UpdateCurrencies()
@@ -25,29 +25,39 @@ local function UpdateCurrencies()
 	end
 
 	Backpack.Currencies:SetText(output)
+
+	P.Fire('UpdateCurrencies', Backpack)
 end
 
 local function Init(self)
-	local Money = self:CreateFontString('$parentMoney', 'OVERLAY')
+	local Money = self:CreateFontString('$parentMoney', 'OVERLAY', 'GameFontHighlightSmall')
 	Money:SetPoint('BOTTOMRIGHT', -8, 10)
-	Money:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
-	Money:SetJustifyH('RIGHT')
 	self.Money = Money
 
-	local Currencies = self:CreateFontString('$parentCurrencies', 'OVERLAY')
+	local Currencies = self:CreateFontString('$parentCurrencies', 'OVERLAY', 'GameFontHighlightSmall')
 	Currencies:SetPoint('BOTTOMLEFT', 5, 8)
-	Currencies:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 	self.Currencies = Currencies
 
-	UpdateMoney()
-	UpdateCurrencies()
+	P.Fire('PostCreateCurrencies', Backpack)
+
+	if(not P.Override('UpdateMoney')) then
+		UpdateMoney()
+	end
+
+	if(not P.Override('UpdateCurrencies')) then
+		UpdateCurrencies()
+	end
 end
 
 local function Update(self, event)
 	if(event == 'PLAYER_MONEY') then
-		UpdateMoney()
+		if(not P.Override('UpdateMoney')) then
+			UpdateMoney()
+		end
 	elseif(event == 'CURRENCY_DISPLAY_UPDATE') then
-		UpdateCurrencies()
+		if(not P.Override('UpdateCurrencies')) then
+			UpdateCurrencies()
+		end
 	end
 end
 
