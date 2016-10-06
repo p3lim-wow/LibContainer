@@ -3,14 +3,7 @@ P.categorySlots = {}
 
 local parents, slots = {}, {}
 local function CreateParent(bagID)
-	local containerName
-	if(bagID == -1 or bagID == -3) then
-		containerName = P.name .. 'Bank'
-	else
-		containerName = P.name
-	end
-
-	local Parent = CreateFrame('Frame', '$parentBag' .. bagID, _G[containerName])
+	local Parent = CreateFrame('Frame', '$parentBag' .. bagID, Backpack)
 	Parent:SetID(bagID)
 
 	parents[bagID] = Parent
@@ -20,17 +13,8 @@ local function CreateParent(bagID)
 end
 
 function P.CreateSlot(bagID, slotID)
-	local template
-	if(bagID == -1) then
-		template = 'ContainerFrameItemButtonTemplate'
-	elseif(bagID == -3) then
-		template = 'ReagentBankItemButtonGenericTemplate'
-	else
-		template = 'ContainerFrameItemButtonTemplate'
-	end
-
 	local Parent = parents[bagID] or CreateParent(bagID)
-	local Slot = CreateFrame('Button', '$parentSlot' .. slotID, Parent, template)
+	local Slot = CreateFrame('Button', '$parentSlot' .. slotID, Parent, 'ContainerFrameItemButtonTemplate')
 	local slotName = Slot:GetName()
 
 	Slot:SetID(slotID)
