@@ -35,10 +35,15 @@ function P.Fire(event, ...)
 		for _, callback in next, eventCallbacks do
 			callback(...)
 		end
+	end
+end
 
-		if(#eventCallbacks > 0) then
-			return true
-		end
+local overrides = {}
+function P.Override(event, ...)
+	local eventOverride = overrides[event]
+	if(eventOverride) then
+		eventOverride(...)
+		return true
 	end
 end
 
@@ -72,6 +77,18 @@ P.Expose('On', function(event, callback)
 	end
 
 	table.insert(callbacks[event], callback)
+end)
+
+-- @name Backpack:Override
+-- @usage Backpack:Override(event, callback)
+-- @param event    - Event to override on
+-- @param callback - Function that will be called when the event happens
+P.Expose('Override', function(event, callback)
+	if(overrides[event]) then
+		error(string.format('Override for event "%s" already exists.', event), 2)
+	else
+		overrides[event] = callback
+	end
 end)
 
 function P.AddModule(init, update, ...)

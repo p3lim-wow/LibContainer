@@ -87,8 +87,8 @@ local function UpdateSlot(event, bagID, slotID)
 		Slot.itemID = itemID
 		Slot.itemLevel = select(4, GetItemInfo(itemID))
 
-		if(not P.Fire('UpdateSlot', Slot, bagID, slotID)) then
-			P.UpdateSlot(Slot, bagID, slotID)
+		if(not P.Override('UpdateSlot', Slot)) then
+			P.OnUpdateSlot(Slot, bagID, slotID)
 		end
 
 		Slot:Show()
