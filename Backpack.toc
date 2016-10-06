@@ -19,6 +19,7 @@ modules\Currencies.lua
 modules\FreeSlots.lua
 modules\Money.lua
 modules\Search.lua
+modules\SellJunk.lua
 
 categories\Artifact.lua
 categories\Collections.lua
