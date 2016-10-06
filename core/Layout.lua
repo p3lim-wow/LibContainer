@@ -50,7 +50,7 @@ function P.SkinSlot(Slot)
 
 	Slot.PushedTexture:SetColorTexture(1, 1, 1, 0.3)
 	Slot.HighlightTexture:SetColorTexture(0, 0.6, 1, 0.3)
-	Slot.NormalTexture:SetTexture(nil)
+	Slot.NormalTexture:SetSize(0.1, 0.1)
 
 	Slot.BattlePay:Hide()
 end
