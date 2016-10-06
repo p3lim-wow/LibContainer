@@ -162,10 +162,8 @@ function P.BAG_UPDATE(event, bagID)
 end
 
 function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
-	local Slot = GetSlot(bagID, slotID)
-	if(not P.Override('UpdateSlotLock', Slot)) then
-		P.OnUpdateSlotLock(Slot, bagID, slotID)
-		P.Fire('PostUpdateSlotLock', bagID, slotID, event)
+	if(bagID >= 0) then
+		P.UpdateSlot(bagID, slotID, event)
 	end
 end
 
