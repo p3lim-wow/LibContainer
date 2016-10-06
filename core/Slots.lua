@@ -1,4 +1,4 @@
-﻿local P = unpack(select(2, ...))
+﻿local P, E = unpack(select(2, ...))
 P.categorySlots = {}
 
 local parents, slots = {}, {}
@@ -93,7 +93,7 @@ function P.UpdateSlot(bagID, slotID, event)
 
 		Slot:Show()
 
-		P.Fire('PostUpdateSlot', event, bagID, slotID)
+		P.Fire('PostUpdateSlot', bagID, slotID, event)
 	else
 		local Slot = slots[bagID] and slots[bagID][slotID]
 		if(Slot) then
@@ -102,7 +102,7 @@ function P.UpdateSlot(bagID, slotID, event)
 
 			Slot:Hide()
 
-			P.Fire('PostRemoveSlot', event, bagID, slotID)
+			P.Fire('PostRemoveSlot', bagID, slotID, event)
 		end
 	end
 end
@@ -113,9 +113,18 @@ function P.UpdateContainer(bagID, event)
 	end
 end
 
+local initialized
 function P.UpdateAllSlots(event)
 	for bagID = 0, NUM_BAG_FRAMES do
 		P.UpdateContainer(bagID, event)
+	end
+
+	if(not initialized) then
+		E:RegisterEvent('BAG_UPDATE', P.BAG_UPDATE)
+		E:RegisterEvent('ITEM_LOCK_CHANGED', P.ITEM_LOCK_CHANGED)
+		E:RegisterEvent('BAG_UPDATE_COOLDOWN', P.BAG_UPDATE_COOLDOWN)
+		E:RegisterEvent('QUEST_ACCEPTED', P.QUEST_ACCEPTED)
+		E:RegisterEvent('UNIT_QUEST_LOG_CHANGED', P.UNIT_QUEST_LOG_CHANGED)
 	end
 end
 
@@ -140,4 +149,36 @@ function P.RemoveCategorySlot(Slot)
 	end
 end
 
+function P.BAG_UPDATE(event, bagID)
+	P.UpdateContainer(bagID, event)
 
+	if(not P.Override('PositionSlots')) then
+		P.PositionSlots()
+	end
+end
+
+function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
+	local Slot = GetSlot(bagID, slotID)
+	if(not P.Override('UpdateSlotLock', Slot)) then
+		P.OnUpdateSlotLock(Slot, bagID, slotID)
+		P.Fire('PostUpdateSlotLock', bagID, slotID, event)
+	end
+end
+
+function P.BAG_UPDATE_COOLDOWN(event)
+	P.UpdateAllSlots(event)
+
+	if(not P.Override('PositionSlots')) then
+		P.PositionSlots()
+	end
+end
+
+function P.QUEST_ACCEPTED(event)
+	P.UpdateAllSlots(event)
+end
+
+function P.UNIT_QUEST_LOG_CHANGED(event, unit)
+	if(unit == 'player') then
+		P.QUEST_ACCEPTED(event)
+	end
+end

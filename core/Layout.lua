@@ -50,14 +50,11 @@ function P.SkinSlot(Slot)
 end
 
 function P.OnUpdateSlot(Slot, bagID, slotID)
-	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = GetContainerItemInfo(bagID, slotID)
+	local itemTexture, itemCount, _, itemQuality, isReadable, isLootable, _, _, _, itemID = GetContainerItemInfo(bagID, slotID)
 	local questItem, itemQuestID, itemQuestActive = GetContainerItemQuestInfo(bagID, slotID)
 	local cooldownStart, cooldownDuration, cooldownEnabled = GetContainerItemCooldown(bagID, slotID)
 
-	local Icon = Slot.Icon
-	Icon:SetTexture(itemTexture)
-	Icon:SetDesaturated(isLocked)
-
+	Slot.Icon:SetTexture(itemTexture)
 	Slot.Count:SetText(itemCount > 1e3 and '*' or itemCount > 1 and itemCount or '')
 
 	if(itemQuestID or questItem) then
@@ -70,6 +67,12 @@ function P.OnUpdateSlot(Slot, bagID, slotID)
 	end
 
 	CooldownFrame_Set(Slot.Cooldown, cooldownStart, cooldownDuration, cooldownEnabled)
+
+	P.OnUpdateSlotLock(Slot, bagID, slotID)
+
+function P.OnUpdateSlotLock(Slot, bagID, slotID)
+	local _, _, isLocked = GetContainerItemInfo(bagID, slotID)
+	Slot.Icon:SetDesaturated(isLocked)
 end
 
 function P.PositionSlots()
