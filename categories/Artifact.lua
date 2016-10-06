@@ -3,21 +3,18 @@
 local categoryName = ARTIFACT_POWER -- "Artifact Power"
 local categoryIndex = 10
 
-local scanTip = CreateFrame('GameTooltip', (...) .. 'ScanTip' .. math.floor(GetTime()))
-scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
-
-local lineName = scanTip:GetName() .. 'TextLeft2'
+local ARTIFACT_SPELL_NAME = GetItemSpell(138783)
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackCustomCategory[itemID]
 	if(custom and custom == categoryIndex) then
 		return true
 	else
-		scanTip:SetBagItem(bagID, slotID)
-		scanTip:Show()
-
-		local line = _G[lineName]
-		return line and line:GetText() == categoryName
+		local spellName = GetItemSpell(itemID)
+		if(spellName and spellName == ARTIFACT_SPELL_NAME) then
+			-- pretty much unique
+			return true
+		end
 	end
 end
 
