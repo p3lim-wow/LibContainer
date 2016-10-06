@@ -43,7 +43,7 @@ function P.CreateSlot(bagID, slotID)
 	return Slot
 end
 
-local function GetSlot(bagID, slotID)
+function P.GetSlot(bagID, slotID)
 	return slots[bagID] and slots[bagID][slotID]
 end
 
@@ -54,7 +54,7 @@ function P.UpdateSlot(bagID, slotID, event)
 		local category = P.GetCategory(bagID, slotID, itemID)
 		local categoryIndex = category.index
 
-		local Slot = GetSlot(bagID, slotID) or P.CreateSlot(bagID, slotID)
+		local Slot = P.GetSlot(bagID, slotID) or P.CreateSlot(bagID, slotID)
 		local slotCategoryIndex = Slot.categoryIndex
 		if(slotCategoryIndex ~= categoryIndex) then
 			if(slotCategoryIndex) then
@@ -81,7 +81,7 @@ function P.UpdateSlot(bagID, slotID, event)
 
 		P.Fire('PostUpdateSlot', bagID, slotID, event)
 	else
-		local Slot = GetSlot(bagID, slotID)
+		local Slot = P.GetSlot(bagID, slotID)
 		if(Slot and Slot:IsShown()) then
 			P.RemoveCategorySlot(Slot)
 			P.RemoveContainerSlot(Slot)

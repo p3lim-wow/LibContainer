@@ -26,6 +26,8 @@ end
 local function CloseSearch(self)
 	self:Hide()
 
+	SetItemSearch('')
+
 	local Parent = self:GetParent()
 	Parent:SetScript('OnEnter', OnEnter)
 	Parent:SetScript('OnLeave', OnLeave)
@@ -36,8 +38,24 @@ local function CloseSearch(self)
 	end
 end
 
-local function Search(self, text)
-	-- TODO
+local function OnTextChanged(self)
+	SetItemSearch(self:GetText())
+end
+
+local function Update()
+	for bagID = 0, NUM_BAG_FRAMES do
+		for slotID = 1, GetContainerNumSlots(bagID) do
+			local exists, _, _, _, _, _, _, isFiltered = GetContainerItemInfo(bagID, slotID)
+			if(exists) then
+				local Slot = P.GetSlot(bagID, slotID)
+				if(isFiltered) then
+					Slot:SetAlpha(0.1)
+				else
+					Slot:SetAlpha(1)
+				end
+			end
+		end
+	end
 end
 
 local function Init(self)
@@ -64,7 +82,7 @@ local function Init(self)
 	Editbox:SetPoint('TOPLEFT', 25, 0)
 	Editbox:SetPoint('BOTTOMRIGHT', -5, 0)
 	Editbox:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
-	Editbox:SetScript('OnTextChanged', Search)
+	Editbox:SetScript('OnTextChanged', OnTextChanged)
 	Editbox:SetScript('OnEscapePressed', CloseSearch)
 	Editbox:SetAutoFocus(true)
 	Editbox:Hide()
@@ -76,4 +94,4 @@ local function Init(self)
 	EditboxIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
 end
 
-P.AddModule(Init)
+P.AddModule(Init, Update, 'INVENTORY_SEARCH_UPDATE')
