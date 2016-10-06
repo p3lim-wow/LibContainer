@@ -69,7 +69,7 @@ function P.UpdateSlot(Slot, bagID, slotID)
 		Slot:SetBackdropBorderColor(0, 0, 0)
 	end
 
-	CooldownFrame_Set(Slot.Cooldown, cooldownStart, cooldownDuration, cooldownEnable)
+	CooldownFrame_Set(Slot.Cooldown, cooldownStart, cooldownDuration, cooldownEnabled)
 end
 
 function P.PositionSlots()
