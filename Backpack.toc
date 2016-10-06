@@ -16,6 +16,7 @@ core\Layout.lua
 core\Blizzard.lua
 
 modules\Currencies.lua
+modules\FreeSlots.lua
 modules\Money.lua
 modules\Search.lua
 
