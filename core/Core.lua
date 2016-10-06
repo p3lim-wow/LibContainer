@@ -25,6 +25,8 @@ function E:ADDON_LOADED(addon)
 
 		-- Hide on escape
 		table.insert(UISpecialFrames, P.name)
+
+		return true
 	end
 end
 
