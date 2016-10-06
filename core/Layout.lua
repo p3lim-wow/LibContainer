@@ -23,6 +23,11 @@ function P.SkinContainer(Container)
 	if(Container:GetID() == 1) then
 		Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
 		Container.paddingY = 27 -- needs even more space for the footer
+
+		Container:EnableMouse(true)
+		Container:SetMovable(true)
+		Container:CreateTitleRegion():SetAllPoints()
+		Container:SetClampedToScreen(true)
 	end
 end
 
