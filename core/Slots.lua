@@ -166,8 +166,12 @@ function P.BAG_UPDATE(event, bagID)
 end
 
 function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
-	if(bagID >= 0) then
-		P.UpdateSlot(bagID, slotID, event)
+	if(bagID >= 0 and bagID <= 4) then
+		if(slotID) then
+			P.UpdateSlot(bagID, slotID, event)
+		else
+			P.UpdateContainer(bagID, event)
+		end
 	end
 end
 
