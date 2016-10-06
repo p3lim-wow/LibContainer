@@ -34,7 +34,7 @@ end
 function P.SkinSlot(Slot)
 	Slot:SetSize(32, 32)
 	Slot:SetBackdrop(BACKDROP)
-	Slot:SetBackdropColor(0, 0, 0, 0.8)
+	Slot:SetBackdropColor(0.1, 0.1, 0.1, 0.5)
 	Slot:SetBackdropBorderColor(0, 0, 0)
 
 	local Icon = Slot.Icon
