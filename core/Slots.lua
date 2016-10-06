@@ -96,10 +96,14 @@ function P.UpdateSlot(bagID, slotID, event)
 		P.Fire('PostUpdateSlot', bagID, slotID, event)
 	else
 		local Slot = slots[bagID] and slots[bagID][slotID]
-		if(Slot) then
+		if(Slot and Slot:IsShown()) then
 			P.RemoveCategorySlot(Slot)
 			P.RemoveContainerSlot(Slot)
 
+			Slot.itemCount = nil
+			Slot.itemQuality = nil
+			Slot.itemID = nil
+			Slot.itemLevel = nil
 			Slot:Hide()
 
 			P.Fire('PostRemoveSlot', bagID, slotID, event)
