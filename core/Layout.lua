@@ -5,22 +5,25 @@ local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
 
 function P.SkinContainer(Container)
+	local Title = Container:CreateFontString('$parentTitle', 'ARTWORK')
+	Title:SetPoint('TOPLEFT', 11, -10)
+	Title:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	Title:SetText(Container.name)
+
+	local Anchor = CreateFrame('Frame', '$parentAnchor', Container)
+	Anchor:SetPoint('TOPLEFT', Title, 'BOTTOMLEFT', -1, -7)
+	Anchor:SetSize(1, 1) -- needs a size
+	Container.anchor = Anchor
+
 	Container:SetBackdrop(BACKDROP)
 	Container:SetBackdropColor(0, 0, 0, 0.6)
 	Container:SetBackdropBorderColor(0, 0, 0)
-
-	Container.Title:SetPoint('TOPLEFT', 11, -10)
-	Container.Title:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
-	Container.Anchor:SetPoint('TOPLEFT', Container.Title, 'BOTTOMLEFT', -1, -7)
-
-	Container.slotSize = 32
-	Container.columns = 8
-	Container.paddingX = 10
 	Container.paddingY = 18 -- needs a little extra because of the title
-	Container.spacing = 4
-	Container.growX = 'RIGHT'
-	Container.growY = 'DOWN'
-	Container.anchorPoint = 'TOPLEFT'
+
+	if(Container:GetID() == 1) then
+		Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
+		Container.paddingY = 27 -- needs even more space for the footer
+	end
 end
 
 function P.SkinSlot(Slot)
@@ -84,19 +87,20 @@ function P.PositionSlots()
 	for categoryIndex, slots in next, categorySlots do
 		local Container = P.GetCategoryContainer(categoryIndex)
 
-		local anchor = Container.Anchor
+		-- defaults
+		local anchor = Container.anchor or Container
 		local anchorPoint = Container.anchorPoint or 'TOPLEFT'
 
-		local sizeX = Container.slotSizeX or Container.slotSize or 37
-		local sizeY = Container.slotSizeY or Container.slotSize or 37
+		local sizeX = Container.slotSizeX or Container.slotSize or 32
+		local sizeY = Container.slotSizeY or Container.slotSize or 32
 
-		local spacingX = Container.spacingX or Container.spacing or 2
-		local spacingY = Container.spacingY or Container.spacing or 2
+		local spacingX = Container.spacingX or Container.spacing or 4
+		local spacingY = Container.spacingY or Container.spacing or 4
 
-		local growX = Container.growX == 'RIGHT' and 1 or -1
-		local growY = Container.growY == 'DOWN' and -1 or 1
+		local growX = Container.growX == 'LEFT' and -1 or 1
+		local growY = Container.growY == 'UP' and 1 or -1
 
-		local cols = Container.columns
+		local cols = Container.columns or 8
 
 		for index, Slot in next, slots do
 			local col = (index - 1) % cols
@@ -123,25 +127,21 @@ function P.ResizeContainers()
 		if(numSlots > 0) then
 			table.insert(visibleContainers, Container)
 
-			local sizeX = Container.slotSizeX or Container.slotSize or 37
-			local sizeY = Container.slotSizeY or Container.slotSize or 37
+			-- defaults
+			local sizeX = Container.slotSizeX or Container.slotSize or 32
+			local sizeY = Container.slotSizeY or Container.slotSize or 32
 
-			local spacingX = Container.spacingX or Container.spacing or 2
-			local spacingY = Container.spacingY or Container.spacing or 2
+			local spacingX = Container.spacingX or Container.spacing or 4
+			local spacingY = Container.spacingY or Container.spacing or 4
 
 			local paddingX = Container.paddingX or Container.padding or 10
 			local paddingY = Container.paddingY or Container.padding or 10
 
-			local cols = Container.columns
+			local cols = Container.columns or 8
 			local rows = math.ceil(numSlots / cols)
 
 			local width = (((sizeX + spacingX) * cols) - spacingX) + (paddingX * 2)
 			local height = (((sizeY + spacingY) * rows) - spacingY) + (paddingY * 2)
-
-			if(categoryIndex == 1) then
-				-- extra space on the bottom for the footer
-				height = height + 18
-			end
 
 			Container:SetSize(width, height)
 			Container:Show()
