@@ -172,12 +172,15 @@ function P.PositionContainers(visibleContainers)
 	end
 end
 
-Backpack:On('PostCreateCurrencies', function(self)
+Backpack:On('PostCreateMoney', function(self)
 	local Money = self.Money
 	Money:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 	Money:SetShadowOffset(0, 0)
+end)
 
-	local Currencies = self.Currencies
-	Currencies:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
-	Currencies:SetShadowOffset(0, 0)
+Backpack:On('PostCreateCurrencies', function(self)
+	for _, Currency in next, self.Currencies do
+		Currency:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+		Currency:SetShadowOffset(0, 0)
+	end
 end)
