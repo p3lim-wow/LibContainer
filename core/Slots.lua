@@ -131,6 +131,8 @@ function P.UpdateAllSlots(event)
 		E:RegisterEvent('BAG_UPDATE_COOLDOWN', P.BAG_UPDATE_COOLDOWN)
 		E:RegisterEvent('QUEST_ACCEPTED', P.QUEST_ACCEPTED)
 		E:RegisterEvent('UNIT_QUEST_LOG_CHANGED', P.UNIT_QUEST_LOG_CHANGED)
+
+		initialized = true
 	end
 end
 
