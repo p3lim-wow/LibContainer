@@ -156,7 +156,10 @@ function P.ResizeContainers()
 			local height = (((sizeY + spacingY) * rows) - spacingY) + (paddingY * 2)
 
 			Container:SetSize(width, height)
-			Container:Show()
+
+			if(categoryIndex ~= 1) then
+				Container:Show()
+			end
 		else
 			-- no slots
 			Container:Hide()
