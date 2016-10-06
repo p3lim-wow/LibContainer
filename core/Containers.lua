@@ -33,10 +33,13 @@ function P.AddContainerSlot(Slot, Container)
 end
 
 function P.RemoveContainerSlot(Slot)
-	for index, slotData in next, Slot.Container.slots do
+	local slots = Slot.Container.Slots
+	for index = #slots, 1, -1 do
+		local slotData = slots[index]
 		if(slotData[1] == Slot.bagID and slotData[2] == Slot.slotID) then
-			Slot.Container.slots[index] = nil
-			return
+			Slot.Container = nil
+
+			table.remove(slots, index)
 		end
 	end
 end
