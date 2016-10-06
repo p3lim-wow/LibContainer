@@ -18,6 +18,7 @@ core\Blizzard.lua
 modules\Currencies.lua
 modules\FreeSlots.lua
 modules\Money.lua
+modules\ResetNew.lua
 modules\Search.lua
 modules\SellJunk.lua
 
