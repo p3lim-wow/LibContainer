@@ -11,7 +11,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 			if(itemClass == LE_ITEM_CLASS_BATTLEPET) then
 				-- caged battlepets
 				return true
-			elseif(itemClass == LE_ITEM_CLASS_MISCELLANEOUS)
+			elseif(itemClass == LE_ITEM_CLASS_MISCELLANEOUS) then
 				if(itemSubClass == 2 or itemSubClass == 5) then
 					-- uncaged battlepets and mounts
 					return true
