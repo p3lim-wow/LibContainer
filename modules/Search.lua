@@ -42,6 +42,25 @@ local function OnTextChanged(self)
 	SetItemSearch(self:GetText())
 end
 
+local MIN_REPEAT_CHARACTERS = 4
+local function OnChar(self)
+	local text = self:GetText()
+	if(string.len(text) > MIN_REPEAT_CHARACTERS) then
+		local repeatChar = true
+		for index = 1, MIN_REPEAT_CHARACTERS - 1, 1 do
+			if(string.sub(text, (0 - index), (0 - index)) ~= string.sub(text, (-1 - index), (-1 - index))) then
+				repeatChar = false
+				break
+			end
+		end
+
+		if(repeatChar) then
+			-- break out of the search if the player is repeating chars (trying to move or something)
+			CloseSearch(self)
+		end
+	end
+end
+
 local function Update()
 	for bagID = 0, NUM_BAG_FRAMES do
 		for slotID = 1, GetContainerNumSlots(bagID) do
@@ -82,6 +101,7 @@ local function Init(self)
 	Editbox:SetPoint('TOPLEFT', 25, 0)
 	Editbox:SetPoint('BOTTOMRIGHT', -5, 0)
 	Editbox:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	Editbox:SetScript('OnChar', OnChar)
 	Editbox:SetScript('OnTextChanged', OnTextChanged)
 	Editbox:SetScript('OnEscapePressed', CloseSearch)
 	Editbox:SetAutoFocus(true)
