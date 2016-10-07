@@ -26,7 +26,7 @@ local function Init(self)
 
 	local Texture = Button:CreateTexture('$parentTexture', 'ARTWORK')
 	Texture:SetAllPoints()
-	Texture:SetTexture([[Interface\Buttons\UI-GroupLoot-Pass-Up]])
+	Texture:SetTexture([[Interface\Buttons\UI-RefreshButton]])
 	Button.Texture = Texture
 
 	P.Fire('PostCreateResetNew', self)
