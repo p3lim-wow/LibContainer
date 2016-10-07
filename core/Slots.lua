@@ -71,7 +71,7 @@ function P.UpdateSlot(bagID, slotID, event)
 		Slot.itemCount = itemCount
 		Slot.itemQuality = itemQuality
 		Slot.itemID = itemID
-		Slot.itemLevel = select(4, GetItemInfo(itemID))
+		Slot.itemLevel = select(4, GetItemInfo(GetContainerItemLink(bagID, slotID)))
 
 		if(not P.Override('UpdateSlot', Slot)) then
 			P.OnUpdateSlot(Slot, bagID, slotID)
