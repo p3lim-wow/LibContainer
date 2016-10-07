@@ -19,7 +19,6 @@ end
 ToggleBag = P.noop
 
 do
-	ItemAnim:UnregisterAllEvents()
 	MainMenuBarBackpackButton:UnregisterAllEvents()
 
 	for index = 0, 3 do
