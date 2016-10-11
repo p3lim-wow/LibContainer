@@ -1,5 +1,11 @@
+local P = unpack(select(2, ...))
+
 local categoryName = COLLECTIONS -- "Collections"
 local categoryIndex = 80
+
+local scanTip = CreateFrame('GameTooltip', P.name .. 'ScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
+scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
+scanTip.name = scanTip:GetName()
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackCustomCategory[itemID]
@@ -16,7 +22,16 @@ local categoryFilter = function(bagID, slotID, itemID)
 					-- uncaged battlepets and mounts
 					return true
 				elseif(itemSubClass == 4) then
-					-- TODO: scan tooltips, toys are in this subclass
+					-- toys
+					scanTip:SetBagItem(bagID, slotID)
+					scanTip:Show()
+
+					for index = 1, scanTip:NumLines() do
+						local line = _G[scanTip.name .. 'TextLeft' .. index]
+						if(line and line:GetText() == TOY) then -- "Toy"
+							return true
+						end
+					end
 				end
 			end
 		end
