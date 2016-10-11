@@ -27,6 +27,9 @@ function P.SkinContainer(Container)
 		elseif(Container == BackpackBank) then
 			Container:SetPoint('TOPLEFT', UIParent, 50, -50)
 
+			Container.containerAnchorPoint = 'TOP'
+			Container.containerAnchorPointRelative = 'BOTTOM'
+			Container.containerSpacingY = -2
 		end
 
 		Container:EnableMouse(true)
@@ -202,9 +205,15 @@ function P.PositionContainers(parentContainer, visibleContainers)
 			end
 		end
 
+		local anchorPoint = parentContainer.containerAnchorPoint or 'BOTTOM'
+		local anchorPointRelative = parentContainer.containerAnchorPointRelative or 'TOP'
+
+		local spacingX = parentContainer.containerSpacingX or 0
+		local spacingY = parentContainer.containerSpacingY or 2
+
 		for index, Container in next, visibleContainers do
 			Container:ClearAllPoints()
-			Container:SetPoint('BOTTOM', visibleContainers[index - 1] or Container:GetParent(), 'TOP', 0, 2)
+			Container:SetPoint(anchorPoint, visibleContainers[index - 1] or Container:GetParent(), anchorPointRelative, spacingX, spacingY)
 		end
 	end
 end
