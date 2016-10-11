@@ -3,5 +3,6 @@
 ## Version: @project-version@
 ## Title: Backpack: Classic
 ## Notes: Basic layout for the Backpack addon
+## RequiredDeps: Backpack
 
 Backpack_Classic.lua
