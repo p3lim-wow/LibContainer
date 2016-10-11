@@ -2,6 +2,7 @@ local P, E = unpack(select(2, ...))
 
 local Backpack = CreateFrame('Frame', P.name, UIParent)
 Backpack:Hide()
+P.Mixin(Backpack)
 
 local Bank = CreateFrame('Frame', '$parentBank', Backpack)
 Bank:Hide()
@@ -15,6 +16,7 @@ local modules = {}
 function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or {}
+		BackpackBankDB = BackpackBankDB or {}
 		BackpackCustomCategory = BackpackCustomCategory or {}
 		BackpackKnownItems = BackpackKnownItems or {}
 
@@ -54,15 +56,11 @@ end
 
 function E:BANKFRAME_OPENED()
 	P.atBank = true
-
-	Bank:Show()
 	Backpack:Toggle(true, true)
 end
 
 function E:BANKFRAME_CLOSED()
 	P.atBank = false
-
-	Bank:Hide()
 	Backpack:Toggle(false)
 end
 
@@ -94,15 +92,20 @@ end
 -- @param force - Boolean to force open/close the bags
 P.Expose('Toggle', function(self, force, includeBank)
 	local isShown = self:IsShown()
-	if(not isShown and force ~= false or includeBank) then
-		if(not isShown or includeBank) then
+	if(not isShown and force ~= false) then
+		if(not isShown) then
 			P.UpdateAllSlots('OnShow')
 			P.PositionSlots()
 		end
 
 		self:Show()
+
+		if(includeBank) then
+			Bank:Show()
+		end
 	elseif(isShown and not force) then
 		self:Hide()
+		Bank:Hide()
 	end
 end)
 

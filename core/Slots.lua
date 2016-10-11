@@ -56,8 +56,8 @@ function P.GetSlot(bagID, slotID)
 end
 
 function P.UpdateSlot(bagID, slotID, event)
-	if(GetContainerItemInfo(bagID, slotID)) then
-		local itemID = GetContainerItemID(bagID, slotID)
+	if(Backpack:GetContainerItemInfo(bagID, slotID)) then
+		local itemID = Backpack:GetContainerItemID(bagID, slotID)
 
 		local category = P.GetCategory(bagID, slotID, itemID)
 		local categoryIndex = category.index
@@ -75,11 +75,11 @@ function P.UpdateSlot(bagID, slotID, event)
 		end
 
 		-- for the sorting methods
-		local _, itemCount, _, itemQuality = GetContainerItemInfo(bagID, slotID)
+		local _, itemCount, _, itemQuality = Backpack:GetContainerItemInfo(bagID, slotID)
 		Slot.itemCount = itemCount
 		Slot.itemQuality = itemQuality
 		Slot.itemID = itemID
-		Slot.itemLevel = select(4, GetItemInfo(GetContainerItemLink(bagID, slotID)))
+		Slot.itemLevel = select(4, GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID)))
 
 		if(not P.Layout('UpdateSlot', Slot)) then
 			P.error('Missing layout!')
@@ -111,13 +111,13 @@ end
 
 function P.UpdateCooldown(Slot)
 	if(Slot and Slot:IsShown()) then
-		local start, duration, enabled = GetContainerItemCooldown(Slot.bagID, Slot.slotID)
+		local start, duration, enabled = Backpack:GetContainerItemCooldown(Slot.bagID, Slot.slotID)
 		CooldownFrame_Set(Slot.Cooldown, start, duration, enabled)
 	end
 end
 
 function P.UpdateContainerSlots(bagID, event)
-	for slotID = 1, GetContainerNumSlots(bagID) do
+	for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
 		P.UpdateSlot(bagID, slotID, event)
 	end
 end
@@ -128,7 +128,7 @@ function P.UpdateAllSlots(event)
 		P.UpdateContainerSlots(bagID)
 	end
 
-	if(P.atBank) then
+	if(P.atBank or BackpackBankDB ~= nil) then
 		P.UpdateContainerSlots(BANK_CONTAINER)
 
 		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
@@ -239,7 +239,7 @@ end
 
 local function UpdateContainerCooldowns(startBagID, endBagID)
 	for bagID = startBagID, endBagID or startBagID do
-		for slotID = 1, GetContainerNumSlots(bagID) do
+		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
 			if(not P.Layout('UpdateCooldown', P.GetSlot(bagID, slotID))) then
 				P.UpdateCooldown(P.GetSlot(bagID, slotID))
 			end

@@ -67,7 +67,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 	if(custom and custom == categoryIndex) then
 		return true
 	elseif(not custom) then
-		local itemID = GetContainerItemID(bagID, slotID)
+		local itemID = Backpack:GetContainerItemID(bagID, slotID)
 		return teleporters[itemID]
 	end
 end

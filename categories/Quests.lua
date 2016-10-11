@@ -7,7 +7,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 		return true
 	elseif(not custom) then
 		-- any item that is part of, or starts, a quest
-		local isQuest, questID = GetContainerItemQuestInfo(bagID, slotID)
+		local isQuest, questID = Backpack:GetContainerItemQuestInfo(bagID, slotID)
 		return questID or isQuest
 	end
 end

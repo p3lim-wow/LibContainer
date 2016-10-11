@@ -4,10 +4,11 @@
 ## Title: Backpack
 ## Notes: WIP
 ## SavedVariables: BackpackDB, BackpackKnownItems, BackpackCustomCategory
-## SavedVariablesPerChar: BackpackBank
+## SavedVariablesPerCharacter: BackpackBankDB
 
 core\Private.lua
 core\EventHandler.lua
+core\API.lua
 core\Core.lua
 core\Categories.lua
 core\Containers.lua

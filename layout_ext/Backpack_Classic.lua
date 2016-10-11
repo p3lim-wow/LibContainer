@@ -74,8 +74,8 @@ Backpack:Layout('SkinSlot', function(Slot)
 end)
 
 Backpack:Layout('UpdateSlot', function(Slot)
-	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = GetContainerItemInfo(Slot.bagID, Slot.slotID)
-	local questItem, itemQuestID, itemQuestActive = GetContainerItemQuestInfo(Slot.bagID, Slot.slotID)
+	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = Backpack:GetContainerItemInfo(Slot.bagID, Slot.slotID)
+	local questItem, itemQuestID, itemQuestActive = Backpack:GetContainerItemQuestInfo(Slot.bagID, Slot.slotID)
 
 	local Icon = Slot.Icon
 	Icon:SetTexture(itemTexture)

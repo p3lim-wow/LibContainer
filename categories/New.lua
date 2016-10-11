@@ -6,7 +6,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 	if(custom and custom == categoryIndex) then
 		return true
 	elseif(not custom) then
-		local _, _, _, itemQuality = GetContainerItemInfo(bagID, slotID)
+		local _, _, _, itemQuality = Backpack:GetContainerItemInfo(bagID, slotID)
 		if(itemQuality > LE_ITEM_QUALITY_POOR) then
 			-- don't mark junk as new items
 			return not BackpackKnownItems[itemID]

@@ -6,16 +6,16 @@ local function GetFreeSlots(containerID)
 	local freeSlots = 0
 	if(containerID == BACKPACK_CONTAINER) then
 		for bagID = containerID, NUM_BAG_SLOTS do
-			freeSlots = freeSlots + GetContainerNumFreeSlots(bagID)
+			freeSlots = freeSlots + Backpack:GetContainerNumFreeSlots(bagID)
 		end
-	elseif(containerID == BANK_CONTAINER) then
-		freeSlots = GetContainerNumFreeSlots(containerID)
+	elseif(containerID == BANK_CONTAINER and (P.atBank or BackpackBankDB ~= nil)) then
+		freeSlots = Backpack:GetContainerNumFreeSlots(containerID)
 
 		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
-			freeSlots = freeSlots + GetContainerNumFreeSlots(bagID)
+			freeSlots = freeSlots + Backpack:GetContainerNumFreeSlots(bagID)
 		end
-	elseif(containerID == REAGENTBANK_CONTAINER) then
-		freeSlots = GetContainerNumFreeSlots(containerID)
+	elseif(containerID == REAGENTBANK_CONTAINER and (P.atBank or BackpackBankDB ~= nil)) then
+		freeSlots = Backpack:GetContainerNumFreeSlots(containerID)
 	end
 
 	return freeSlots
@@ -29,9 +29,9 @@ local function Update(self)
 end
 
 local function GetContainerEmptySlot(bagID)
-	if(GetContainerNumFreeSlots(bagID) > 0) then
-		for slotID = 1, GetContainerNumSlots(bagID) do
-			if(not GetContainerItemInfo(bagID, slotID)) then
+	if(Backpack:GetContainerNumFreeSlots(bagID) > 0) then
+		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+			if(not Backpack:GetContainerItemInfo(bagID, slotID)) then
 				return bagID, slotID
 			end
 		end
