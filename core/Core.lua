@@ -19,7 +19,10 @@ function E:ADDON_LOADED(addon)
 		BackpackKnownItems = BackpackKnownItems or {}
 
 		for _, categoryInfo in next, P.categories do
-			P.CreateContainer(categoryInfo, Backpack)
+			if(categoryInfo.index ~= 1002) then -- no reagentbank for inventory
+				P.CreateContainer(categoryInfo, Backpack)
+			end
+
 			P.CreateContainer(categoryInfo, Bank)
 		end
 
@@ -36,6 +39,10 @@ function E:ADDON_LOADED(addon)
 
 		-- might interfere, disable just in case
 		SetBackpackAutosortDisabled(true)
+
+		if(not IsReagentBankUnlocked()) then
+			E:RegisterEvent('REAGENTBANK_PURCHASED', P.UpdateAllSlots)
+		end
 
 		return true
 	end

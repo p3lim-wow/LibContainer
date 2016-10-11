@@ -34,5 +34,6 @@ categories\Junk.lua
 categories\New.lua
 categories\Professions.lua
 categories\Quests.lua
+categories\ReagentBank.lua
 categories\Teleport.lua
 categories\TradeGoods.lua

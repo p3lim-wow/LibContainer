@@ -144,7 +144,8 @@ function P.ResizeContainers(parentContainer)
 	local containers = P.GetContainers(parentContainer)
 	for categoryIndex, Container in next, containers do
 		local numSlots = #Container.slots
-		if(categoryIndex == 1) then
+		if(categoryIndex == 1 or categoryIndex == 1002) then
+			-- Inventory and ReagentBank needs an additional slot for FreeSlots module
 			numSlots = numSlots + 1
 		end
 
@@ -188,6 +189,15 @@ function P.PositionContainers(parentContainer, visibleContainers)
 			if(Container:GetID() == 1) then
 				-- yank the parent out of there so it doesn't mess with positioning
 				table.remove(visibleContainers, index)
+				break
+			end
+		end
+
+		for index, Container in next, visibleContainers do
+			if(Container:GetID() == 1002) then
+				-- shift the position for reagentbank so it's right after inventory
+				table.remove(visibleContainers, index)
+				table.insert(visibleContainers, 1, Container)
 				break
 			end
 		end

@@ -123,6 +123,10 @@ function P.UpdateAllSlots(event)
 		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
 			P.UpdateContainerSlots(bagID)
 		end
+
+		if(IsReagentBankUnlocked()) then
+			P.UpdateContainerSlots(REAGENTBANK_CONTAINER)
+		end
 	end
 
 	if(not initialized) then
@@ -132,9 +136,12 @@ function P.UpdateAllSlots(event)
 		E:RegisterEvent('QUEST_ACCEPTED', P.QUEST_ACCEPTED)
 		E:RegisterEvent('UNIT_QUEST_LOG_CHANGED', P.UNIT_QUEST_LOG_CHANGED)
 		E:RegisterEvent('PLAYERBANKSLOTS_CHANGED', P.PLAYERBANKSLOTS_CHANGED)
+		E:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED', P.PLAYERREAGENTBANKSLOTS_CHANGED)
 
 		initialized = true
 	end
+
+	return true -- to unregister REAGENTBANK_PURCHASED
 end
 
 function P.AddCategorySlot(Slot, category)
@@ -218,6 +225,14 @@ end
 
 function P.PLAYERBANKSLOTS_CHANGED(event, slotID)
 	P.UpdateSlot(BANK_CONTAINER, slotID, event)
+
+	if(not P.Override('PositionSlots')) then
+		P.PositionSlots()
+	end
+end
+
+function P.PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
+	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
 
 	if(not P.Override('PositionSlots')) then
 		P.PositionSlots()

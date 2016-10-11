@@ -21,6 +21,7 @@ ToggleBag = P.noop
 do
 	MainMenuBarBackpackButton:UnregisterAllEvents()
 	BankFrame:UnregisterAllEvents()
+	ReagentBankFrame:UnregisterAllEvents()
 
 	for index = 0, 3 do
 		local Frame = _G['CharacterBag' .. index .. 'Slot']
