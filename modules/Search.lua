@@ -61,9 +61,9 @@ end
 
 local function Update()
 	for bagID = REAGENTBANK_CONTAINER, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
-		for slotID = 1, GetContainerNumSlots(bagID) do
+		for slotID = 0, GetContainerNumSlots(bagID) do
 			local exists, _, _, _, _, _, _, isFiltered = GetContainerItemInfo(bagID, slotID)
-			if(exists) then
+			if(exists or slotID == 0) then
 				local Slot = P.GetSlot(bagID, slotID)
 				if(Slot and Slot:IsVisible()) then
 					if(isFiltered) then
