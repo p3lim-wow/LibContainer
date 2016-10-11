@@ -38,4 +38,4 @@ local function Init(self)
 	P.Fire('PostCreateSellJunk', self)
 end
 
-P.AddModule(Init, Update, 'MERCHANT_SHOW', 'MERCHANT_CLOSED', 'BAG_UPDATE_DELAYED')
+P.AddModule(Init, Update, false, 'MERCHANT_SHOW', 'MERCHANT_CLOSED', 'BAG_UPDATE_DELAYED')

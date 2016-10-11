@@ -59,4 +59,4 @@ local function Init(self)
 	Update()
 end
 
-P.AddModule(Init, Update, 'CURRENCY_DISPLAY_UPDATE')
+P.AddModule(Init, Update, false, 'CURRENCY_DISPLAY_UPDATE')

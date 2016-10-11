@@ -32,6 +32,10 @@ function E:ADDON_LOADED(addon)
 			end
 
 			moduleInfo.init(Backpack)
+
+			if(moduleInfo.includeBank) then
+				moduleInfo.init(Bank)
+			end
 		end
 
 		-- Hide on escape
@@ -129,10 +133,11 @@ P.Expose('Override', function(self, event, callback)
 	end
 end)
 
-function P.AddModule(init, update, ...)
+function P.AddModule(init, update, includeBank, ...)
 	table.insert(modules, {
 		init = init,
 		update = update,
+		includeBank = includeBank,
 		events = {...}
 	})
 end

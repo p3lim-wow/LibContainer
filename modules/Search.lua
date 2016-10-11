@@ -60,15 +60,17 @@ local function OnChar(self)
 end
 
 local function Update()
-	for bagID = 0, NUM_BAG_FRAMES do
+	for bagID = REAGENTBANK_CONTAINER, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
 		for slotID = 1, GetContainerNumSlots(bagID) do
 			local exists, _, _, _, _, _, _, isFiltered = GetContainerItemInfo(bagID, slotID)
 			if(exists) then
 				local Slot = P.GetSlot(bagID, slotID)
-				if(isFiltered) then
-					Slot:SetAlpha(0.1)
-				else
-					Slot:SetAlpha(1)
+				if(Slot and Slot:IsVisible()) then
+					if(isFiltered) then
+						Slot:SetAlpha(0.1)
+					else
+						Slot:SetAlpha(1)
+					end
 				end
 			end
 		end
@@ -101,4 +103,4 @@ local function Init(self)
 	P.Fire('PostCreateSearch', self)
 end
 
-P.AddModule(Init, Update, 'INVENTORY_SEARCH_UPDATE')
+P.AddModule(Init, Update, false, 'INVENTORY_SEARCH_UPDATE')

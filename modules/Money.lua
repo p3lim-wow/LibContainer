@@ -32,4 +32,4 @@ local function Init(self)
 	Update()
 end
 
-P.AddModule(Init, Update, 'PLAYER_MONEY', 'PLAYER_LOGIN')
+P.AddModule(Init, Update, false, 'PLAYER_MONEY', 'PLAYER_LOGIN')

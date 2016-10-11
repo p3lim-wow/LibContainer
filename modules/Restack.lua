@@ -1,10 +1,20 @@
 local P = unpack(select(2, ...))
 
-local function Init(self)
+local function Restack(self)
+	if(self:GetParent() == Backpack) then
+		SortBags()
+	elseif(self:GetParent() == BackpackBank) then
+		SortBankBags()
+	else
+		SortReagentBankBags()
+	end
+end
+
+local function CreateButton(self)
 	local Button = CreateFrame('Button', '$parentRestack', self)
 	Button:SetPoint('TOPRIGHT', -9, -6)
 	Button:SetSize(16, 16)
-	Button:SetScript('OnClick', SortBags)
+	Button:SetScript('OnClick', Restack)
 	self.Restack = Button
 
 	local NormalTexture = Button:CreateTexture('$parentNormal', 'ARTWORK')
@@ -23,8 +33,16 @@ local function Init(self)
 	Button:SetNormalTexture(NormalTexture)
 	Button:SetPushedTexture(PushedTexture)
 	Button:SetHighlightTexture(HighlightTexture)
+end
+
+local function Init(self)
+	CreateButton(self)
+
+	if(self == BackpackBank) then
+		CreateButton(BackpackBankContainerReagentBank)
+	end
 
 	P.Fire('PostCreateRestack', self)
 end
 
-P.AddModule(Init)
+P.AddModule(Init, nil, true)

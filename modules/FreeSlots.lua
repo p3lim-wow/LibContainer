@@ -1,32 +1,78 @@
 local P = unpack(select(2, ...))
 
-local function Update(self)
-	local freeSlots, totalSlots = 0, 0
-	for bagID = 0, NUM_BAG_FRAMES do
-		freeSlots = freeSlots + GetContainerNumFreeSlots(bagID)
-		totalSlots = totalSlots + GetContainerNumSlots(bagID)
+local emptySlots = {}
+
+local function GetFreeSlots(containerID)
+	local freeSlots = 0
+	if(containerID == BACKPACK_CONTAINER) then
+		for bagID = containerID, NUM_BAG_SLOTS do
+			freeSlots = freeSlots + GetContainerNumFreeSlots(bagID)
+		end
+	elseif(containerID == BANK_CONTAINER) then
+		freeSlots = GetContainerNumFreeSlots(containerID)
+
+		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
+			freeSlots = freeSlots + GetContainerNumFreeSlots(bagID)
+		end
+	elseif(containerID == REAGENTBANK_CONTAINER) then
+		freeSlots = GetContainerNumFreeSlots(containerID)
 	end
 
-	Backpack.EmptySlot.Count:SetText(freeSlots)
+	return freeSlots
 end
 
-local function OnDrop()
-	for bagID = 0, NUM_BAG_FRAMES do
-		if(GetContainerNumFreeSlots(bagID) > 0) then
-			for slotID = 1, GetContainerNumSlots(bagID) do
-				if(not GetContainerItemInfo(bagID, slotID)) then
-					PickupContainerItem(bagID, slotID)
-					return
-				end
+local function Update(self)
+	for _, EmptySlot in next, emptySlots do
+		local freeSlots = GetFreeSlots(EmptySlot.bagID)
+		EmptySlot.Count:SetText(freeSlots)
+	end
+end
+
+local function GetContainerEmptySlot(bagID)
+	if(GetContainerNumFreeSlots(bagID) > 0) then
+		for slotID = 1, GetContainerNumSlots(bagID) do
+			if(not GetContainerItemInfo(bagID, slotID)) then
+				return bagID, slotID
 			end
 		end
 	end
+end
 
+local function GetEmptySlot(containerID)
+	if(containerID == BACKPACK_CONTAINER) then
+		for index = containerID, NUM_BAG_SLOTS do
+			local bagID, slotID = GetContainerEmptySlot(index)
+			if(slotID) then
+				return bagID, slotID
+			end
+		end
+	elseif(containerID == BANK_CONTAINER) then
+		local bagID, slotID = GetContainerEmptySlot(containerID)
+		if(slotID) then
+			return bagID, slotID
+		end
+
+		for index = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
+			local bagID, slotID = GetContainerEmptySlot(index)
+			if(slotID) then
+				return bagID, slotID
+			end
+		end
+	elseif(containerID == REAGENTBANK_CONTAINER) then
+		local bagID, slotID = GetContainerEmptySlot(containerID)
+		if(slotID) then
+			return bagID, slotID
+		end
+	end
+end
+
+local function OnDrop(self)
+	PickupContainerItem(GetEmptySlot(self.bagID))
 	-- BUG: we end up with the container on our cursor if we click the empty slot
 end
 
-local function Init(self)
-	local Slot = P.CreateSlot(0, 0)
+local function CreateEmptySlot(bagID, categoryIndex)
+	local Slot = P.CreateSlot(bagID, 0)
 	Slot:SetScript('OnMouseUp', OnDrop)
 	Slot:SetScript('OnReceiveDrag', OnDrop)
 	Slot:Show()
@@ -37,10 +83,19 @@ local function Init(self)
 	Slot.itemID = 0
 	Slot.itemLevel = 0
 
-	self.EmptySlot = Slot
-	P.AddCategorySlot(Slot, P.categories[1])
+	P.AddCategorySlot(Slot, P.categories[categoryIndex])
+
+	table.insert(emptySlots, Slot)
+
+	return Slot
+end
+
+local function Init(self)
+	Backpack.EmptySlot = CreateEmptySlot(BACKPACK_CONTAINER, 1)
+	BackpackBank.EmptySlot = CreateEmptySlot(BANK_CONTAINER, 1)
+	BackpackBankContainerReagentBank.EmptySlot = CreateEmptySlot(REAGENTBANK_CONTAINER, 1002)
 
 	Update()
 end
 
-P.AddModule(Init, Update, 'BAG_UPDATE')
+P.AddModule(Init, Update, false, 'BAG_UPDATE', 'BANKFRAME_OPENED')
