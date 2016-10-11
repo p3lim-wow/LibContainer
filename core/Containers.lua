@@ -1,6 +1,6 @@
 local P = unpack(select(2, ...))
 
-local containers, containerIndices = {}, {}
+local containers = {}
 function P.CreateContainer(category, Parent)
 	local Container
 	local categoryIndex = category.index
@@ -20,7 +20,6 @@ function P.CreateContainer(category, Parent)
 	end
 
 	containers[categoryIndex] = Container
-	table.insert(containerIndices, Container)
 end
 
 function P.GetCategoryContainer(categoryIndex)
