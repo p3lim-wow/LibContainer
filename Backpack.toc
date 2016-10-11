@@ -36,3 +36,7 @@ categories\Quests.lua
 categories\ReagentBank.lua
 categories\Teleport.lua
 categories\TradeGoods.lua
+
+#@do-not-package@
+layout_ext\Backpack_Classic.lua
+#@end-do-not-package@
