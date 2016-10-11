@@ -6,7 +6,7 @@ local function Update(event)
 		if(event == 'MERCHANT_SHOW' or lastNumItems > 0) then
 			lastNumItems = 0
 
-			local Container = P.GetCategoryContainer(1e3)
+			local Container = P.GetCategoryContainer(Backpack, 1e3)
 			for _, Slot in next, Container.slots do
 				lastNumItems = lastNumItems + 1
 				UseContainerItem(Slot.bagID, Slot.slotID)
