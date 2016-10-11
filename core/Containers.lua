@@ -19,11 +19,15 @@ function P.CreateContainer(category, Parent)
 		P.SkinContainer(Container)
 	end
 
-	containers[categoryIndex] = Container
+	if(not containers[Parent]) then
+		containers[Parent] = {}
+	end
+
+	containers[Parent][categoryIndex] = Container
 end
 
-function P.GetCategoryContainer(categoryIndex)
-	return containers[categoryIndex]
+function P.GetCategoryContainer(parentContainer, categoryIndex)
+	return containers[parentContainer][categoryIndex]
 end
 
 function P.AddContainerSlot(Slot, Container)
@@ -43,6 +47,6 @@ function P.RemoveContainerSlot(Slot)
 	end
 end
 
-function P.GetContainers()
-	return containers
+function P.GetContainers(parentContainer)
+	return containers[parentContainer]
 end

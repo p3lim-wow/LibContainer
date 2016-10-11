@@ -21,8 +21,13 @@ function P.SkinContainer(Container)
 	Container.paddingY = 18 -- needs a little extra because of the title
 
 	if(Container:GetID() == 1) then
-		Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
-		Container.paddingY = 27 -- needs even more space for the footer
+		if(Container == Backpack) then
+			Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
+			Container.paddingY = 27 -- needs more space for the footer
+		elseif(Container == BackpackBank) then
+			Container:SetPoint('TOPLEFT', UIParent, 50, -50)
+
+		end
 
 		Container:EnableMouse(true)
 		Container:SetMovable(true)
@@ -97,45 +102,46 @@ function P.OnUpdateCooldown(Slot, bagID, slotID)
 end
 
 function P.PositionSlots()
-	local categorySlots = P.categorySlots
-	for categoryIndex in next, categorySlots do
-		table.sort(categorySlots[categoryIndex], P.categories[categoryIndex].sortFunc)
-	end
-
-	for categoryIndex, slots in next, categorySlots do
-		local Container = P.GetCategoryContainer(categoryIndex)
-
-		-- defaults
-		local anchor = Container.anchor or Container
-		local anchorPoint = Container.anchorPoint or 'TOPLEFT'
-
-		local sizeX = Container.slotSizeX or Container.slotSize or 32
-		local sizeY = Container.slotSizeY or Container.slotSize or 32
-
-		local spacingX = Container.spacingX or Container.spacing or 4
-		local spacingY = Container.spacingY or Container.spacing or 4
-
-		local growX = Container.growX == 'LEFT' and -1 or 1
-		local growY = Container.growY == 'UP' and 1 or -1
-
-		local cols = Container.columns or 8
-
-		for index, Slot in next, slots do
-			local col = (index - 1) % cols
-			local row = math.floor((index - 1) / cols)
-
-			Slot:ClearAllPoints()
-			Slot:SetPoint(anchorPoint, anchor, col * (sizeX + spacingX) * growX, row * (sizeY + spacingY) * growY)
+	for parentContainer, categorySlots in next, P.categorySlots do
+		for categoryIndex in next, categorySlots do
+			table.sort(categorySlots[categoryIndex], P.categories[categoryIndex].sortFunc)
 		end
-	end
 
-	P.ResizeContainers()
+		for categoryIndex, slots in next, categorySlots do
+			local Container = P.GetCategoryContainer(parentContainer, categoryIndex)
+
+			-- defaults
+			local anchor = Container.anchor or Container
+			local anchorPoint = Container.anchorPoint or 'TOPLEFT'
+
+			local sizeX = Container.slotSizeX or Container.slotSize or 32
+			local sizeY = Container.slotSizeY or Container.slotSize or 32
+
+			local spacingX = Container.spacingX or Container.spacing or 4
+			local spacingY = Container.spacingY or Container.spacing or 4
+
+			local growX = Container.growX == 'LEFT' and -1 or 1
+			local growY = Container.growY == 'UP' and 1 or -1
+
+			local cols = Container.columns or 8
+
+			for index, Slot in next, slots do
+				local col = (index - 1) % cols
+				local row = math.floor((index - 1) / cols)
+
+				Slot:ClearAllPoints()
+				Slot:SetPoint(anchorPoint, anchor, col * (sizeX + spacingX) * growX, row * (sizeY + spacingY) * growY)
+			end
+		end
+
+		P.ResizeContainers(parentContainer)
+	end
 end
 
-function P.ResizeContainers()
+function P.ResizeContainers(parentContainer)
 	local visibleContainers = {}
 
-	local containers = P.GetContainers()
+	local containers = P.GetContainers(parentContainer)
 	for categoryIndex, Container in next, containers do
 		local numSlots = #Container.slots
 		if(categoryIndex == 1) then
@@ -172,15 +178,15 @@ function P.ResizeContainers()
 		end
 	end
 
-	P.PositionContainers(visibleContainers)
+	P.PositionContainers(parentContainer, visibleContainers)
 end
 
-function P.PositionContainers(visibleContainers)
+function P.PositionContainers(parentContainer, visibleContainers)
 	local numVisibleContainers = #visibleContainers
 	if(numVisibleContainers > 0) then -- the inventory can actually be empty
-		-- yank the parent out of there so it doesn't mess with positioning
 		for index, Container in next, visibleContainers do
 			if(Container:GetID() == 1) then
+				-- yank the parent out of there so it doesn't mess with positioning
 				table.remove(visibleContainers, index)
 				break
 			end

@@ -1,8 +1,15 @@
 local P, E = unpack(select(2, ...))
 
 local Backpack = CreateFrame('Frame', P.name, UIParent)
-local Bank = CreateFrame('Frame', '$parentBank', Backpack)
 Backpack:Hide()
+
+local Bank = CreateFrame('Frame', '$parentBank', Backpack)
+Bank:Hide()
+Bank:HookScript('OnHide', function()
+	if(P.atBank) then
+		CloseBankFrame()
+	end
+end)
 
 local modules = {}
 function E:ADDON_LOADED(addon)
@@ -13,6 +20,7 @@ function E:ADDON_LOADED(addon)
 
 		for _, categoryInfo in next, P.categories do
 			P.CreateContainer(categoryInfo, Backpack)
+			P.CreateContainer(categoryInfo, Bank)
 		end
 
 		for _, moduleInfo in next, modules do
@@ -31,6 +39,20 @@ function E:ADDON_LOADED(addon)
 
 		return true
 	end
+end
+
+function E:BANKFRAME_OPENED()
+	P.atBank = true
+
+	Bank:Show()
+	Backpack:Toggle(true)
+end
+
+function E:BANKFRAME_CLOSED()
+	P.atBank = false
+
+	Bank:Hide()
+	Backpack:Toggle(false)
 end
 
 local callbacks = {}
