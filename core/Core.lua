@@ -56,7 +56,7 @@ function E:BANKFRAME_OPENED()
 	P.atBank = true
 
 	Bank:Show()
-	Backpack:Toggle(true)
+	Backpack:Toggle(true, true)
 end
 
 function E:BANKFRAME_CLOSED()
@@ -92,10 +92,10 @@ end
 -- @name Backpack:Toggle
 -- @usage Backpack:Toggle([force])
 -- @param force - Boolean to force open/close the bags
-P.Expose('Toggle', function(self, force)
+P.Expose('Toggle', function(self, force, includeBank)
 	local isShown = self:IsShown()
-	if(not isShown and force ~= false) then
-		if(not isShown) then
+	if(not isShown and force ~= false or includeBank) then
+		if(not isShown or includeBank) then
 			P.UpdateAllSlots('OnShow')
 
 			if(not P.Override('PositionSlots')) then
