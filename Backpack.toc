@@ -8,7 +8,7 @@
 
 core\Private.lua
 core\EventHandler.lua
-core\API.lua
+core\ContainerAPI.lua
 core\Core.lua
 core\Categories.lua
 core\Containers.lua

@@ -116,7 +116,7 @@ function E:PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
 	SaveData(REAGENTBANK_CONTAINER, slotID)
 end
 
-function P.Mixin(frame)
+function P.MixinAPI(frame)
 	Mixin(frame, methodsMixin)
 end
 

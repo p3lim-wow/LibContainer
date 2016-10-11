@@ -2,7 +2,7 @@ local P, E = unpack(select(2, ...))
 
 local Backpack = CreateFrame('Frame', P.name, UIParent)
 Backpack:Hide()
-P.Mixin(Backpack)
+P.MixinAPI(Backpack)
 
 local Bank = CreateFrame('Frame', '$parentBank', Backpack)
 Bank:Hide()
