@@ -1,0 +1,7 @@
+## Interface: 70000
+## Author: p3lim
+## Version: @project-version@
+## Title: Backpack: Classic
+## Notes: Basic layout for the Backpack addon
+
+Backpack_Classic.lua

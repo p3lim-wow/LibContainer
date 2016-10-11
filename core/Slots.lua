@@ -42,8 +42,8 @@ function P.CreateSlot(bagID, slotID)
 	Slot.BattlePay = Slot.BattlepayItemTexture
 	Slot.Cooldown = _G[slotName .. 'Cooldown']
 
-	if(not P.Fire('SkinSlot', Slot)) then
-		P.SkinSlot(Slot)
+	if(not P.Layout('SkinSlot', Slot)) then
+		P.error('Missing layout!')
 	end
 
 	slots[bagID][slotID] = Slot
@@ -81,8 +81,12 @@ function P.UpdateSlot(bagID, slotID, event)
 		Slot.itemID = itemID
 		Slot.itemLevel = select(4, GetItemInfo(GetContainerItemLink(bagID, slotID)))
 
-		if(not P.Override('UpdateSlot', Slot)) then
-			P.OnUpdateSlot(Slot, bagID, slotID)
+		if(not P.Layout('UpdateSlot', Slot)) then
+			P.error('Missing layout!')
+		end
+
+		if(not P.Layout('UpdateCooldown', Slot)) then
+			P.UpdateCooldown(Slot)
 		end
 
 		Slot:Show()
@@ -102,6 +106,13 @@ function P.UpdateSlot(bagID, slotID, event)
 
 			P.Fire('PostRemoveSlot', bagID, slotID, event)
 		end
+	end
+end
+
+function P.UpdateCooldown(Slot)
+	if(Slot and Slot:IsShown()) then
+		local start, duration, enabled = GetContainerItemCooldown(Slot.bagID, Slot.slotID)
+		CooldownFrame_Set(Slot.Cooldown, start, duration, enabled)
 	end
 end
 
@@ -174,12 +185,46 @@ function P.RemoveCategorySlot(Slot)
 	end
 end
 
+function P.PositionSlots()
+	for parentContainer, categorySlots in next, P.categorySlots do
+		for categoryIndex in next, categorySlots do
+			table.sort(categorySlots[categoryIndex], P.categories[categoryIndex].sortFunc)
+		end
+
+		for categoryIndex, slots in next, categorySlots do
+			local Container = P.GetCategoryContainer(parentContainer, categoryIndex)
+
+			-- defaults
+			local anchor = Container.anchor or Container
+			local anchorPoint = Container.anchorPoint or 'TOPLEFT'
+
+			local sizeX = Container.slotSizeX or Container.slotSize or 32
+			local sizeY = Container.slotSizeY or Container.slotSize or 32
+
+			local spacingX = Container.spacingX or Container.spacing or 4
+			local spacingY = Container.spacingY or Container.spacing or 4
+
+			local growX = Container.growX == 'LEFT' and -1 or 1
+			local growY = Container.growY == 'UP' and 1 or -1
+
+			local cols = Container.columns or 8
+
+			for index, Slot in next, slots do
+				local col = (index - 1) % cols
+				local row = math.floor((index - 1) / cols)
+
+				Slot:ClearAllPoints()
+				Slot:SetPoint(anchorPoint, anchor, col * (sizeX + spacingX) * growX, row * (sizeY + spacingY) * growY)
+			end
+		end
+
+		P.ResizeContainers(parentContainer)
+	end
+end
+
 function P.BAG_UPDATE(event, bagID)
 	P.UpdateContainerSlots(bagID, event)
-
-	if(not P.Override('PositionSlots')) then
-		P.PositionSlots()
-	end
+	P.PositionSlots()
 end
 
 function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
@@ -189,16 +234,14 @@ function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
 		P.UpdateContainerSlots(bagID, event)
 	end
 
-	if(not P.Override('PositionSlots')) then
-		P.PositionSlots()
-	end
+	P.PositionSlots()
 end
 
 local function UpdateContainerCooldowns(startBagID, endBagID)
 	for bagID = startBagID, endBagID or startBagID do
 		for slotID = 1, GetContainerNumSlots(bagID) do
-			if(not P.Override('UpdateCooldown')) then
-				P.OnUpdateCooldown(P.GetSlot(bagID, slotID), bagID, slotID)
+			if(not P.Layout('UpdateCooldown', P.GetSlot(bagID, slotID))) then
+				P.UpdateCooldown(P.GetSlot(bagID, slotID))
 			end
 		end
 	end
@@ -225,16 +268,10 @@ end
 
 function P.PLAYERBANKSLOTS_CHANGED(event, slotID)
 	P.UpdateSlot(BANK_CONTAINER, slotID, event)
-
-	if(not P.Override('PositionSlots')) then
-		P.PositionSlots()
-	end
+	P.PositionSlots()
 end
 
 function P.PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
 	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
-
-	if(not P.Override('PositionSlots')) then
-		P.PositionSlots()
-	end
+	P.PositionSlots()
 end

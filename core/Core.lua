@@ -76,11 +76,11 @@ function P.Fire(event, ...)
 	end
 end
 
-local overrides = {}
-function P.Override(event, ...)
-	local eventOverride = overrides[event]
-	if(eventOverride) then
-		eventOverride(...)
+local layouts = {}
+function P.Layout(event, ...)
+	local eventLayout = layouts[event]
+	if(eventLayout) then
+		eventLayout(...)
 		return true
 	end
 end
@@ -97,10 +97,7 @@ P.Expose('Toggle', function(self, force, includeBank)
 	if(not isShown and force ~= false or includeBank) then
 		if(not isShown or includeBank) then
 			P.UpdateAllSlots('OnShow')
-
-			if(not P.Override('PositionSlots')) then
-				P.PositionSlots()
-			end
+			P.PositionSlots()
 		end
 
 		self:Show()
@@ -121,15 +118,15 @@ P.Expose('On', function(self, event, callback)
 	table.insert(callbacks[event], callback)
 end)
 
--- @name Backpack:Override
--- @usage Backpack:Override(event, callback)
--- @param event    - Event to override on
+-- @name Backpack:Layout
+-- @usage Backpack:Layout(event, callback)
+-- @param event    - Layout event
 -- @param callback - Function that will be called when the event happens
-P.Expose('Override', function(self, event, callback)
-	if(overrides[event]) then
-		error(string.format('Override for event "%s" already exists.', event), 2)
+P.Expose('Layout', function(self, event, callback)
+	if(layouts[event]) then
+		P.error('Layout already exists.')
 	else
-		overrides[event] = callback
+		layouts[event] = callback
 	end
 end)
 

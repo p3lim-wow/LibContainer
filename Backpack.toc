@@ -12,7 +12,6 @@ core\Core.lua
 core\Categories.lua
 core\Containers.lua
 core\Slots.lua
-core\Layout.lua
 core\Blizzard.lua
 
 modules\Currencies.lua

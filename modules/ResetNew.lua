@@ -8,11 +8,8 @@ local function OnClick(self)
 		BackpackCustomCategory[itemID] = nil
 	end
 
-	P.UpdateAllSlots()
-
-	if(not P.Override('PositionSlots')) then
-		P.PositionSlots()
-	end
+	P.UpdateAllSlots('ResetNew')
+	P.PositionSlots()
 end
 
 local function Init(self)
