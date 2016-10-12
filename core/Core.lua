@@ -151,7 +151,7 @@ P.Expose('Toggle', function(self, force, includeBank)
 
 		self:Show()
 
-		if(includeBank) then
+		if(includeBank and Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
 			Bank:Show()
 		end
 	elseif(isShown and not force) then
