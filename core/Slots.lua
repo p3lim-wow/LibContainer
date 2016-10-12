@@ -152,6 +152,30 @@ function P.UpdateAllSlots(event)
 	return true -- to unregister REAGENTBANK_PURCHASED
 end
 
+function P.InitializeAllSlots()
+	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+			P.CreateSlot(bagID, slotID)
+		end
+	end
+
+	for slotID = 1, Backpack:GetContainerNumSlots(BANK_CONTAINER) do
+		P.CreateSlot(BANK_CONTAINER, slotID)
+	end
+
+	for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
+		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+			P.CreateSlot(bagID, slotID)
+		end
+	end
+
+	if(IsReagentBankUnlocked()) then
+		for slotID = 1, Backpack:GetContainerNumSlots(REAGENTBANK_CONTAINER) do
+			P.CreateSlot(REAGENTBANK_CONTAINER, slotID)
+		end
+	end
+end
+
 function P.AddCategorySlot(Slot, category)
 	local categoryIndex = category.index
 	Slot.category = category

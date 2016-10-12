@@ -12,7 +12,7 @@ Bank:HookScript('OnHide', function()
 	end
 end)
 
-local modules = {}
+local modules, initialized = {}
 function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or {}
@@ -26,6 +26,11 @@ function E:ADDON_LOADED(addon)
 			end
 
 			P.CreateContainer(categoryInfo, Bank)
+		end
+
+		if(not initialized) then
+			P.InitializeAllSlots()
+			initialized = true
 		end
 
 		for _, moduleInfo in next, modules do
