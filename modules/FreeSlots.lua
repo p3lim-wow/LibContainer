@@ -90,12 +90,16 @@ local function CreateEmptySlot(bagID, categoryIndex)
 	return Slot
 end
 
-local function Init(self)
-	Backpack.EmptySlot = CreateEmptySlot(BACKPACK_CONTAINER, 1)
-	BackpackBank.EmptySlot = CreateEmptySlot(BANK_CONTAINER, 1)
-	BackpackBankContainerReagentBank.EmptySlot = CreateEmptySlot(REAGENTBANK_CONTAINER, 1002)
+Backpack:On('PostCreateParent', function(self, bagID)
+	if(bagID == BACKPACK_CONTAINER) then
+		Backpack.EmptySlot = CreateEmptySlot(bagID, 1)
+	elseif(bagID == BANK_CONTAINER) then
+		BackpackBank.EmptySlot = CreateEmptySlot(bagID, 1)
+	elseif(bagID == REAGENTBANK_CONTAINER) then
+		BackpackBankContainerReagentBank.EmptySlot = CreateEmptySlot(bagID, 1002)
+	end
 
 	Update()
-end
+end)
 
-P.AddModule(Init, Update, false, 'BAG_UPDATE', 'BANKFRAME_OPENED')
+P.AddModule(nil, Update, false, 'BAG_UPDATE', 'BANKFRAME_OPENED')

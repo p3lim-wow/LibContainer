@@ -1,4 +1,4 @@
-local P, E = unpack(select(2, ...))
+local P = unpack(select(2, ...))
 
 local function OnClick(self)
 	local Container = P.GetCategoryContainer(self.parentContainer, 1001)

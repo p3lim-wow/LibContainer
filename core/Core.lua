@@ -12,8 +12,8 @@ Bank:HookScript('OnHide', function()
 	end
 end)
 
-local modules, initialized = {}
-function E:ADDON_LOADED(addon)
+local modules = {}
+function E:ADDON_LOADED(event, addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or {}
 		BackpackBankDB = BackpackBankDB or {}
@@ -28,21 +28,22 @@ function E:ADDON_LOADED(addon)
 			P.CreateContainer(categoryInfo, Bank)
 		end
 
-		if(not initialized) then
-			P.InitializeAllSlots()
-			initialized = true
-		end
-
 		for _, moduleInfo in next, modules do
 			for _, event in next, moduleInfo.events do
 				E:RegisterEvent(event, moduleInfo.update)
 			end
 
-			moduleInfo.init(Backpack)
+			if(moduleInfo.init) then
+				moduleInfo.init(Backpack)
 
-			if(moduleInfo.includeBank) then
-				moduleInfo.init(Bank)
+				if(moduleInfo.includeBank) then
+					moduleInfo.init(Bank)
+				end
 			end
+		end
+
+		if(Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
+			P.InitializeBank()
 		end
 
 		-- Hide on escape
@@ -51,20 +52,25 @@ function E:ADDON_LOADED(addon)
 		-- might interfere, disable just in case
 		SetBackpackAutosortDisabled(true)
 
-		if(not IsReagentBankUnlocked()) then
-			E:RegisterEvent('REAGENTBANK_PURCHASED', P.UpdateAllSlots)
-		end
-
 		return true
 	end
 end
 
-function E:BAG_UPDATE(bagID)
+function E:BAG_UPDATE(event, bagID)
+	if(not P.HasParent(BACKPACK_CONTAINER)) then
+		-- doesn't seem to have its own event
+		P.InitializeAllSlots(BACKPACK_CONTAINER)
+	end
+
+	if(not P.HasParent(bagID)) then
+		P.InitializeAllSlots(bagID)
+	end
+
 	P.UpdateContainerSlots(bagID, event)
 	P.PositionSlots()
 end
 
-function E:ITEM_LOCK_CHANGED(bagID, slotID)
+function E:ITEM_LOCK_CHANGED(event, bagID, slotID)
 	if(slotID) then
 		P.UpdateSlot(bagID, slotID, event)
 	else
@@ -85,31 +91,53 @@ function E:BAG_UPDATE_COOLDOWN()
 	end
 end
 
-function E:QUEST_ACCEPTED()
-	P.UpdateAllSlots('QUEST_ACCEPTED')
+function E:QUEST_ACCEPTED(event)
+	P.UpdateAllSlots(event)
 end
 
-function E:UNIT_QUEST_LOG_CHANGED(unit)
+function E:UNIT_QUEST_LOG_CHANGED(event, unit)
 	if(unit == 'player') then
-		P.UpdateAllSlots('UNIT_QUEST_LOG_CHANGED')
+		P.UpdateAllSlots(event)
 	end
 end
 
-function E:PLAYERBANKSLOTS_CHANGED(slotID)
-	P.UpdateSlot(BANK_CONTAINER, slotID, 'PLAYERBANKSLOTS_CHANGED')
+function E:PLAYERBANKSLOTS_CHANGED(event, slotID)
+	P.UpdateSlot(BANK_CONTAINER, slotID, event)
 	P.PositionSlots()
 end
 
-function E:PLAYERREAGENTBANKSLOTS_CHANGED(slotID)
-	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, 'PLAYERREAGENTBANKSLOTS_CHANGED')
+function E:PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
+	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
 	P.PositionSlots()
+end
+
+local function REAGENTBANK_PURCHASED(event)
+	P.InitializeAllSlots(REAGENTBANK_CONTAINER)
+	P.UpdateContainerSlots(REAGENTBANK_CONTAINER, event)
+	P.PositionSlots()
+
+	return true
+end
+
+function P.InitializeBank()
+	P.InitializeAllSlots(BANK_CONTAINER)
+
+	for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
+		P.InitializeAllSlots(bagID)
+	end
+
+	if(IsReagentBankUnlocked()) then
+		P.InitializeAllSlots(REAGENTBANK_CONTAINER)
+	else
+		E:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
+	end
 end
 
 function E:BANKFRAME_OPENED()
 	P.atBank = true
 
-	if(not P.GetSlot(BANK_CONTAINER, 1)) then
-		P.InitializeAllSlots(true)
+	if(not P.HasParent(BANK_CONTAINER)) then
+		P.InitializeBank()
 	end
 
 	Backpack:Toggle(true, true)

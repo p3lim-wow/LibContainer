@@ -1,4 +1,4 @@
-local P, E = unpack(select(2, ...))
+local P = unpack(select(2, ...))
 
 local lastNumItems = 0
 local function Update(event)

@@ -1,4 +1,4 @@
-﻿local P, E = unpack(select(2, ...))
+﻿local P = unpack(select(2, ...))
 P.categorySlots = {}
 
 local parents, slots = {}, {}
@@ -15,6 +15,8 @@ local function CreateParent(bagID)
 
 	parents[bagID] = Parent
 	slots[bagID] = {}
+
+	P.Fire('PostCreateParent', bagID)
 
 	return Parent
 end
@@ -53,6 +55,10 @@ end
 
 function P.GetSlot(bagID, slotID)
 	return slots[bagID] and slots[bagID][slotID]
+end
+
+function P.HasParent(bagID)
+	return parents[bagID] ~= nil
 end
 
 function P.UpdateSlot(bagID, slotID, event)
@@ -134,47 +140,25 @@ end
 
 function P.UpdateAllSlots(event)
 	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-		P.UpdateContainerSlots(bagID)
+		P.UpdateContainerSlots(bagID, event)
 	end
 
 	if(P.atBank or BackpackBankDB ~= nil) then
-		P.UpdateContainerSlots(BANK_CONTAINER)
+		P.UpdateContainerSlots(BANK_CONTAINER, event)
 
 		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
-			P.UpdateContainerSlots(bagID)
+			P.UpdateContainerSlots(bagID, event)
 		end
 
 		if(IsReagentBankUnlocked()) then
-			P.UpdateContainerSlots(REAGENTBANK_CONTAINER)
+			P.UpdateContainerSlots(REAGENTBANK_CONTAINER, event)
 		end
 	end
-
-	return true -- to unregister REAGENTBANK_PURCHASED
 end
 
-function P.InitializeAllSlots(bankOnly)
-	if(not bankOnly) then
-		for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-			for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
-				P.CreateSlot(bagID, slotID)
-			end
-		end
-	end
-
-	for slotID = 1, Backpack:GetContainerNumSlots(BANK_CONTAINER) do
-		P.CreateSlot(BANK_CONTAINER, slotID)
-	end
-
-	for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
-		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
-			P.CreateSlot(bagID, slotID)
-		end
-	end
-
-	if(IsReagentBankUnlocked()) then
-		for slotID = 1, Backpack:GetContainerNumSlots(REAGENTBANK_CONTAINER) do
-			P.CreateSlot(REAGENTBANK_CONTAINER, slotID)
-		end
+function P.InitializeAllSlots(bagID)
+	for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+		P.CreateSlot(bagID, slotID)
 	end
 end
 

@@ -36,7 +36,7 @@ local function Call(self, event, ...)
 	local funcs = listeners[event]
 	if(funcs) then
 		for func in next, funcs do
-			if(securecall(func, event, ...) and self == EventHandler) then
+			if(securecall(func, event, event, ...) and self == EventHandler) then
 				Unregister(event, func)
 			end
 		end
