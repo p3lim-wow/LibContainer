@@ -62,7 +62,7 @@ function P.UpdateSlot(bagID, slotID, event)
 		local category = P.GetCategory(bagID, slotID, itemID)
 		local categoryIndex = category.index
 
-		local Slot = P.GetSlot(bagID, slotID) or P.CreateSlot(bagID, slotID)
+		local Slot = P.GetSlot(bagID, slotID)
 		local slotCategoryIndex = Slot.categoryIndex
 		if(slotCategoryIndex ~= categoryIndex) then
 			if(slotCategoryIndex) then
@@ -152,10 +152,12 @@ function P.UpdateAllSlots(event)
 	return true -- to unregister REAGENTBANK_PURCHASED
 end
 
-function P.InitializeAllSlots()
-	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
-			P.CreateSlot(bagID, slotID)
+function P.InitializeAllSlots(bankOnly)
+	if(not bankOnly) then
+		for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+			for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+				P.CreateSlot(bagID, slotID)
+			end
 		end
 	end
 

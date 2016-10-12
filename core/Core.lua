@@ -107,6 +107,11 @@ end
 
 function E:BANKFRAME_OPENED()
 	P.atBank = true
+
+	if(not P.GetSlot(BANK_CONTAINER, 1)) then
+		P.InitializeAllSlots(true)
+	end
+
 	Backpack:Toggle(true, true)
 end
 
