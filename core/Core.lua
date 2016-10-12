@@ -175,8 +175,18 @@ end
 -- @usage Backpack:Toggle([force])
 -- @param force - Boolean to force open/close the bags
 P.Expose('Toggle', function(self, force, includeBank)
+	local shouldShow, shouldShowBank
+
 	local isShown = self:IsShown()
-	if(not isShown and force ~= false or (includeBank and not Bank:IsVisible())) then
+	if(((not isShown and force ~= false) or force) and not (isShown and not force)) then
+		shouldShow = true
+	end
+
+	if(includeBank and not Bank:IsShown() and Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
+		shouldShowBank = true
+	end
+
+	if(shouldShow or shouldShowBank) then
 		if(not isShown) then
 			P.UpdateAllSlots('OnShow')
 			P.PositionSlots()
@@ -184,10 +194,10 @@ P.Expose('Toggle', function(self, force, includeBank)
 
 		self:Show()
 
-		if(includeBank and Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
+		if(shouldShowBank) then
 			Bank:Show()
 		end
-	elseif(isShown and not force) then
+	elseif(not shouldShow) then
 		self:Hide()
 		Bank:Hide()
 	end
