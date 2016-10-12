@@ -116,13 +116,22 @@ function P.UpdateCooldown(Slot)
 	end
 end
 
+function P.UpdateContainerCooldowns(startBagID, endBagID)
+	for bagID = startBagID, endBagID or startBagID do
+		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+			if(not P.Layout('UpdateCooldown', P.GetSlot(bagID, slotID))) then
+				P.UpdateCooldown(P.GetSlot(bagID, slotID))
+			end
+		end
+	end
+end
+
 function P.UpdateContainerSlots(bagID, event)
 	for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
 		P.UpdateSlot(bagID, slotID, event)
 	end
 end
 
-local initialized
 function P.UpdateAllSlots(event)
 	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		P.UpdateContainerSlots(bagID)
@@ -138,18 +147,6 @@ function P.UpdateAllSlots(event)
 		if(IsReagentBankUnlocked()) then
 			P.UpdateContainerSlots(REAGENTBANK_CONTAINER)
 		end
-	end
-
-	if(not initialized) then
-		E:RegisterEvent('BAG_UPDATE', P.BAG_UPDATE)
-		E:RegisterEvent('ITEM_LOCK_CHANGED', P.ITEM_LOCK_CHANGED)
-		E:RegisterEvent('BAG_UPDATE_COOLDOWN', P.BAG_UPDATE_COOLDOWN)
-		E:RegisterEvent('QUEST_ACCEPTED', P.QUEST_ACCEPTED)
-		E:RegisterEvent('UNIT_QUEST_LOG_CHANGED', P.UNIT_QUEST_LOG_CHANGED)
-		E:RegisterEvent('PLAYERBANKSLOTS_CHANGED', P.PLAYERBANKSLOTS_CHANGED)
-		E:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED', P.PLAYERREAGENTBANKSLOTS_CHANGED)
-
-		initialized = true
 	end
 
 	return true -- to unregister REAGENTBANK_PURCHASED
@@ -220,58 +217,4 @@ function P.PositionSlots()
 
 		P.ResizeContainers(parentContainer)
 	end
-end
-
-function P.BAG_UPDATE(event, bagID)
-	P.UpdateContainerSlots(bagID, event)
-	P.PositionSlots()
-end
-
-function P.ITEM_LOCK_CHANGED(event, bagID, slotID)
-	if(slotID) then
-		P.UpdateSlot(bagID, slotID, event)
-	else
-		P.UpdateContainerSlots(bagID, event)
-	end
-
-	P.PositionSlots()
-end
-
-local function UpdateContainerCooldowns(startBagID, endBagID)
-	for bagID = startBagID, endBagID or startBagID do
-		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
-			if(not P.Layout('UpdateCooldown', P.GetSlot(bagID, slotID))) then
-				P.UpdateCooldown(P.GetSlot(bagID, slotID))
-			end
-		end
-	end
-end
-
-function P.BAG_UPDATE_COOLDOWN(event)
-	UpdateContainerCooldowns(BACKPACK_CONTAINER, NUM_BAG_SLOTS)
-
-	if(BackpackBank:IsVisible()) then
-		UpdateContainerCooldowns(BANK_CONTAINER)
-		UpdateContainerCooldowns(NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS)
-	end
-end
-
-function P.QUEST_ACCEPTED(event)
-	P.UpdateAllSlots(event)
-end
-
-function P.UNIT_QUEST_LOG_CHANGED(event, unit)
-	if(unit == 'player') then
-		P.QUEST_ACCEPTED(event)
-	end
-end
-
-function P.PLAYERBANKSLOTS_CHANGED(event, slotID)
-	P.UpdateSlot(BANK_CONTAINER, slotID, event)
-	P.PositionSlots()
-end
-
-function P.PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
-	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
-	P.PositionSlots()
 end
