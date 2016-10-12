@@ -148,7 +148,7 @@ end
 -- @param force - Boolean to force open/close the bags
 P.Expose('Toggle', function(self, force, includeBank)
 	local isShown = self:IsShown()
-	if(not isShown and force ~= false) then
+	if(not isShown and force ~= false or (includeBank and not Bank:IsVisible())) then
 		if(not isShown) then
 			P.UpdateAllSlots('OnShow')
 			P.PositionSlots()
