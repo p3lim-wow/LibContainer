@@ -1,6 +1,6 @@
-local P = unpack(select(2, ...))
+local P, E, L = unpack(select(2, ...))
 
-local categoryName = NEW .. ' ' .. ITEMS -- TODO: improve this
+local categoryName = L['New Items']
 local categoryIndex = 1001
 
 local categoryFilter = function(bagID, slotID, itemID)

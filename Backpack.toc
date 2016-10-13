@@ -7,6 +7,9 @@
 ## SavedVariablesPerCharacter: BackpackBankDB
 
 core\Private.lua
+
+Localization.lua
+
 core\EventHandler.lua
 core\ContainerAPI.lua
 core\Core.lua

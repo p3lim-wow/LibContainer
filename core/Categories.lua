@@ -1,4 +1,4 @@
-local P = unpack(select(2, ...))
+local P, E, L = unpack(select(2, ...))
 P.categories = {}
 
 local MAX_INDEX = 1002
@@ -95,19 +95,19 @@ P.Expose('DisableCategory', function(_, index)
 	if(P.categories[index]) then
 		local categoryName = P.categories[index].name
 		if(protectedCategories[index]) then
-			P.error('Can\'t disable protected category "%s"', categoryName)
+			P.error(L['Can\'t disable protected category "%s"'], categoryName)
 		else
 			if(not BackpackDB.disabledCategories[index]) then
-				P.printf('Disabled category "%s"', categoryName)
-				P.print('/reload for changes to take effect')
+				P.printf(L['Disabled category "%s"'], categoryName)
+				P.print(L['/reload for changes to take effect'])
 
 				BackpackDB.disabledCategories[index] = true
 			else
-				P.printf('Category "%s" is already disabled', categoryName)
+				P.printf(L['Category "%s" is already disabled'], categoryName)
 			end
 		end
 	else
-		P.error('Found no category with index %s', index)
+		P.error(L['Found no category with index %s'], index)
 	end
 end)
 
@@ -118,14 +118,14 @@ P.Expose('EnableCategory', function(_, index)
 	if(P.categories[index]) then
 		local categoryName = P.categories[index].name
 		if(BackpackDB.disabledCategories[index]) then
-			P.printf('Enabled category "%s"', categoryName)
-			P.print('/reload for changes to take effect')
+			P.printf(L['Enabled category "%s"'], categoryName)
+			P.print(L['/reload for changes to take effect'])
 
 			BackpackDB.disabledCategories[index] = false
 		else
-			P.printf('Category "%s" is already enabled', categoryName)
+			P.printf(L['Category "%s" is already enabled'], categoryName)
 		end
 	else
-		P.error('Found no category with index %s', index)
+		P.error(L['Found no category with index %s'], index)
 	end
 end)
