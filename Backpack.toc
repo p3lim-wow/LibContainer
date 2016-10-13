@@ -31,6 +31,7 @@ categories\Consumables.lua
 categories\Equipment.lua
 categories\EquipmentSets.lua
 categories\Events.lua
+categories\Invalid.lua
 categories\Inventory.lua
 categories\Junk.lua
 categories\New.lua
