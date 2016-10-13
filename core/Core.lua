@@ -154,6 +154,21 @@ function E:BANKFRAME_CLOSED()
 	Backpack:Toggle(false)
 end
 
+P.query = {}
+function E:GET_ITEM_INFO_RECEIVED(event)
+	if(#P.query > 0) then
+		for index, Slot in next, P.query do
+			local bagID, slotID = Slot.bagID, Slot.slotID
+			if(GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID))) then
+				table.remove(P.query, index)
+				P.UpdateSlot(bagID, slotID, event)
+			end
+		end
+
+		P.PositionSlots()
+	end
+end
+
 function P.InitializeBank()
 	P.InitializeAllSlots(BANK_CONTAINER)
 

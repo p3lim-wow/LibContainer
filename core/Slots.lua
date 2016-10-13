@@ -74,11 +74,16 @@ end
 function P.UpdateSlot(bagID, slotID, event)
 	if(Backpack:GetContainerItemInfo(bagID, slotID)) then
 		local itemID = Backpack:GetContainerItemID(bagID, slotID)
+		local cached, _, _, itemLevel = GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID))
 
 		local category = P.GetCategory(bagID, slotID, itemID)
 		local categoryIndex = category.index
 
 		local Slot = P.GetSlot(bagID, slotID)
+		if(not cached) then
+			table.insert(P.query, Slot)
+		end
+
 		local slotCategoryIndex = Slot.categoryIndex
 		if(slotCategoryIndex ~= categoryIndex) then
 			if(slotCategoryIndex) then
@@ -95,7 +100,7 @@ function P.UpdateSlot(bagID, slotID, event)
 		Slot.itemCount = itemCount
 		Slot.itemQuality = itemQuality
 		Slot.itemID = itemID
-		Slot.itemLevel = select(4, GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID)))
+		Slot.itemLevel = itemLevel or 0
 
 		if(not P.Layout('UpdateSlot', Slot)) then
 			P.error('Missing layout!')
