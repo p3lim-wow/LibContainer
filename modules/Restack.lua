@@ -19,11 +19,19 @@ local function Update()
 	UpdateVisibility(nil, true)
 end
 
+local function ShowTooltip(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
+	GameTooltip:SetText(self.tooltipText)
+	GameTooltip:Show()
+end
+
 local function CreateButton(self)
 	local Button = CreateFrame('Button', '$parentRestack', self)
 	Button:SetPoint('TOPRIGHT', -9, -6)
 	Button:SetSize(16, 16)
 	Button:SetScript('OnClick', Restack)
+	Button:SetScript('OnEnter', ShowTooltip)
+	Button:SetScript('OnLeave', GameTooltip_Hide)
 	self.Restack = Button
 
 	local NormalTexture = Button:CreateTexture('$parentNormal', 'ARTWORK')
@@ -42,6 +50,14 @@ local function CreateButton(self)
 	Button:SetNormalTexture(NormalTexture)
 	Button:SetPushedTexture(PushedTexture)
 	Button:SetHighlightTexture(HighlightTexture)
+
+	if(self == Backpack) then
+		Button.tooltipText = BAG_CLEANUP_BAGS
+	elseif(self == BackpackBank) then
+		Button.tooltipText = BAG_CLEANUP_BANK
+	else
+		Button.tooltipText = BAG_CLEANUP_REAGENT_BANK
+	end
 end
 
 local function Init(self)

@@ -1,4 +1,4 @@
-local P = unpack(select(2, ...))
+local P, E, L = unpack(select(2, ...))
 
 local categoryName = BAG_FILTER_JUNK -- "Junk"
 local categoryIndex = 1e3
@@ -30,6 +30,12 @@ local function Update(event)
 	end
 end
 
+local function ShowTooltip(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
+	GameTooltip:SetText(L['Toggle auto-vendoring'])
+	GameTooltip:Show()
+end
+
 local function OnClick(self)
 	BackpackDB.autoSellJunk = not BackpackDB.autoSellJunk
 	self.Texture:SetDesaturated(not BackpackDB.autoSellJunk)
@@ -42,6 +48,8 @@ local function Init(self)
 	Button:SetPoint('TOPRIGHT', -8, -8)
 	Button:SetSize(16, 16)
 	Button:SetScript('OnClick', OnClick)
+	Button:SetScript('OnEnter', ShowTooltip)
+	Button:SetScript('OnLeave', GameTooltip_Hide)
 	self.SellJunk = Button
 
 	local Texture = Button:CreateTexture('$parentTexture', 'ARTWORK')

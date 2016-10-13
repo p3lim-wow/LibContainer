@@ -18,6 +18,12 @@ end
 
 Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
 
+local function ShowTooltip(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
+	GameTooltip:SetText(L['Mark items as known'])
+	GameTooltip:Show()
+end
+
 local function OnClick(self)
 	local Container = P.GetCategoryContainer(self.parentContainer, 1001)
 	for _, Slot in next, Container.slots do
@@ -37,6 +43,8 @@ local function Init(self)
 	Button:SetPoint('TOPRIGHT', -8, -8)
 	Button:SetSize(16, 16)
 	Button:SetScript('OnClick', OnClick)
+	Button:SetScript('OnEnter', ShowTooltip)
+	Button:SetScript('OnLeave', GameTooltip_Hide)
 	Button.parentContainer = self
 	self.ResetNew = Button
 
