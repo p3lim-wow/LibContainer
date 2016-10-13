@@ -90,7 +90,7 @@ local function CreateEmptySlot(bagID, categoryIndex)
 	return Slot
 end
 
-Backpack:On('PostCreateParent', function(self, bagID)
+Backpack:On('PostCreateParent', function(bagID)
 	if(bagID == BACKPACK_CONTAINER) then
 		Backpack.EmptySlot = CreateEmptySlot(bagID, 1)
 	elseif(bagID == BANK_CONTAINER) then
