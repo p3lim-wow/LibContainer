@@ -2,3 +2,6 @@ package-as: Backpack
 
 move-folders:
   Backpack/layout_ext: Backpack_Classic
+
+ignore:
+  - README.md
