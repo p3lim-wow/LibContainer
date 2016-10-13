@@ -10,6 +10,15 @@ local function Restack(self)
 	end
 end
 
+local function UpdateVisibility(_, visiting)
+	BackpackBank.Restack:SetShown(P.atBank or visiting)
+	BackpackBankContainerReagentBank.Restack:SetShown(P.atBank or visiting)
+end
+
+local function Update()
+	UpdateVisibility(nil, true)
+end
+
 local function CreateButton(self)
 	local Button = CreateFrame('Button', '$parentRestack', self)
 	Button:SetPoint('TOPRIGHT', -9, -6)
@@ -40,9 +49,11 @@ local function Init(self)
 
 	if(self == BackpackBank) then
 		CreateButton(BackpackBankContainerReagentBank)
+
+		self:HookScript('OnShow', UpdateVisibility)
 	end
 
 	P.Fire('PostCreateRestack', self)
 end
 
-Backpack:AddModule('Restack', Init, nil, true)
+Backpack:AddModule('Restack', Init, Update, true, 'BANKFRAME_OPENED')
