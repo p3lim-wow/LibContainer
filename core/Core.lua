@@ -134,16 +134,6 @@ local function REAGENTBANK_PURCHASED(event)
 	return true
 end
 
-function P.InitializeBank()
-	P.InitializeAllSlots(BANK_CONTAINER)
-
-	if(IsReagentBankUnlocked()) then
-		P.InitializeAllSlots(REAGENTBANK_CONTAINER)
-	else
-		E:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
-	end
-end
-
 function E:BANKFRAME_OPENED(event)
 	P.atBank = true
 
@@ -162,6 +152,16 @@ end
 function E:BANKFRAME_CLOSED()
 	P.atBank = false
 	Backpack:Toggle(false)
+end
+
+function P.InitializeBank()
+	P.InitializeAllSlots(BANK_CONTAINER)
+
+	if(IsReagentBankUnlocked()) then
+		P.InitializeAllSlots(REAGENTBANK_CONTAINER)
+	else
+		E:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
+	end
 end
 
 local callbacks = {}
