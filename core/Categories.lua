@@ -90,7 +90,7 @@ local protectedCategories = {
 
 -- @name Backpack:DisableCategory
 -- @usage Backpack:AddCategory(index)
--- @param index - Category index disable
+-- @param index - Category index to disable
 P.Expose('DisableCategory', function(_, index)
 	if(P.categories[index]) then
 		local categoryName = P.categories[index].name
