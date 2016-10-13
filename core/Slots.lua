@@ -22,8 +22,17 @@ local function CreateParent(bagID)
 end
 
 function P.CreateSlot(bagID, slotID)
+	local template
+	if(bagID == BANK_CONTAINER) then
+		template = 'BankItemButtonGenericTemplate'
+	elseif(bagID == REAGENTBANK_CONTAINER) then
+		template = 'ReagentBankItemButtonGenericTemplate'
+	else
+		template = 'ContainerFrameItemButtonTemplate'
+	end
+
 	local Parent = parents[bagID] or CreateParent(bagID)
-	local Slot = CreateFrame('Button', '$parentSlot' .. slotID, Parent, 'ContainerFrameItemButtonTemplate')
+	local Slot = CreateFrame('Button', '$parentSlot' .. slotID, Parent, template)
 	local slotName = Slot:GetName()
 
 	Slot:Hide()
@@ -38,7 +47,7 @@ function P.CreateSlot(bagID, slotID)
 	Slot.NormalTexture = Slot:GetNormalTexture()
 	Slot.PushedTexture = Slot:GetPushedTexture()
 	Slot.HighlightTexture = Slot:GetHighlightTexture()
-	Slot.QuestIcon = _G[slotName .. 'IconQuestTexture']
+	Slot.QuestIcon = Slot.IconQuestTexture or _G[slotName .. 'IconQuestTexture']
 	Slot.JunkIcon = Slot.JunkIcon
 	Slot.Flash = Slot.flash
 	Slot.NewItem = Slot.NewItemTexture

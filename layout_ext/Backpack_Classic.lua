@@ -67,10 +67,17 @@ Backpack:Layout('SkinSlot', function(Slot)
 	Highlight:SetColorTexture(0, 0.6, 1, 0.3)
 
 	Slot.NormalTexture:SetSize(0.1, 0.1)
-
 	Slot.QuestIcon:Hide()
-	Slot.Flash:Hide()
-	Slot.BattlePay:Hide()
+
+	local Flash = Slot.Flash
+	if(Flash) then
+		Flash:Hide()
+	end
+
+	local BattlePay = Slot.BattlePay
+	if(BattlePay) then
+		BattlePay:Hide()
+	end
 end)
 
 Backpack:Layout('UpdateSlot', function(Slot)
