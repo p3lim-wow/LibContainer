@@ -7,10 +7,14 @@ function P.print(...)
 	print('|cff33ff99Backpack|r', ...)
 end
 
+function P.printf(message, ...)
+	P.print(string.format(message, ...))
+end
+
 local lastMessage
 function P.error(message, ...)
 	if(message ~= lastMessage) then
-		P.print('|cffff0000Error:|r ' .. string.format(message, ...))
+		P.printf('|cffff0000Error:|r ' .. message, ...)
 		lastMessage = message
 	end
 end

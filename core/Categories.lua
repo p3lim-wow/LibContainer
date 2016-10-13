@@ -32,7 +32,7 @@ function P.GetCategory(bagID, slotID, itemID)
 
 	for index = #reverse, 1, -1 do
 		local category = categories[reverse[index]]
-		if(category.filterFunc(bagID, slotID, itemID)) then
+		if(not BackpackDB.disabledCategories[category.index] and category.filterFunc(bagID, slotID, itemID)) then
 			return category
 		end
 	end
@@ -81,4 +81,51 @@ P.Expose('AddCategory', function(_, index, name, filterFunc, sortFunc)
 		filterFunc = filterFunc,
 		sortFunc = sortFunc or defaultSort,
 	}
+end)
+
+local protectedCategories = {
+	[1] = true, -- Inventory
+	[1002] = true, -- Reagent Bank
+}
+
+-- @name Backpack:DisableCategory
+-- @usage Backpack:AddCategory(index)
+-- @param index - Category index disable
+P.Expose('DisableCategory', function(_, index)
+	if(P.categories[index]) then
+		local categoryName = P.categories[index].name
+		if(protectedCategories[index]) then
+			P.error('Can\'t disable protected category "%s"', categoryName)
+		else
+			if(not BackpackDB.disabledCategories[index]) then
+				P.printf('Disabled category "%s"', categoryName)
+				P.print('/reload for changes to take effect')
+
+				BackpackDB.disabledCategories[index] = true
+			else
+				P.printf('Category "%s" is already disabled', categoryName)
+			end
+		end
+	else
+		P.error('Found no category with index %s', index)
+	end
+end)
+
+-- @name Backpack:EnableCategory
+-- @usage Backpack:EnableCategory(index)
+-- @param index - Category index to enable
+P.Expose('EnableCategory', function(_, index)
+	if(P.categories[index]) then
+		local categoryName = P.categories[index].name
+		if(BackpackDB.disabledCategories[index]) then
+			P.printf('Enabled category "%s"', categoryName)
+			P.print('/reload for changes to take effect')
+
+			BackpackDB.disabledCategories[index] = false
+		else
+			P.printf('Category "%s" is already enabled', categoryName)
+		end
+	else
+		P.error('Found no category with index %s', index)
+	end
 end)

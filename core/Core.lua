@@ -1,6 +1,7 @@
 local P, E = unpack(select(2, ...))
 
 local defaults = {
+	disabledCategories = {},
 	autoSellJunk = false,
 }
 
@@ -29,11 +30,14 @@ function E:ADDON_LOADED(event, addon)
 		BackpackKnownItems = BackpackKnownItems or {}
 
 		for _, categoryInfo in next, P.categories do
-			if(categoryInfo.index ~= 1002) then -- no reagentbank for inventory
-				P.CreateContainer(categoryInfo, Backpack)
-			end
+			local categoryIndex = categoryInfo.index
+			if(not BackpackDB.disabledCategories[categoryIndex]) then
+				if(categoryIndex ~= 1002) then -- no reagentbank for inventory
+					P.CreateContainer(categoryInfo, Backpack)
+				end
 
-			P.CreateContainer(categoryInfo, Bank)
+				P.CreateContainer(categoryInfo, Bank)
+			end
 		end
 
 		for _, moduleInfo in next, modules do
