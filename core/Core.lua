@@ -42,10 +42,6 @@ function E:ADDON_LOADED(event, addon)
 			end
 		end
 
-		if(Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
-			P.InitializeBank()
-		end
-
 		-- Hide on escape
 		table.insert(UISpecialFrames, P.name)
 
@@ -54,6 +50,14 @@ function E:ADDON_LOADED(event, addon)
 
 		return true
 	end
+end
+
+function E:PLAYER_LOGIN()
+	if(Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
+		P.InitializeBank()
+	end
+
+	return true
 end
 
 function E:BAG_UPDATE(event, bagID)
@@ -121,10 +125,6 @@ end
 
 function P.InitializeBank()
 	P.InitializeAllSlots(BANK_CONTAINER)
-
-	for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
-		P.InitializeAllSlots(bagID)
-	end
 
 	if(IsReagentBankUnlocked()) then
 		P.InitializeAllSlots(REAGENTBANK_CONTAINER)
