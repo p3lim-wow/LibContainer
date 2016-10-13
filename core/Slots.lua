@@ -112,8 +112,8 @@ function P.UpdateSlot(bagID, slotID, event)
 			-- TODO: provide default
 		end
 
-		if(not P.Override('UpdateCooldown', Slot)) then
-			P.UpdateCooldown(Slot)
+		if(not P.Override('UpdateSlotCooldown', Slot)) then
+			P.UpdateSlotCooldown(Slot)
 		end
 
 		Slot:Show()
@@ -136,7 +136,7 @@ function P.UpdateSlot(bagID, slotID, event)
 	end
 end
 
-function P.UpdateCooldown(Slot)
+function P.UpdateSlotCooldown(Slot)
 	if(Slot and Slot:IsShown()) then
 		local start, duration, enabled = Backpack:GetContainerItemCooldown(Slot.bagID, Slot.slotID)
 		CooldownFrame_Set(Slot.Cooldown, start, duration, enabled)
@@ -146,8 +146,8 @@ end
 function P.UpdateContainerCooldowns(startBagID, endBagID)
 	for bagID = startBagID, endBagID or startBagID do
 		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
-			if(not P.Override('UpdateCooldown', P.GetSlot(bagID, slotID))) then
-				P.UpdateCooldown(P.GetSlot(bagID, slotID))
+			if(not P.Override('UpdateSlotCooldown', P.GetSlot(bagID, slotID))) then
+				P.UpdateSlotCooldown(P.GetSlot(bagID, slotID))
 			end
 		end
 	end
