@@ -16,12 +16,12 @@ local function SkinContainer(Container)
 	Container:SetBackdrop(BACKDROP)
 	Container:SetBackdropColor(0, 0, 0, 0.6)
 	Container:SetBackdropBorderColor(0, 0, 0)
-	Container.paddingY = 18 -- needs a little extra because of the title
+	Container.extraPaddingY = 16 -- needs a little extra because of the title
 
 	if(Container:GetID() == 1) then
 		if(Container == Backpack) then
 			Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
-			Container.paddingY = 27 -- needs more space for the footer
+			Container.extraPaddingY = 25 -- needs more space for the footer
 		elseif(Container == BackpackBank) then
 			Container:SetPoint('TOPLEFT', UIParent, 50, -50)
 

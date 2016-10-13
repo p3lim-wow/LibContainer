@@ -77,11 +77,14 @@ function P.ResizeContainers(parentContainer)
 			local paddingX = Container.paddingX or Container.padding or 10
 			local paddingY = Container.paddingY or Container.padding or 10
 
+			local extraPaddingX = Container.extraPaddingX or Container.extraPadding or 0
+			local extraPaddingY = Container.extraPaddingY or Container.extraPadding or 0
+
 			local cols = Container.columns or 8
 			local rows = math.ceil(numSlots / cols)
 
-			local width = (((sizeX + spacingX) * cols) - spacingX) + (paddingX * 2)
-			local height = (((sizeY + spacingY) * rows) - spacingY) + (paddingY * 2)
+			local width = (((sizeX + spacingX) * cols) - spacingX) + (paddingX * 2) + extraPaddingX
+			local height = (((sizeY + spacingY) * rows) - spacingY) + (paddingY * 2) + extraPaddingY
 
 			Container:SetSize(width, height)
 
