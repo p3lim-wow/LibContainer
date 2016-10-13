@@ -18,10 +18,8 @@ core\Blizzard.lua
 modules\Currencies.lua
 modules\FreeSlots.lua
 modules\Money.lua
-modules\ResetNew.lua
 modules\Restack.lua
 modules\Search.lua
-modules\SellJunk.lua
 
 categories\Artifact.lua
 categories\Collections.lua
