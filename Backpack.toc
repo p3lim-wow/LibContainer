@@ -15,6 +15,7 @@ core\ContainerAPI.lua
 core\Core.lua
 core\Categories.lua
 core\Containers.lua
+core\Modules.lua
 core\Slots.lua
 core\Blizzard.lua
 

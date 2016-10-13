@@ -45,4 +45,4 @@ local function Init(self)
 	P.Fire('PostCreateRestack', self)
 end
 
-P.AddModule(Init, nil, true)
+Backpack:AddModule('Restack', Init, nil, true)

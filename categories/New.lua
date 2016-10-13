@@ -48,4 +48,4 @@ local function Init(self)
 	P.Fire('PostCreateResetNew', self)
 end
 
-P.AddModule(Init, nil, true)
+Backpack:AddModule('ResetNew', Init, nil, true)

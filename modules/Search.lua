@@ -103,4 +103,4 @@ local function Init(self)
 	P.Fire('PostCreateSearch', self)
 end
 
-P.AddModule(Init, Update, false, 'INVENTORY_SEARCH_UPDATE')
+Backpack:AddModule('Search', Init, Update, false, 'INVENTORY_SEARCH_UPDATE')

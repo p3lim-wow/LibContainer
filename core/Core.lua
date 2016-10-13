@@ -21,7 +21,6 @@ Backpack:SetScript('OnHide', function()
 	Bank:Hide()
 end)
 
-local modules = {}
 function E:ADDON_LOADED(event, addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or defaults
@@ -40,20 +39,6 @@ function E:ADDON_LOADED(event, addon)
 			end
 		end
 
-		for _, moduleInfo in next, modules do
-			for _, event in next, moduleInfo.events do
-				E:RegisterEvent(event, moduleInfo.update)
-			end
-
-			if(moduleInfo.init) then
-				moduleInfo.init(Backpack)
-
-				if(moduleInfo.includeBank) then
-					moduleInfo.init(Bank)
-				end
-			end
-		end
-
 		-- Hide on escape
 		table.insert(UISpecialFrames, P.name)
 
@@ -67,6 +52,20 @@ end
 function E:PLAYER_LOGIN()
 	if(Backpack:GetContainerNumSlots(BANK_CONTAINER) > 0) then
 		P.InitializeBank()
+	end
+
+	for _, moduleInfo in next, P.modules do
+		for _, event in next, moduleInfo.events do
+			E:RegisterEvent(event, moduleInfo.update)
+		end
+
+		if(moduleInfo.init) then
+			moduleInfo.init(Backpack)
+
+			if(moduleInfo.includeBank) then
+				moduleInfo.init(Bank)
+			end
+		end
 	end
 
 	return true
@@ -242,14 +241,5 @@ P.Expose('Layout', function(self, event, callback)
 		layouts[event] = callback
 	end
 end)
-
-function P.AddModule(init, update, includeBank, ...)
-	table.insert(modules, {
-		init = init,
-		update = update,
-		includeBank = includeBank,
-		events = {...}
-	})
-end
 
 P.noop = function() end

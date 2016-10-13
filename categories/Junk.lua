@@ -53,4 +53,4 @@ local function Init(self)
 	P.Fire('PostCreateSellJunk', self)
 end
 
-P.AddModule(Init, Update, false, 'MERCHANT_SHOW', 'MERCHANT_CLOSED', 'BAG_UPDATE_DELAYED')
+Backpack:AddModule('SellJunk', Init, Update, false, 'MERCHANT_SHOW', 'MERCHANT_CLOSED', 'BAG_UPDATE_DELAYED')
