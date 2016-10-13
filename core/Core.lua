@@ -12,6 +12,10 @@ Bank:HookScript('OnHide', function()
 	end
 end)
 
+Backpack:SetScript('OnHide', function()
+	Bank:Hide()
+end)
+
 local modules = {}
 function E:ADDON_LOADED(event, addon)
 	if(addon == P.name) then
@@ -199,7 +203,6 @@ P.Expose('Toggle', function(self, force, includeBank)
 		end
 	elseif(not shouldShow) then
 		self:Hide()
-		Bank:Hide()
 	end
 end)
 
