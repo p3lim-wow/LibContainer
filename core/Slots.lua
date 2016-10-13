@@ -26,6 +26,7 @@ function P.CreateSlot(bagID, slotID)
 	local Slot = CreateFrame('Button', '$parentSlot' .. slotID, Parent, 'ContainerFrameItemButtonTemplate')
 	local slotName = Slot:GetName()
 
+	Slot:Hide()
 	Slot:SetID(slotID)
 	Slot.slotID = slotID
 	Slot.bagID = bagID
