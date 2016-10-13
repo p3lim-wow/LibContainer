@@ -137,11 +137,16 @@ function P.InitializeBank()
 	end
 end
 
-function E:BANKFRAME_OPENED()
+function E:BANKFRAME_OPENED(event)
 	P.atBank = true
 
 	if(not P.HasParent(BANK_CONTAINER)) then
 		P.InitializeBank()
+	end
+
+	if(Bank:IsVisible()) then
+		P.UpdateAllSlots(event)
+		P.PositionSlots()
 	end
 
 	Backpack:Toggle(true, true)
