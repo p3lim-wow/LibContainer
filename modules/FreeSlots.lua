@@ -102,4 +102,4 @@ Backpack:On('PostCreateParent', function(bagID)
 	Update()
 end)
 
-Backpack:AddModule('FreeSlots', nil, Update, false, 'BAG_UPDATE', 'BANKFRAME_OPENED')
+Backpack:AddModule('FreeSlots', nil, Update, false, 'BAG_UPDATE_DELAYED', 'BANKFRAME_OPENED')
