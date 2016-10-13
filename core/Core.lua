@@ -3,6 +3,7 @@ local P, E = unpack(select(2, ...))
 local defaults = {
 	disabledCategories = {},
 	autoSellJunk = false,
+	autoDepositReagents = false,
 }
 
 local Backpack = CreateFrame('Frame', P.name, UIParent)
@@ -63,7 +64,7 @@ function E:PLAYER_LOGIN()
 			moduleInfo.init(Backpack)
 
 			if(moduleInfo.includeBank) then
-				moduleInfo.init(Bank)
+				moduleInfo.init(Bank, true)
 			end
 		end
 	end

@@ -15,14 +15,15 @@ core\ContainerAPI.lua
 core\Core.lua
 core\Categories.lua
 core\Containers.lua
+core\ContainerButtons.lua
 core\Modules.lua
 core\Slots.lua
 core\Blizzard.lua
 
+modules\Restack.lua
 modules\Currencies.lua
 modules\FreeSlots.lua
 modules\Money.lua
-modules\Restack.lua
 modules\Search.lua
 
 categories\Artifact.lua

@@ -1,6 +1,6 @@
 local P = unpack(select(2, ...))
 
-local function Restack(self)
+local function OnClick(self)
 	if(self:GetParent() == Backpack) then
 		SortBags()
 	elseif(self:GetParent() == BackpackBank) then
@@ -10,31 +10,12 @@ local function Restack(self)
 	end
 end
 
-local function UpdateVisibility(_, visiting)
-	BackpackBank.Restack:SetShown(P.atBank or visiting)
-	BackpackBankContainerReagentBank.Restack:SetShown(P.atBank or visiting)
-end
-
-local function Update()
-	UpdateVisibility(nil, true)
-end
-
-local function ShowTooltip(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
-	GameTooltip:SetText(self.tooltipText)
-	GameTooltip:Show()
-end
-
-local function CreateButton(self)
-	local Button = CreateFrame('Button', '$parentRestack', self)
-	Button:SetPoint('TOPRIGHT', -9, -6)
-	Button:SetSize(16, 16)
-	Button:SetScript('OnClick', Restack)
-	Button:SetScript('OnEnter', ShowTooltip)
-	Button:SetScript('OnLeave', GameTooltip_Hide)
+local function CreateButton(self, categoryIndex, isBank)
+	local Button = P.CreateContainerButton('Restack', categoryIndex, isBank)
+	Button:SetScript('OnClick', OnClick)
 	self.Restack = Button
 
-	local NormalTexture = Button:CreateTexture('$parentNormal', 'ARTWORK')
+	local NormalTexture = Button.Texture
 	NormalTexture:SetAllPoints()
 	NormalTexture:SetAtlas('bags-button-autosort-up')
 
@@ -60,16 +41,14 @@ local function CreateButton(self)
 	end
 end
 
-local function Init(self)
-	CreateButton(self)
+local function Init(self, isBank)
+	CreateButton(self, 1, isBank)
 
-	if(self == BackpackBank) then
-		CreateButton(BackpackBankContainerReagentBank)
-
-		self:HookScript('OnShow', UpdateVisibility)
+	if(isBank) then
+		CreateButton(BackpackBankContainerReagentBank, 1002, isBank)
 	end
 
 	P.Fire('PostCreateRestack', self)
 end
 
-Backpack:AddModule('Restack', Init, Update, true, 'BANKFRAME_OPENED')
+Backpack:AddModule('Restack', Init, nil, true)

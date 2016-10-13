@@ -30,35 +30,20 @@ local function Update(event)
 	end
 end
 
-local function ShowTooltip(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
-	GameTooltip:SetText(L['Toggle auto-vendoring'])
-	GameTooltip:Show()
-end
-
 local function OnClick(self)
 	BackpackDB.autoSellJunk = not BackpackDB.autoSellJunk
 	self.Texture:SetDesaturated(not BackpackDB.autoSellJunk)
 end
 
 local function Init(self)
-	local Parent = BackpackContainerJunk
-
-	local Button = CreateFrame('Button', '$parentToggleSellJunk', Parent)
-	Button:SetPoint('TOPRIGHT', -8, -8)
-	Button:SetSize(16, 16)
+	local Button = P.CreateContainerButton('ToggleSellJunk', categoryIndex)
 	Button:SetScript('OnClick', OnClick)
-	Button:SetScript('OnEnter', ShowTooltip)
-	Button:SetScript('OnLeave', GameTooltip_Hide)
-	self.SellJunk = Button
+	Button.tooltipText = L['Toggle auto-vendoring']
 
-	local Texture = Button:CreateTexture('$parentTexture', 'ARTWORK')
-	Texture:SetAllPoints()
-	Texture:SetTexture([[Interface\Buttons\UI-GroupLoot-Pass-Up]])
-	Texture:SetDesaturated(not BackpackDB.autoSellJunk)
-	Button.Texture = Texture
+	Button.Texture:SetDesaturated(not BackpackDB.autoSellJunk)
+	self.ToggleSellJunk = Button
 
-	P.Fire('PostCreateSellJunk', self)
+	P.Fire('PostCreateSellJunk', Button)
 end
 
 Backpack:AddModule('SellJunk', Init, Update, false, 'MERCHANT_SHOW', 'MERCHANT_CLOSED', 'BAG_UPDATE_DELAYED')

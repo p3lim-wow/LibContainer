@@ -18,12 +18,6 @@ end
 
 Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
 
-local function ShowTooltip(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
-	GameTooltip:SetText(L['Mark items as known'])
-	GameTooltip:Show()
-end
-
 local function OnClick(self)
 	local Container = P.GetCategoryContainer(self.parentContainer, 1001)
 	for _, Slot in next, Container.slots do
@@ -36,24 +30,16 @@ local function OnClick(self)
 	P.PositionSlots()
 end
 
-local function Init(self)
-	local Parent = _G[self:GetName() .. 'ContainerNewItems']
-
-	local Button = CreateFrame('Button', '$parentResetNew', Parent)
-	Button:SetPoint('TOPRIGHT', -8, -8)
-	Button:SetSize(16, 16)
+local function Init(self, isBank)
+	local Button = P.CreateContainerButton('ResetNew', categoryIndex, isBank)
 	Button:SetScript('OnClick', OnClick)
-	Button:SetScript('OnEnter', ShowTooltip)
-	Button:SetScript('OnLeave', GameTooltip_Hide)
+	Button.tooltipText = L['Mark items as known']
 	Button.parentContainer = self
+
+	Button.Texture:SetTexture([[Interface\Buttons\UI-RefreshButton]])
 	self.ResetNew = Button
 
-	local Texture = Button:CreateTexture('$parentTexture', 'ARTWORK')
-	Texture:SetAllPoints()
-	Texture:SetTexture([[Interface\Buttons\UI-RefreshButton]])
-	Button.Texture = Texture
-
-	P.Fire('PostCreateResetNew', self)
+	P.Fire('PostCreateResetNew', Button)
 end
 
 Backpack:AddModule('ResetNew', Init, nil, true)

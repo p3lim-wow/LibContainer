@@ -11,58 +11,34 @@ end
 
 Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
 
-local function ShowDepositReagentsTooltip(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
-	GameTooltip:SetText(REAGENTBANK_DEPOSIT)
-	GameTooltip:Show()
-end
 
-Backpack:AddModule('DepositReagents', function()
-	local Button = CreateFrame('Button', '$parentDepositReagents', BackpackBankContainerReagentBank)
-	Button:SetPoint('TOPRIGHT', -8, -6)
-	Button:SetSize(16, 16)
+Backpack:AddModule('DepositReagents', function(self)
+	local Button = P.CreateContainerButton('DepositReagents', categoryIndex, true)
 	Button:SetScript('OnClick', DepositReagentBank)
-	Button:SetScript('OnEnter', ShowDepositReagentsTooltip)
-	Button:SetScript('OnLeave', GameTooltip_Hide)
+	Button.tooltipText = REAGENTBANK_DEPOSIT
 
-	local Texture = Button:CreateTexture('$parentTexture', 'ARTWORK')
-	Texture:SetAllPoints()
-	Texture:SetTexture([[Interface\Buttons\UI-GroupLoot-Pass-Up]])
+	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
+	self.DepositReagents = Button
+
+	P.Fire('PostCreateAutoDeposit', Button)
 end)
 
-local function ShowAutoDepositTooltip(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
-	GameTooltip:SetText(L['Toggle auto-deposit'])
-	GameTooltip:Show()
+local function OnClick(self)
+	BackpackDB.autoDepositReagents = not BackpackDB.autoDepositReagents
+	BackpackBankContainerReagentBank.AutoDeposit.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 end
 
-local function ToggleAutoDeposit(self)
-	BackpackDB.autodeposit = not BackpackDB.autodeposit
-	BackpackBankContainerReagentBank.AutoDeposit:GetNormalTexture():SetDesaturated(not BackpackDB.autodeposit)
-end
+Backpack:AddModule('AutoDeposit', function(self)
+	local Button = P.CreateContainerButton('AutoDeposit', categoryIndex, true)
+	Button:SetScript('OnClick', OnClick)
+	Button.tooltipText = L['Toggle auto-deposit']
 
-local function AutoDepositUpdate()
-	if(BackpackDB.autodeposit and not IsShiftKeyDown()) then
+	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
+	BackpackBankContainerReagentBank.AutoDeposit = Button
+
+	P.Fire('PostCreateAutoDeposit', Button)
+end, function()
+	if(BackpackDB.autoDepositReagents and not IsShiftKeyDown() and IsReagentBankUnlocked()) then
 		DepositReagentBank()
 	end
-end
-
-local function AutoDepositInit()
-	local self = BackpackBankContainerReagentBank
-	local Button = CreateFrame('Button', '$parentAutoDeposit', self)
-	Button:SetPoint('TOPRIGHT', -30, -6)
-	Button:SetSize(16, 16)
-	Button:SetScript('OnClick', ToggleAutoDeposit)
-	Button:SetScript('OnEnter', ShowAutoDepositTooltip)
-	Button:SetScript('OnLeave', GameTooltip_Hide)
-
-	local Texture = Button:CreateTexture('$parentTexture', 'ARTWORK')
-	Texture:SetAllPoints()
-	Texture:SetTexture([[Interface\Buttons\UI-GroupLoot-Pass-Up]])
-	Texture:SetDesaturated(not BackpackDB.autodeposit)
-	Button:SetNormalTexture(Texture)
-
-	self.AutoDeposit = Button
-end
-
-Backpack:AddModule('AutoDeposit', AutoDepositInit, AutoDepositUpdate, false, 'BANKFRAME_OPENED')
+end)
