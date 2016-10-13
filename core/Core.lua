@@ -1,5 +1,9 @@
 local P, E = unpack(select(2, ...))
 
+local defaults = {
+	autoSellJunk = false,
+}
+
 local Backpack = CreateFrame('Frame', P.name, UIParent)
 Backpack:Hide()
 P.MixinAPI(Backpack)
@@ -19,7 +23,7 @@ end)
 local modules = {}
 function E:ADDON_LOADED(event, addon)
 	if(addon == P.name) then
-		BackpackDB = BackpackDB or {}
+		BackpackDB = BackpackDB or defaults
 		BackpackBankDB = BackpackBankDB or {}
 		BackpackCustomCategory = BackpackCustomCategory or {}
 		BackpackKnownItems = BackpackKnownItems or {}
