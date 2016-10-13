@@ -2,7 +2,7 @@ local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
 local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
 
-Backpack:Layout('SkinContainer', function(Container)
+local function SkinContainer(Container)
 	local Title = Container:CreateFontString('$parentTitle', 'ARTWORK')
 	Title:SetPoint('TOPLEFT', 11, -10)
 	Title:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
@@ -35,9 +35,9 @@ Backpack:Layout('SkinContainer', function(Container)
 		Container:CreateTitleRegion():SetAllPoints()
 		Container:SetClampedToScreen(true)
 	end
-end)
+end
 
-Backpack:Layout('SkinSlot', function(Slot)
+local function SkinSlot(Slot)
 	Slot:SetSize(32, 32)
 	Slot:SetBackdrop(BACKDROP)
 	Slot:SetBackdropColor(0.1, 0.1, 0.1, 0.5)
@@ -78,9 +78,11 @@ Backpack:Layout('SkinSlot', function(Slot)
 	if(BattlePay) then
 		BattlePay:Hide()
 	end
-end)
+end
 
-Backpack:Layout('UpdateSlot', function(Slot)
+Backpack:AddLayout('Classic', SkinContainer, SkinSlot)
+
+Backpack:Override('UpdateSlot', function(Slot)
 	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = Backpack:GetContainerItemInfo(Slot.bagID, Slot.slotID)
 	local questItem, itemQuestID, itemQuestActive = Backpack:GetContainerItemQuestInfo(Slot.bagID, Slot.slotID)
 

@@ -1,7 +1,7 @@
 local P = unpack(select(2, ...))
 
 local function Update()
-	if(not P.Layout('UpdateMoney')) then
+	if(not P.Override('UpdateMoney')) then
 		local money = GetMoney()
 		local gold = math.floor(money / 1e4)
 		local silver = math.floor((money / 1e2) % 1e2)

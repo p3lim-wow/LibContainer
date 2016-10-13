@@ -1,7 +1,7 @@
 local P = unpack(select(2, ...))
 
 local function Update()
-	if(not P.Layout('UpdateCurrencies')) then
+	if(not P.Override('UpdateCurrencies')) then
 		for index = 1, MAX_WATCHED_TOKENS do
 			local Currency = Backpack.Currencies[index]
 

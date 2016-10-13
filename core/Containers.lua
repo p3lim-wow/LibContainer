@@ -15,13 +15,11 @@ function P.CreateContainer(category, Parent)
 	Container.name = category.name
 	Container.slots = {}
 
-	if(not P.Layout('SkinContainer', Container)) then
-		P.error('Missing layout!')
-	end
-
 	if(not containers[Parent]) then
 		containers[Parent] = {}
 	end
+
+	P.SkinCallback('Container', Container)
 
 	containers[Parent][categoryIndex] = Container
 end
@@ -45,6 +43,10 @@ function P.RemoveContainerSlot(Slot)
 			table.remove(slots, index)
 		end
 	end
+end
+
+function P.GetAllContainers()
+	return containers
 end
 
 function P.GetContainers(parentContainer)

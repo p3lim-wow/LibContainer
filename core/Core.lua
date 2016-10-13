@@ -189,12 +189,21 @@ function P.Fire(event, ...)
 	end
 end
 
-local layouts = {}
-function P.Layout(event, ...)
-	local eventLayout = layouts[event]
-	if(eventLayout) then
-		eventLayout(...)
+local overrides, layout = {}
+function P.Override(event, ...)
+	if(overrides[event]) then
+		overrides[event](...)
 		return true
+	end
+end
+
+function P.SkinCallback(event, ...)
+	if(layout) then
+		if(event == 'Slot') then
+			layout.slotFunc(...)
+		elseif(event == 'Container') then
+			layout.containerFunc(...)
+		end
 	end
 end
 
@@ -245,15 +254,50 @@ P.Expose('On', function(self, event, callback)
 	table.insert(callbacks[event], callback)
 end)
 
--- @name Backpack:Layout
--- @usage Backpack:Layout(event, callback)
--- @param event    - Layout event
--- @param callback - Function that will be called when the event happens
-P.Expose('Layout', function(self, event, callback)
-	if(layouts[event]) then
-		P.error('Layout already exists.')
+-- @name Backpack:AddLayout
+-- @usage Backpack:AddLayout(name, containerFunc, slotFunc)
+-- @param name          - Name of layout
+-- @param containerFunc - Function that will apply skin to containers
+-- @param slotFunc      - Function that will apply skin to slots
+P.Expose('AddLayout', function(_, name, containerFunc, slotFunc)
+	-- TODO: argcheck
+
+	if(layout) then
+		P.error(L['A layout already exists (%s)'], layout.name)
 	else
-		layouts[event] = callback
+		layout = {
+			name = name,
+			slotFunc = slotFunc,
+			containerFunc = containerFunc,
+		}
+
+		-- skin all containers
+		for parentContainer, containers in next, P.GetAllContainers() do
+			for categoryIndex, Container in next, containers do
+				containerFunc(Container)
+			end
+		end
+
+		-- skin all slots
+		for bagID, Parent in next, P.GetAllParents() do
+			for slotID, Slot in next, P.GetAllSlots(bagID) do
+				slotFunc(Slot)
+			end
+		end
+	end
+end)
+
+-- @name Backpack:Override
+-- @usage Backpack:Override(event, func)
+-- @param event - Event to override
+-- @param func  - Function to override the event with
+P.Expose('Override', function(_, event, func)
+	-- TODO: argcheck
+
+	if(overrides[event]) then
+		P.error(L['Override for "%s" already exists'], event)
+	else
+		overrides[event] = func
 	end
 end)
 

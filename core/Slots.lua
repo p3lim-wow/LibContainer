@@ -54,9 +54,7 @@ function P.CreateSlot(bagID, slotID)
 	Slot.BattlePay = Slot.BattlepayItemTexture
 	Slot.Cooldown = _G[slotName .. 'Cooldown']
 
-	if(not P.Layout('SkinSlot', Slot)) then
-		P.error('Missing layout!')
-	end
+	P.SkinCallback('Slot', Slot)
 
 	slots[bagID][slotID] = Slot
 
@@ -65,6 +63,14 @@ end
 
 function P.GetSlot(bagID, slotID)
 	return slots[bagID] and slots[bagID][slotID]
+end
+
+function P.GetAllSlots(bagID)
+	return slots[bagID]
+end
+
+function P.GetAllParents()
+	return parents
 end
 
 function P.HasParent(bagID)
@@ -102,11 +108,11 @@ function P.UpdateSlot(bagID, slotID, event)
 		Slot.itemID = itemID
 		Slot.itemLevel = itemLevel or 0
 
-		if(not P.Layout('UpdateSlot', Slot)) then
-			P.error('Missing layout!')
+		if(not P.Override('UpdateSlot', Slot)) then
+			-- TODO: provide default
 		end
 
-		if(not P.Layout('UpdateCooldown', Slot)) then
+		if(not P.Override('UpdateCooldown', Slot)) then
 			P.UpdateCooldown(Slot)
 		end
 
@@ -140,7 +146,7 @@ end
 function P.UpdateContainerCooldowns(startBagID, endBagID)
 	for bagID = startBagID, endBagID or startBagID do
 		for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
-			if(not P.Layout('UpdateCooldown', P.GetSlot(bagID, slotID))) then
+			if(not P.Override('UpdateCooldown', P.GetSlot(bagID, slotID))) then
 				P.UpdateCooldown(P.GetSlot(bagID, slotID))
 			end
 		end
