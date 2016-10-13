@@ -109,7 +109,7 @@ function P.UpdateSlot(bagID, slotID, event)
 		Slot.itemLevel = itemLevel or 0
 
 		if(not P.Override('UpdateSlot', Slot)) then
-			-- TODO: provide default
+			P.UpdateSlotInfo(Slot)
 		end
 
 		if(not P.Override('UpdateSlotCooldown', Slot)) then
@@ -133,6 +133,37 @@ function P.UpdateSlot(bagID, slotID, event)
 
 			P.Fire('PostRemoveSlot', bagID, slotID, event)
 		end
+	end
+end
+
+function P.UpdateSlotInfo(Slot)
+	local itemTexture, itemCount, isLocked, itemQuality, _, _, _, _, _, itemID = Backpack:GetContainerItemInfo(Slot.bagID, Slot.slotID)
+	local questItem, itemQuestID, itemQuestActive = Backpack:GetContainerItemQuestInfo(Slot.bagID, Slot.slotID)
+
+	SetItemButtonTexture(Slot, itemTexture)
+	SetItemButtonQuality(Slot, itemQuality, itemID)
+	SetItemButtonCount(Slot, itemCount)
+	SetItemButtonDesaturated(Slot, isLocked)
+
+	local QuestIcon = Slot.QuestIcon
+	if(itemQuestID and not itemQuestActive) then
+		QuestIcon:SetTexture(TEXTURE_ITEM_QUEST_BANG)
+		QuestIcon:Show()
+	elseif(itemQuestID or questItem) then
+		QuestIcon:SetTexture(TEXTURE_ITEM_QUEST_BORDER)
+		QuestIcon:Show()
+	else
+		QuestIcon:Hide()
+	end
+
+	local BattlePay = Slot.BattlePay
+	if(BattlePay) then
+		BattlePay:SetShown(IsBattlePayItem(Slot.bagID, Slot.slotID))
+	end
+
+	local JunkIcon = Slot.JunkIcon
+	if(JunkIcon) then
+		JunkIcon:SetShown(itemQuality == LE_ITEM_QUALITY_POOR)
 	end
 end
 
