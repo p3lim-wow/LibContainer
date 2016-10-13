@@ -59,6 +59,8 @@ local function SaveData(bagID, slotID)
 
 	if(not BackpackBankDB[bagID][slotID]) then
 		BackpackBankDB[bagID][slotID] = {}
+	else
+		table.wipe(BackpackBankDB[bagID][slotID])
 	end
 
 	for _, method in next, slotMethods do
