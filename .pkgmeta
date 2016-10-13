@@ -1,5 +1,9 @@
 package-as: Backpack
 
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
 move-folders:
   Backpack/layout_ext: Backpack_Classic
 
