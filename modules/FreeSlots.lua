@@ -74,6 +74,7 @@ local function CreateEmptySlot(bagID, categoryIndex)
 	local Slot = P.CreateSlot(bagID, 99)
 	Slot:SetScript('OnMouseUp', OnDrop)
 	Slot:SetScript('OnReceiveDrag', OnDrop)
+	Slot:SetScript('OnEnter', nil)
 	Slot:Show()
 
 	-- fake info so we get sorted last
