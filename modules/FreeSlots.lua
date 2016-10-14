@@ -68,11 +68,10 @@ end
 
 local function OnDrop(self)
 	PickupContainerItem(GetEmptySlot(self.bagID))
-	-- BUG: we end up with the container on our cursor if we click the empty slot
 end
 
 local function CreateEmptySlot(bagID, categoryIndex)
-	local Slot = P.CreateSlot(bagID, 0)
+	local Slot = P.CreateSlot(bagID, 99)
 	Slot:SetScript('OnMouseUp', OnDrop)
 	Slot:SetScript('OnReceiveDrag', OnDrop)
 	Slot:Show()
