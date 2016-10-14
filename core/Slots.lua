@@ -201,10 +201,10 @@ function P.UpdateAllSlots(event)
 		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
 			P.UpdateContainerSlots(bagID, event)
 		end
+	end
 
-		if(IsReagentBankUnlocked()) then
-			P.UpdateContainerSlots(REAGENTBANK_CONTAINER, event)
-		end
+	if(P.HasParent(REAGENTBANK_CONTAINER) and IsReagentBankUnlocked()) then
+		P.UpdateContainerSlots(REAGENTBANK_CONTAINER, event)
 	end
 end
 
