@@ -54,7 +54,7 @@ end, function()
 	if(BackpackDB.autoDepositReagents and not IsShiftKeyDown() and IsReagentBankUnlocked()) then
 		DepositReagentBank()
 	end
-end)
+end, false, 'BANKFRAME_OPENED')
 
 local function PurchaseReagentBankOnClick()
 	StaticPopup_Show('CONFIRM_BUY_REAGENTBANK_TAB')
