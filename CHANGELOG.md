@@ -1,3 +1,7 @@
+### Changes in 70000.4-Beta:
+
+- Fixed: Errors related to (reagent) bank slots not existing
+
 ### Changes in 70000.3-Beta:
 
 - Added: Deposit All Reagents button
