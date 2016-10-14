@@ -21,7 +21,7 @@ local function SkinContainer(Container)
 	if(Container:GetID() == 1) then
 		if(Container == Backpack) then
 			Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
-			Container.extraPaddingY = 25 -- needs more space for the footer
+			Container.extraPaddingY = 32 -- needs more space for the footer
 		elseif(Container == BackpackBank) then
 			Container:SetPoint('TOPLEFT', UIParent, 50, -50)
 
