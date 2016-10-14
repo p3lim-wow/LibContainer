@@ -84,13 +84,15 @@ function E.BAG_UPDATE(event, bagID)
 end
 
 function E.ITEM_LOCK_CHANGED(event, bagID, slotID)
-	if(slotID) then
-		P.UpdateSlot(bagID, slotID, event)
-	else
-		P.UpdateContainerSlots(bagID, event)
-	end
+	if(P.HasParent(bagID)) then
+		if(slotID) then
+			P.UpdateSlot(bagID, slotID, event)
+		else
+			P.UpdateContainerSlots(bagID, event)
+		end
 
-	P.PositionSlots()
+		P.PositionSlots()
+	end
 end
 
 function E:BAG_UPDATE_COOLDOWN()
