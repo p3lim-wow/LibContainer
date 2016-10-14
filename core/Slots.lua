@@ -195,7 +195,7 @@ function P.UpdateAllSlots(event)
 		P.UpdateContainerSlots(bagID, event)
 	end
 
-	if(P.atBank or BackpackBankDB ~= nil) then
+	if(P.HasParent(BANK_CONTAINER)) then
 		P.UpdateContainerSlots(BANK_CONTAINER, event)
 
 		for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
