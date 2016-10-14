@@ -7,11 +7,16 @@ local function UpdatePositions()
 			if(Container.buttons) then
 				local index = 1
 				for _, Button in next, Container.buttons do
-					if(Button.hideOfflineBank and not atBank) then
-						Button:Hide()
+					local shouldShow
+					if(Button.overrideShouldShow) then
+						shouldShow = Button:overrideShouldShow(atBank)
 					else
-						Button:Show()
+						shouldShow = not (Button.hideOfflineBank and not atBank)
+					end
 
+					Button:SetShown(shouldShow)
+
+					if(Button:IsShown()) then
 						Button:ClearAllPoints()
 						Button:SetPoint('TOPRIGHT', -8 - (20 * (index - 1)), -6)
 
@@ -67,5 +72,9 @@ end
 
 function E:BANKFRAME_CLOSED()
 	atBank = false
+	UpdatePositions()
+end
+
+function E:REAGENTBANK_PURCHASED()
 	UpdatePositions()
 end

@@ -11,11 +11,21 @@ end
 
 Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
 
+local function ShouldShow(self, atBank)
+	if(self.hideOfflineBank) then
+		if(IsReagentBankUnlocked() and atBank) then
+			return true
+		end
+	else
+		return true
+	end
+end
 
 Backpack:AddModule('DepositReagents', function(self)
 	local Button = P.CreateContainerButton('DepositReagents', categoryIndex, true)
 	Button:SetScript('OnClick', DepositReagentBank)
 	Button.tooltipText = REAGENTBANK_DEPOSIT
+	Button.overrideShouldShow = ShouldShow
 
 	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 	self.DepositReagents = Button
@@ -23,15 +33,18 @@ Backpack:AddModule('DepositReagents', function(self)
 	P.Fire('PostCreateAutoDeposit', Button)
 end)
 
-local function OnClick(self)
+local function AutoDepositOnClick(self)
 	BackpackDB.autoDepositReagents = not BackpackDB.autoDepositReagents
 	BackpackBankContainerReagentBank.AutoDeposit.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 end
 
 Backpack:AddModule('AutoDeposit', function(self)
 	local Button = P.CreateContainerButton('AutoDeposit', categoryIndex, true)
-	Button:SetScript('OnClick', OnClick)
+	Button:SetScript('OnClick', AutoDepositOnClick)
 	Button.tooltipText = L['Toggle auto-deposit']
+	Button.overrideShouldShow = function()
+		return true
+	end
 
 	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 	BackpackBankContainerReagentBank.AutoDeposit = Button
@@ -42,3 +55,25 @@ end, function()
 		DepositReagentBank()
 	end
 end)
+
+local function PurchaseReagentBankOnClick()
+	StaticPopup_Show('CONFIRM_BUY_REAGENTBANK_TAB')
+end
+
+Backpack:AddModule('PurchaseReagentBank', function()
+	local self = BackpackBankContainerReagentBank
+
+
+	local Button = CreateFrame('Button', '$parentPurchaseReagentBank', self, 'UIPanelButtonTemplate')
+	Button:SetPoint('CENTER')
+	Button:SetText(PURCHASE)
+	Button:SetWidth(Button:GetTextWidth() + 40)
+	Button:SetScript('OnClick', PurchaseReagentBankOnClick)
+	self.PurchaseReagentBank = Button
+
+	if(IsReagentBankUnlocked()) then
+		Button:Hide()
+	end
+end, function()
+	BackpackBankContainerReagentBank.PurchaseReagentBank:Hide()
+end, false, 'REAGENTBANK_PURCHASED')
