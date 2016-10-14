@@ -21,7 +21,7 @@ Backpack:SetScript('OnHide', function()
 	Bank:Hide()
 end)
 
-function E:ADDON_LOADED(event, addon)
+function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or defaults
 		BackpackBankDB = BackpackBankDB or {}
@@ -71,7 +71,7 @@ function E:PLAYER_LOGIN()
 	return true
 end
 
-function E:BAG_UPDATE(event, bagID)
+function E.BAG_UPDATE(event, bagID)
 	if(not P.HasParent(BACKPACK_CONTAINER)) then
 		-- doesn't seem to have its own event
 		P.InitializeAllSlots(BACKPACK_CONTAINER)
@@ -85,7 +85,7 @@ function E:BAG_UPDATE(event, bagID)
 	P.PositionSlots()
 end
 
-function E:ITEM_LOCK_CHANGED(event, bagID, slotID)
+function E.ITEM_LOCK_CHANGED(event, bagID, slotID)
 	if(slotID) then
 		P.UpdateSlot(bagID, slotID, event)
 	else
@@ -106,22 +106,22 @@ function E:BAG_UPDATE_COOLDOWN()
 	end
 end
 
-function E:QUEST_ACCEPTED(event)
+function E.QUEST_ACCEPTED(event)
 	P.UpdateAllSlots(event)
 end
 
-function E:UNIT_QUEST_LOG_CHANGED(event, unit)
+function E.UNIT_QUEST_LOG_CHANGED(event, unit)
 	if(unit == 'player') then
 		P.UpdateAllSlots(event)
 	end
 end
 
-function E:PLAYERBANKSLOTS_CHANGED(event, slotID)
+function E.PLAYERBANKSLOTS_CHANGED(event, slotID)
 	P.UpdateSlot(BANK_CONTAINER, slotID, event)
 	P.PositionSlots()
 end
 
-function E:PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
+function E.PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
 	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
 	P.PositionSlots()
 end
@@ -134,7 +134,7 @@ local function REAGENTBANK_PURCHASED(event)
 	return true
 end
 
-function E:BANKFRAME_OPENED(event)
+function E.BANKFRAME_OPENED(event)
 	P.atBank = true
 
 	if(not P.HasParent(BANK_CONTAINER)) then
@@ -155,7 +155,7 @@ function E:BANKFRAME_CLOSED()
 end
 
 P.query = {}
-function E:GET_ITEM_INFO_RECEIVED(event)
+function E.GET_ITEM_INFO_RECEIVED(event)
 	if(#P.query > 0) then
 		for index, Slot in next, P.query do
 			local bagID, slotID = Slot.bagID, Slot.slotID

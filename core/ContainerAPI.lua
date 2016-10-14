@@ -110,11 +110,11 @@ function E:BAG_UPDATE_COOLDOWN()
 	end
 end
 
-function E:PLAYERBANKSLOTS_CHANGED(event, slotID)
+function E.PLAYERBANKSLOTS_CHANGED(event, slotID)
 	SaveData(BANK_CONTAINER, slotID)
 end
 
-function E:PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
+function E.PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
 	SaveData(REAGENTBANK_CONTAINER, slotID)
 end
 
