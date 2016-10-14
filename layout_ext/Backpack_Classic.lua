@@ -67,7 +67,11 @@ local function SkinSlot(Slot)
 	Highlight:SetColorTexture(0, 0.6, 1, 0.3)
 
 	Slot.NormalTexture:SetSize(0.1, 0.1)
-	Slot.QuestIcon:Hide()
+
+	local QuestIcon = Slot.QuestIcon
+	if(QuestIcon) then
+		QuestIcon:Hide()
+	end
 
 	local Flash = Slot.Flash
 	if(Flash) then

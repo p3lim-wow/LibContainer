@@ -21,6 +21,7 @@ core\Slots.lua
 core\Blizzard.lua
 
 modules\Restack.lua
+modules\BagSlots.lua
 modules\Currencies.lua
 modules\FreeSlots.lua
 modules\Money.lua
