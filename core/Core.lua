@@ -100,7 +100,7 @@ function E:BAG_UPDATE_COOLDOWN()
 		P.UpdateContainerCooldowns(BACKPACK_CONTAINER, NUM_BAG_SLOTS)
 	end
 
-	if(BackpackBank:IsVisible()) then
+	if(Bank:IsVisible()) then
 		P.UpdateContainerCooldowns(BANK_CONTAINER)
 		P.UpdateContainerCooldowns(NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS)
 	end
