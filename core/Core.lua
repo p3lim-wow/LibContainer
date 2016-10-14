@@ -115,13 +115,23 @@ function E.UNIT_QUEST_LOG_CHANGED(event, unit)
 end
 
 function E.PLAYERBANKSLOTS_CHANGED(event, slotID)
-	P.UpdateSlot(BANK_CONTAINER, slotID, event)
-	P.PositionSlots()
+	if(P.HasParent(BANK_CONTAINER)) then
+		P.UpdateSlot(BANK_CONTAINER, slotID, event)
+
+		if(Bank:IsVisible()) then
+			P.PositionSlots()
+		end
+	end
 end
 
 function E.PLAYERREAGENTBANKSLOTS_CHANGED(event, slotID)
-	P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
-	P.PositionSlots()
+	if(P.HasParent(REAGENTBANK_CONTAINER)) then
+		P.UpdateSlot(REAGENTBANK_CONTAINER, slotID, event)
+
+		if(Bank:IsVisible()) then
+			P.PositionSlots()
+		end
+	end
 end
 
 local function REAGENTBANK_PURCHASED(event)
