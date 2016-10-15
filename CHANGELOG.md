@@ -1,3 +1,8 @@
+### Changes in 70000.5-Beta:
+
+- Fixed: More errors related to bank slots not existing
+- Fixed: Bank not showing on first visit and Backpack was open
+
 ### Changes in 70000.4-Beta:
 
 - Fixed: Errors related to (reagent) bank slots not existing
