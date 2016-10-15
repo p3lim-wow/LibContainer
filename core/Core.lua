@@ -75,12 +75,14 @@ function E.BAG_UPDATE(event, bagID)
 		P.InitializeAllSlots(BACKPACK_CONTAINER)
 	end
 
-	if(not P.HasParent(bagID) and bagID <= NUM_BAG_SLOTS) then
+	if(not P.HasParent(bagID)) then
 		P.InitializeAllSlots(bagID)
 	end
 
-	P.UpdateContainerSlots(bagID, event)
-	P.PositionSlots()
+	if(P.HasParent(bagID)) then
+		P.UpdateContainerSlots(bagID, event)
+		P.PositionSlots()
+	end
 end
 
 function E.ITEM_LOCK_CHANGED(event, bagID, slotID)
@@ -181,10 +183,6 @@ end
 
 function P.InitializeBank()
 	P.InitializeAllSlots(BANK_CONTAINER)
-
-	for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
-		P.InitializeAllSlots(bagID)
-	end
 
 	if(IsReagentBankUnlocked()) then
 		P.InitializeAllSlots(REAGENTBANK_CONTAINER)

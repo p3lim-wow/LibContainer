@@ -209,7 +209,14 @@ function P.UpdateAllSlots(event)
 end
 
 function P.InitializeAllSlots(bagID)
-	for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+	local numSlots = Backpack:GetContainerNumSlots(bagID)
+	if(numSlots == 0) then
+		-- if we don't have the actual amount of slots, create the maximum amount
+		-- 98 equals to the reagent bank, and will be future-proof for bags
+		numSlots = 98
+	end
+
+	for slotID = 1, numSlots do
 		P.CreateSlot(bagID, slotID)
 	end
 end
