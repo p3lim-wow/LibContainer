@@ -153,7 +153,7 @@ function E.BANKFRAME_OPENED(event)
 		P.InitializeBank()
 	end
 
-	if(Bank:IsVisible()) then
+	if(Bank:IsVisible() or Backpack:IsVisible()) then
 		P.UpdateAllSlots(event)
 		P.PositionSlots()
 	end
