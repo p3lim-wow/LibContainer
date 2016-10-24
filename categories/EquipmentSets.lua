@@ -6,4 +6,4 @@ local function categoryFilter(bagID, slotID, itemID)
 	return isInSet
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
+Backpack:AddCategory(categoryIndex, categoryName, 'EquipmentSets', categoryFilter)

@@ -8,4 +8,4 @@ local categoryFilter = function(bagID, slotID)
 	return not itemLink
 end
 
-Backpack:AddCategory(2, categoryName, categoryFilter)
+Backpack:AddCategory(2, categoryName, 'Erronous', categoryFilter)

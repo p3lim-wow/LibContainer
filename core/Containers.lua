@@ -8,8 +8,7 @@ function P.CreateContainer(category, Parent)
 		Container = Parent
 		Container.type = Parent == Backpack and 1 or 2
 	else
-		local strippedName = string.gsub(category.name, ' ', '')
-		Container = CreateFrame('Frame', '$parentContainer' .. strippedName, Parent)
+		Container = CreateFrame('Frame', '$parentContainer' .. category.frameName, Parent)
 	end
 
 	Container:Hide()

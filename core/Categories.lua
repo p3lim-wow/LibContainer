@@ -44,17 +44,19 @@ end
 -- @param name       - Category name, displayed as a label on the container and menu
 -- @param filterFunc - Function to determine if an item should be part of this category or not
 -- @param sortFunc   - Function to allow custom sorting within the category (optional)
-P.Expose('AddCategory', function(_, index, name, filterFunc, sortFunc)
-	assert(name, string.format('Missing required parameter "name" for category "%s".', name))
-	assert(type(name) == 'string', string.format('Parameter "name" for category "%s" must be a string.', name))
+P.Expose('AddCategory', function(_, index, name, frameName, filterFunc, sortFunc)
+	assert(name, string.format('Missing required parameter "name" for category "%d".', index))
+	assert(type(name) == 'string', string.format('Parameter "name" for category "%d" must be a string.', index))
+	assert(frameName, string.format('Missing required parameter "frameName" for category "%d".', index))
+	assert(type(frameName) == 'string', string.format('Parameter "frameName" for category "%d" must be a string.', index))
 
 	if(index) then
 		if(type(index) ~= 'number') then
-			error(string.format('Index for category "%s" must be a number, was "%s".', name, type(index)), 2)
+			error(string.format('Index for category "%s" must be a number, was "%s".', frameName, type(index)), 2)
 		elseif(index > MAX_INDEX or index < MIN_INDEX) then
-			error(string.format('Index \'%d\' for category "%s" is out of bounds.', index, name), 2)
+			error(string.format('Index \'%d\' for category "%s" is out of bounds.', index, frameName), 2)
 		elseif(P.categories[index]) then
-			error(string.format('Index \'%d\' is already occupied by category "%s".', index, P.categories[index].name), 2)
+			error(string.format('Index \'%d\' is already occupied by category "%s".', index, P.categories[index].frameName), 2)
 		end
 	else
 		local index = ASSIGN_INDEX
@@ -64,20 +66,21 @@ P.Expose('AddCategory', function(_, index, name, filterFunc, sortFunc)
 
 		if(index >= MAX_INDEX) then
 			-- this addon must be popular!
-			error(string.format('Automatic index for category "%s" could not be provided.', name))
+			error(string.format('Automatic index for category "%s" could not be provided.', frameName))
 		end
 	end
 
-	assert(filterFunc, string.format('Missing required parameter "filterFunc" for category "%s".', name))
-	assert(type(filterFunc) == 'function', string.format('Parameter "filterFunc" for category "%s" must be a function.', name))
+	assert(filterFunc, string.format('Missing required parameter "filterFunc" for category "%s".', frameName))
+	assert(type(filterFunc) == 'function', string.format('Parameter "filterFunc" for category "%s" must be a function.', frameName))
 
 	if(sortFunc) then
-		assert(type(sortFunc) == 'function', string.format('Parameter "sortFunc" for category "%s" must be a function.', name))
+		assert(type(sortFunc) == 'function', string.format('Parameter "sortFunc" for category "%s" must be a function.', frameName))
 	end
 
 	P.categories[index] = {
 		index = index,
 		name = name,
+		frameName = frameName,
 		filterFunc = filterFunc,
 		sortFunc = sortFunc or defaultSort,
 	}

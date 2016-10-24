@@ -19,4 +19,4 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, categoryFilter)
+Backpack:AddCategory(categoryIndex, categoryName, 'Equipment', categoryFilter)

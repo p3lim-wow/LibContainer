@@ -4,4 +4,4 @@ local categoryFilter = function(bagID, slotID)
 	return true -- default path
 end
 
-Backpack:AddCategory(1, categoryName, categoryFilter)
+Backpack:AddCategory(1, categoryName, 'Inventory', categoryFilter)
