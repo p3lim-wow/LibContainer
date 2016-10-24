@@ -56,6 +56,8 @@ function P.CreateSlot(bagID, slotID)
 
 	P.SkinCallback('Slot', Slot)
 
+	P.Fire('PostCreateSlot', Slot)
+
 	slots[bagID][slotID] = Slot
 
 	return Slot
@@ -118,7 +120,7 @@ function P.UpdateSlot(bagID, slotID, event)
 
 		Slot:Show()
 
-		P.Fire('PostUpdateSlot', bagID, slotID, event)
+		P.Fire('PostUpdateSlot', Slot, event)
 	else
 		local Slot = P.GetSlot(bagID, slotID)
 		if(Slot and Slot:IsShown()) then
@@ -131,7 +133,7 @@ function P.UpdateSlot(bagID, slotID, event)
 			Slot.itemLevel = nil
 			Slot:Hide()
 
-			P.Fire('PostRemoveSlot', bagID, slotID, event)
+			P.Fire('PostRemoveSlot', Slot, event)
 		end
 	end
 end
