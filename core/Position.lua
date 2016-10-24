@@ -48,7 +48,6 @@ function P.InitializePosition(self)
 	self:SetClampedToScreen(true)
 	self:EnableMouse(true)
 	self:SetMovable(true)
-	self:SetUserPlaced(false)
 	self:RegisterForDrag('LeftButton')
 
 	self:SetScript('OnDragStart', self.StartMoving)
