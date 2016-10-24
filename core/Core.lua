@@ -40,6 +40,9 @@ function E:ADDON_LOADED(addon)
 			end
 		end
 
+		P.InitializePosition(Backpack)
+		P.InitializePosition(Bank)
+
 		-- Hide on escape
 		table.insert(UISpecialFrames, P.name)
 

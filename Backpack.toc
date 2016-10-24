@@ -4,7 +4,7 @@
 ## Title: Backpack
 ## Notes: WIP
 ## SavedVariables: BackpackDB, BackpackKnownItems, BackpackCustomCategory
-## SavedVariablesPerCharacter: BackpackBankDB
+## SavedVariablesPerCharacter: BackpackBankDB, BackpackPosition
 
 embed.xml
 

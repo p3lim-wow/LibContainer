@@ -11,6 +11,7 @@
 	<Script file='core\ContainerButtons.lua'/>
 	<Script file='core\Modules.lua'/>
 	<Script file='core\Slots.lua'/>
+	<Script file='core\Position.lua'/>
 	<Script file='core\Blizzard.lua'/>
 
 	<Script file='modules\Restack.lua'/>

@@ -18,22 +18,8 @@ local function SkinContainer(Container)
 	Container:SetBackdropBorderColor(0, 0, 0)
 	Container.extraPaddingY = 16 -- needs a little extra because of the title
 
-	if(Container:GetID() == 1) then
-		if(Container == Backpack) then
-			Container:SetPoint('BOTTOMRIGHT', UIParent, -50, 50)
-			Container.extraPaddingY = 32 -- needs more space for the footer
-		elseif(Container == BackpackBank) then
-			Container:SetPoint('TOPLEFT', UIParent, 50, -50)
-
-			Container.containerAnchorPoint = 'TOP'
-			Container.containerAnchorPointRelative = 'BOTTOM'
-			Container.containerSpacingY = -2
-		end
-
-		Container:EnableMouse(true)
-		Container:SetMovable(true)
-		Container:CreateTitleRegion():SetAllPoints()
-		Container:SetClampedToScreen(true)
+	if(Container == Backpack) then
+		Container.extraPaddingY = 32 -- needs more space for the footer
 	end
 end
 
