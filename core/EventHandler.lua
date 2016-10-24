@@ -56,17 +56,17 @@ end
 
 methods.Call = Call
 
-local mt = getmetatable(E)
-function mt:__index(event)
-	if(listeners[event]) then
-		return function(_, ...)
-			Call(nil, event, ...)
+setmetatable(E, {
+	__index = function(_, event)
+		if(listeners[event]) then
+			return function(_, ...)
+				Call(nil, event, ...)
+			end
+		else
+			return methods[event]
 		end
-	else
-		return methods[event]
+	end,
+	__newindex = function(_, event, func)
+		Register(event, func)
 	end
-end
-
-function mt:__newindex(event, func)
-	Register(event, func)
-end
+})
