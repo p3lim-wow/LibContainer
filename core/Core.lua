@@ -73,6 +73,11 @@ function E:PLAYER_LOGIN()
 	return true
 end
 
+function E:UI_SCALE_CHANGED()
+	P.UpdateContainerPositions(Backpack)
+	P.UpdateContainerPositions(Bank)
+end
+
 function E.BAG_UPDATE(event, bagID)
 	if(not P.HasParent(BACKPACK_CONTAINER)) then
 		-- doesn't seem to have its own event
