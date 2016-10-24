@@ -146,8 +146,7 @@ function P.UpdateContainerPositions(parentContainer)
 	local parentBottom = parentContainer:GetBottom()
 	local cols = 1
 
-	local resolution = select(GetCurrentResolution(), GetScreenResolutions())
-	local resolutionHeight = tonumber(string.match(resolution, '%d+x(%d+)'))
+	local uiHeight = UIParent:GetHeight()
 
 	for index, Container in next, visibleContainers do
 		local prevContainer = visibleContainers[index - 1] or parentContainer
@@ -156,7 +155,7 @@ function P.UpdateContainerPositions(parentContainer)
 
 		local x, y
 		if(growY > 0) then
-			if((prevTop + Container:GetHeight() + spacingY) > resolutionHeight) then
+			if((prevTop + Container:GetHeight() + spacingY) > uiHeight) then
 				cols = cols + 1
 				y = 0
 			else
