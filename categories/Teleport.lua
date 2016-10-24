@@ -1,5 +1,6 @@
--- custom list of any items that provide teleporting, because they deserve their own category
+local P, E, L = unpack(select(2, ...))
 
+-- custom list of any items that provide teleporting, because they deserve their own category
 local teleporters = {
 	6948, -- Hearthstone
 	17690, -- Frostwolf Insignia Rank 1
@@ -59,7 +60,7 @@ for _, itemID in next, teleporters do
 end
 teleporters = temp
 
-local categoryName = "Teleporters"
+local categoryName = L['Teleporters']
 local categoryIndex = 60
 
 local categoryFilter = function(bagID, slotID, itemID)
