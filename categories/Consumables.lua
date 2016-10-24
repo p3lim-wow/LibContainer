@@ -1,4 +1,6 @@
-local categoryName = BAG_FILTER_CONSUMABLES -- "Consumables"
+local L = select(2, ...)[3]
+
+local categoryName = L['Consumables']
 local categoryIndex = 41
 
 local categoryFilter = function(bagID, slotID, itemID)

@@ -1,6 +1,6 @@
 local P, E, L = unpack(select(2, ...))
 
-local categoryName = REAGENT_BANK -- "Reagent Bank"
+local categoryName = L['Reagent Bank']
 local categoryIndex = 1002
 
 local categoryFilter = function(bagID, slotID, itemID)

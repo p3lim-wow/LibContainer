@@ -1,4 +1,6 @@
-local categoryName = AUCTION_CATEGORY_TRADE_GOODS -- "Trade Goods"
+local L = select(2, ...)[3]
+
+local categoryName = L['Trade Goods']
 local categoryIndex = 40
 
 local categoryFilter = function(bagID, slotID, itemID)

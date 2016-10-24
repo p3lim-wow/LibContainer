@@ -1,6 +1,6 @@
 local P, E, L = unpack(select(2, ...))
 
-local categoryName = BAG_FILTER_JUNK -- "Junk"
+local categoryName = L['Junk']
 local categoryIndex = 1e3
 
 local categoryFilter = function(bagID, slotID, itemID)

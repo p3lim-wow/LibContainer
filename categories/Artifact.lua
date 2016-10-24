@@ -1,6 +1,7 @@
 -- flavor of the expansion, gets their own category
+local L = select(2, ...)[3]
 
-local categoryName = ARTIFACT_POWER -- "Artifact Power"
+local categoryName = L['Artifact Power']
 local categoryIndex = 10
 
 local ARTIFACT_SPELL_NAME = GetItemSpell(138783)

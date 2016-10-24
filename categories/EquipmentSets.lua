@@ -1,4 +1,6 @@
-local categoryName = strsplit(':', EQUIPMENT_SETS) -- "Equipment Sets"
+local L = select(2, ...)[3]
+
+local categoryName = L['Equipment Sets']
 local categoryIndex = 31
 
 local function categoryFilter(bagID, slotID, itemID)

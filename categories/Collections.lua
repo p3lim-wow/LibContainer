@@ -1,6 +1,6 @@
-local P = unpack(select(2, ...))
+local P, _, L = unpack(select(2, ...))
 
-local categoryName = COLLECTIONS -- "Collections"
+local categoryName = L['Collections']
 local categoryIndex = 80
 
 local scanTip = CreateFrame('GameTooltip', P.name .. 'ScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')

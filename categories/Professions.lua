@@ -1,4 +1,6 @@
-local categoryName = TRADE_SKILLS -- "Professions"
+local L = select(2, ...)[3]
+
+local categoryName = L['Professions']
 local categoryIndex = 50
 
 local categoryFilter = function(bagID, slotID, itemID)

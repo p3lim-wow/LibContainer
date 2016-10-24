@@ -1,4 +1,6 @@
-local categoryName = BATTLE_PET_SOURCE_7 -- "World Event" (EVENTS_LABEL)
+local L = select(2, ...)[3]
+
+local categoryName = L['World Event']
 local categoryIndex = 70
 
 local categoryFilter = function(bagID, slotID, itemID)
