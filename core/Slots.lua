@@ -284,6 +284,6 @@ function P.PositionSlots()
 			end
 		end
 
-		P.ResizeContainers(parentContainer)
+		P.UpdateContainerSizes(parentContainer)
 	end
 end

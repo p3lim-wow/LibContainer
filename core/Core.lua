@@ -4,6 +4,7 @@ local defaults = {
 	disabledCategories = {},
 	autoSellJunk = false,
 	autoDepositReagents = false,
+	containerOrder = {{},{}}, -- automatically filled on first run
 }
 
 local Backpack = CreateFrame('Frame', P.name, UIParent)

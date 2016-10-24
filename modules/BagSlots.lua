@@ -128,14 +128,14 @@ local function OnShow(self)
 	Container.extraPaddingY = extraPaddingY + sizeY + (paddingY * 2)
 	self.extraPaddingY = extraPaddingY
 
-	P.ResizeContainers(Container)
+	P.UpdateContainerSizes(Container)
 end
 
 local function OnHide(self)
 	local Container = self:GetParent()
 	Container.extraPaddingY = self.extraPaddingY
 
-	P.ResizeContainers(Container)
+	P.UpdateContainerSizes(Container)
 end
 
 local function CreateParent(self)

@@ -33,6 +33,8 @@ local function OnDragStop(self)
 	savedPosition[1] = point
 	savedPosition[2] = x
 	savedPosition[3] = y
+
+	P.UpdateContainerPositions(self)
 end
 
 function P.InitializePosition(self)
