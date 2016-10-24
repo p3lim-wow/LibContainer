@@ -7,8 +7,8 @@ local categoryFilter = function(bagID, slotID, itemID)
 		return true
 	elseif(not custom) then
 		-- tradegoods/reagents
-		local cached, _, _, _, _, _, _, _, _, _, _, itemClass = GetItemInfo(itemID)
-		return cached and itemClass == LE_ITEM_CLASS_TRADEGOODS
+		local _, _, _, _, _, itemClass = GetItemInfoInstant(itemID)
+		return itemClass == LE_ITEM_CLASS_TRADEGOODS
 	end
 end
 
