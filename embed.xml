@@ -1,0 +1,38 @@
+<Ui xmlns='http://www.blizzard.com/wow/ui'>
+	<Script file='core\Private.lua'/>
+
+	<Script file='Localization.lua'/>
+
+	<Script file='core\EventHandler.lua'/>
+	<Script file='core\ContainerAPI.lua'/>
+	<Script file='core\Core.lua'/>
+	<Script file='core\Categories.lua'/>
+	<Script file='core\Containers.lua'/>
+	<Script file='core\ContainerButtons.lua'/>
+	<Script file='core\Modules.lua'/>
+	<Script file='core\Slots.lua'/>
+	<Script file='core\Blizzard.lua'/>
+
+	<Script file='modules\Restack.lua'/>
+	<Script file='modules\BagSlots.lua'/>
+	<Script file='modules\Currencies.lua'/>
+	<Script file='modules\FreeSlots.lua'/>
+	<Script file='modules\Money.lua'/>
+	<Script file='modules\Search.lua'/>
+
+	<Script file='categories\Artifact.lua'/>
+	<Script file='categories\Collections.lua'/>
+	<Script file='categories\Consumables.lua'/>
+	<Script file='categories\Equipment.lua'/>
+	<Script file='categories\EquipmentSets.lua'/>
+	<Script file='categories\Events.lua'/>
+	<Script file='categories\Invalid.lua'/>
+	<Script file='categories\Inventory.lua'/>
+	<Script file='categories\Junk.lua'/>
+	<Script file='categories\New.lua'/>
+	<Script file='categories\Professions.lua'/>
+	<Script file='categories\Quests.lua'/>
+	<Script file='categories\ReagentBank.lua'/>
+	<Script file='categories\Teleport.lua'/>
+	<Script file='categories\TradeGoods.lua'/>
+</Ui>

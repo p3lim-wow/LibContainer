@@ -6,42 +6,7 @@
 ## SavedVariables: BackpackDB, BackpackKnownItems, BackpackCustomCategory
 ## SavedVariablesPerCharacter: BackpackBankDB
 
-core\Private.lua
-
-Localization.lua
-
-core\EventHandler.lua
-core\ContainerAPI.lua
-core\Core.lua
-core\Categories.lua
-core\Containers.lua
-core\ContainerButtons.lua
-core\Modules.lua
-core\Slots.lua
-core\Blizzard.lua
-
-modules\Restack.lua
-modules\BagSlots.lua
-modules\Currencies.lua
-modules\FreeSlots.lua
-modules\Money.lua
-modules\Search.lua
-
-categories\Artifact.lua
-categories\Collections.lua
-categories\Consumables.lua
-categories\Equipment.lua
-categories\EquipmentSets.lua
-categories\Events.lua
-categories\Invalid.lua
-categories\Inventory.lua
-categories\Junk.lua
-categories\New.lua
-categories\Professions.lua
-categories\Quests.lua
-categories\ReagentBank.lua
-categories\Teleport.lua
-categories\TradeGoods.lua
+embed.xml
 
 #@do-not-package@
 layout_ext\Backpack_Classic.lua
