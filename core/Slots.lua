@@ -211,11 +211,13 @@ function P.UpdateAllSlots(event)
 end
 
 function P.InitializeAllSlots(bagID)
-	local numSlots = Backpack:GetContainerNumSlots(bagID)
-	if(numSlots == 0) then
-		-- if we don't have the actual amount of slots, create the maximum amount
-		-- 98 equals to the reagent bank, and will be future-proof for bags
+	local numSlots = 16
+	if(bagID == -1) then
+		numSlots = 28
+	elseif(bagID == -3) then
 		numSlots = 98
+	elseif(bagID > 0) then
+		numSlots = 36 -- currently largest bag size, as of 7.0
 	end
 
 	for slotID = 1, numSlots do
