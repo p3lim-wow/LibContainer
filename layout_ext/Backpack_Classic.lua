@@ -1,4 +1,7 @@
+local FONT = [[Interface\AddOns\Backpack_Classic\semplice.ttf]]
+--@do-not-package@
 local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
+--@end-do-not-package@
 local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
 
