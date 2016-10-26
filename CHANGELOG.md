@@ -1,3 +1,18 @@
+### Changes in 70100.6-Beta:
+
+- Added: Proper position system
+- Added: Item levels on equipment slots
+- Added: Total amount of carried Artifact Power on the Artifact Power container title
+- Added: PostCreateSlot callback
+- Changed: Update Interface version
+- Changed: Localizations are now defined directly in the addon, please contribute!
+- Changed: Using GetItemInfoInstant for item classes and subclasses in categories filters
+- Changed: PostUpdateSlot and PostRemoveSlot now pass the Slot instead of bagID and slotID
+- Fixed: Containers going off the screen (they shift their columns now)
+- Fixed: Item quality not representable
+- Fixed: Font not moved to the layout
+- Removed: Leaked global variable
+
 ### Changes in 70000.5-Beta:
 
 - Fixed: More errors related to bank slots not existing
