@@ -82,7 +82,7 @@ end
 function P.UpdateSlot(bagID, slotID, event)
 	if(Backpack:GetContainerItemInfo(bagID, slotID)) then
 		local itemID = Backpack:GetContainerItemID(bagID, slotID)
-		local cached, _, itemQuality, itemLevel = GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID))
+		local cached, _, _, itemLevel = GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID))
 
 		local category = P.GetCategory(bagID, slotID, itemID)
 		local categoryIndex = category.index
@@ -104,7 +104,7 @@ function P.UpdateSlot(bagID, slotID, event)
 		end
 
 		-- for the sorting methods
-		local _, itemCount = Backpack:GetContainerItemInfo(bagID, slotID)
+		local _, itemCount, _, itemQuality = Backpack:GetContainerItemInfo(bagID, slotID)
 		Slot.itemCount = itemCount
 		Slot.itemQuality = itemQuality
 		Slot.itemID = itemID

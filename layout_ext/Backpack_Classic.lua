@@ -83,13 +83,8 @@ end
 Backpack:AddLayout('Classic', SkinContainer, SkinSlot)
 
 Backpack:Override('UpdateSlot', function(Slot)
-	local itemQuality = Slot.itemQuality -- accurate for upgraded items
-	local itemTexture, itemCount, isLocked, fallbackItemQuality, isReadable, isLootable, _, _, _, itemID = Backpack:GetContainerItemInfo(Slot.bagID, Slot.slotID)
+	local itemTexture, itemCount, isLocked, itemQuality, isReadable, isLootable, _, _, _, itemID = Backpack:GetContainerItemInfo(Slot.bagID, Slot.slotID)
 	local questItem, itemQuestID, itemQuestActive = Backpack:GetContainerItemQuestInfo(Slot.bagID, Slot.slotID)
-
-	if(not itemQuality) then
-		itemQuality = fallbackItemQuality
-	end
 	local r, g, b, hex = GetItemQualityColor(itemQuality)
 
 	local Icon = Slot.Icon
