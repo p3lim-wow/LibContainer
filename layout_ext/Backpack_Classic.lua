@@ -106,7 +106,6 @@ Backpack:Override('UpdateSlot', function(Slot)
 
 	if(itemQuestID or questItem) then
 		Slot:SetBackdropBorderColor(1, 1, 0)
-		r, g, b = 1, 1, 0
 	elseif(itemQuality >= LE_ITEM_QUALITY_UNCOMMON) then
 		Slot:SetBackdropBorderColor(r, g, b)
 	else
