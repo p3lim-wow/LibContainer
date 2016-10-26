@@ -7,6 +7,7 @@ local function SkinContainer(Container)
 	Title:SetPoint('TOPLEFT', 11, -10)
 	Title:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 	Title:SetText(Container.name)
+	Container.Title = Title
 
 	local Anchor = CreateFrame('Frame', '$parentAnchor', Container)
 	Anchor:SetPoint('TOPLEFT', 10, -26)
@@ -91,6 +92,40 @@ Backpack:Override('UpdateSlot', function(Slot)
 		Slot:SetBackdropBorderColor(0, 0, 0)
 	end
 end)
+
+do
+	local scanTip = CreateFrame('GameTooltip', (...) .. 'ScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
+	scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
+	scanTip.name = scanTip:GetName()
+
+	Backpack:HookScript('OnShow', function(self)
+		local totalArtifactPower = 0
+
+		for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+			for slotID = 1, self:GetContainerNumSlots(bagID) do
+				local itemID = self:GetContainerItemID(bagID, slotID)
+				if(itemID) then
+					scanTip:SetBagItem(bagID, slotID)
+					scanTip:Show()
+
+					for index = 1, scanTip:NumLines() do
+						local line = _G[scanTip.name .. 'TextLeft' .. index]
+						if(line) then
+							local artifactPower = string.match(line:GetText(), '([0-9?,]+) ' .. ARTIFACT_POWER)
+							if(artifactPower) then
+								totalArtifactPower = totalArtifactPower + tonumber((artifactPower:gsub(',', '')))
+								break
+							end
+						end
+					end
+				end
+			end
+		end
+
+		local Container = BackpackContainerArtifactPower
+		Container.Title:SetFormattedText('%s |cff00ff00(%s)|r', Container.name, BreakUpLargeNumbers(totalArtifactPower))
+	end)
+end
 
 Backpack:On('PostCreateMoney', function(self)
 	local Money = self.Money
