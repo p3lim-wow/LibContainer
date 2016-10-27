@@ -28,9 +28,7 @@ It has the following features:
 	- Add/remove custom categories/containers
 	- Enable/disable categories and modules
 - Individual container movement
-	- With smart anchoring
 - Menu for assigning category
-- Bag slots
 
 ## Feedback
 
