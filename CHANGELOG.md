@@ -1,3 +1,11 @@
+### Changes in 70100.7-Beta:
+
+- Added: deDE translations (thanks to @bullsei on GitHub!)
+- Fixed: Errors due to missing savedvariables
+- Fixed: Errors when changing bags during combat
+- Fixed: Errors due to inaccuracy in blizzard API
+- Removed: ItemLevel text (until I can figure out what's wrong with the API)
+
 ### Changes in 70100.6-Beta:
 
 - Added: Proper position system
