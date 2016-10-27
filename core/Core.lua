@@ -26,6 +26,13 @@ end)
 function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or defaults
+
+		for key, value in next, defaults do
+			if(BackpackDB[key] == nil) then
+				BackpackDB[key] = value
+			end
+		end
+
 		BackpackBankDB = BackpackBankDB or {}
 		BackpackCustomCategory = BackpackCustomCategory or {}
 		BackpackKnownItems = BackpackKnownItems or {}
