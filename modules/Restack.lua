@@ -39,16 +39,19 @@ local function CreateButton(self, categoryIndex, isBank)
 	else
 		Button.tooltipText = L['Restack Reagent Bank']
 	end
+
+	return Button
 end
 
 local function Init(self, isBank)
-	CreateButton(self, 1, isBank)
+	local Button = CreateButton(self, 1, isBank)
 
+	local ReagentBankButton
 	if(isBank) then
-		CreateButton(BackpackBankContainerReagentBank, 1002, isBank)
+		ReagentBankButton = CreateButton(BackpackBankContainerReagentBank, 1002, isBank)
 	end
 
-	P.Fire('PostCreateRestack', self)
+	P.Fire('PostCreateRestack', Button, ReagentBankButton)
 end
 
 Backpack:AddModule('Restack', Init, nil, true)

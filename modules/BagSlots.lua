@@ -140,7 +140,7 @@ local function CreateParent(self)
 	Parent:SetScript('OnShow', OnShow)
 	Parent:SetScript('OnHide', OnHide)
 
-	P.Fire('PostCreateBagSlots', Parent)
+	P.Fire('PostCreateBagSlot', Parent)
 
 	self.BagSlots = Parent
 
@@ -186,7 +186,7 @@ local function Init(self, isBank)
 		BagSlots:SetSize(((sizeX + spacingX) * numBagSlots) - spacingX, sizeY)
 	end
 
-	P.Fire('PostInitBagSlots', BagSlots)
+	P.Fire('PostCreateBagSlots', Button, BagSlots)
 
 	self:HookScript('OnHide', HideBagSlots)
 end

@@ -100,7 +100,7 @@ local function Init(self)
 	Editbox:Hide()
 	SearchBox.Editbox = Editbox
 
-	P.Fire('PostCreateSearch', self)
+	P.Fire('PostCreateSearch', SearchBox)
 end
 
 Backpack:AddModule('Search', Init, Update, false, 'INVENTORY_SEARCH_UPDATE')

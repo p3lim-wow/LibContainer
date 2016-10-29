@@ -30,7 +30,7 @@ Backpack:AddModule('DepositReagents', function(self)
 	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 	self.DepositReagents = Button
 
-	P.Fire('PostCreateAutoDeposit', Button)
+	P.Fire('PostCreateDepositReagents', Button)
 end)
 
 local function AutoDepositOnClick(self)
