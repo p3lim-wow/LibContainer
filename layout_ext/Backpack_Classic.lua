@@ -153,10 +153,27 @@ Backpack:On('PostCreateMoney', function(self)
 	Money:SetShadowOffset(0, 0)
 end)
 
-Backpack:On('PostCreateCurrencies', function(self)
-	for _, Currency in next, self.Currencies do
-		Currency:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
-		Currency:SetShadowOffset(0, 0)
+Backpack:On('PostCreateCurrencies', function(Currencies)
+	for index, Button in next, Currencies do
+		local Label = Button.Label
+		Label:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+		Label:SetShadowOffset(0, 0)
+
+		local Icon = Button.Icon
+		Icon:SetSize(9, 9)
+		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+
+		local IconBorder = Button:CreateTexture('$parentIconBorder', 'BORDER')
+		IconBorder:SetPoint('TOPLEFT', Icon, -1, 1)
+		IconBorder:SetPoint('BOTTOMRIGHT', Icon, 1, -1)
+		IconBorder:SetColorTexture(0, 0, 0)
+
+		Button:ClearAllPoints()
+		if(index == 1) then
+			Button:SetPoint('BOTTOMLEFT', 11, 10)
+		else
+			Button:SetPoint('LEFT', Currencies[index - 1], 'RIGHT', 10, 0)
+		end
 	end
 end)
 
