@@ -21,6 +21,9 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Mark items as known'] = 'Gegenstände als bekannt markieren'
 L['Toggle auto-deposit'] = 'Automatische Einlagerung ein-/ausschalten'
 L['Toggle bag slots'] = 'Taschenplätze umschalten'
+L['Restack'] = 'Restack'
+L['Restack Bank'] = 'Restack Bank'
+L['Restack Reagent Bank'] = 'Restack Reagent Bank'
 
 -- Error messages
 L['Enabled category "%s"'] = 'Kategorie "%s" wurde aktiviert'

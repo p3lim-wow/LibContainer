@@ -33,11 +33,11 @@ local function CreateButton(self, categoryIndex, isBank)
 	Button:SetHighlightTexture(HighlightTexture)
 
 	if(self == Backpack) then
-		Button.tooltipText = BAG_CLEANUP_BAGS
+		Button.tooltipText = L['Restack']
 	elseif(self == BackpackBank) then
-		Button.tooltipText = BAG_CLEANUP_BANK
+		Button.tooltipText = L['Restack Bank']
 	else
-		Button.tooltipText = BAG_CLEANUP_REAGENT_BANK
+		Button.tooltipText = L['Restack Reagent Bank']
 	end
 end
 
