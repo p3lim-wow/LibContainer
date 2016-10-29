@@ -25,6 +25,8 @@ L['Restack'] = 'Restack' -- needs translation
 L['Restack Bank'] = 'Restack Bank' -- needs translation
 L['Restack Reagent Bank'] = 'Restack Reagent Bank' -- needs translation
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
+L['Lock'] = LOCK
+L['Unlock'] = UNLOCK
 
 -- Misc messages
 L['Purchase'] = PURCHASE

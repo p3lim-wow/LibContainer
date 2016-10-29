@@ -1,4 +1,4 @@
-local P = unpack(select(2, ...))
+local P, E, L = unpack(select(2, ...))
 
 local defaultPositions = {
 	Backpack = {'BOTTOMRIGHT', -50, 50},
@@ -6,6 +6,12 @@ local defaultPositions = {
 }
 
 local function OnDragStop(self)
+	if(BackpackDB.locked) then
+		return
+	end
+
+	self:StopMovingOrSizing()
+
 	local left, bottom, width, height = self:GetRect()
 	local screenWidth, screenHeight = UIParent:GetSize()
 
@@ -37,6 +43,12 @@ local function OnDragStop(self)
 	P.UpdateContainerPositions(self)
 end
 
+local function OnDragStart(self)
+	if(not BackpackDB.locked) then
+		self:StartMoving()
+	end
+end
+
 function P.InitializePosition(self)
 	if(not BackpackPosition) then
 		BackpackPosition = defaultPositions
@@ -50,7 +62,30 @@ function P.InitializePosition(self)
 	self:SetMovable(true)
 	self:RegisterForDrag('LeftButton')
 
-	self:SetScript('OnDragStart', self.StartMoving)
-	self:SetScript('OnDragStop', self.StopMovingOrSizing)
-	self:HookScript('OnDragStop', OnDragStop)
+	self:SetScript('OnDragStart', OnDragStart)
+	self:SetScript('OnDragStop', OnDragStop)
 end
+
+local function OnClick(self)
+	BackpackDB.locked = not BackpackDB.locked
+
+	self.tooltipText = BackpackDB.locked and L['Unlock'] or L['Lock']
+	self:UpdateTooltip()
+end
+
+local function Init(self, isBank)
+	local Button = P.CreateContainerButton('ToggleLock', 1, isBank)
+	Button:SetScript('OnClick', OnClick)
+	Button.tooltipText = L['Unlock']
+	self.ToggleLock = Button
+
+	if(isBank) then
+		Button.overrideShouldShow = function()
+			return true
+		end
+	end
+
+	P.Fire('PostCreateToggleLock', Button)
+end
+
+Backpack:AddModule('ToggleLock', Init, nil, true)

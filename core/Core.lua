@@ -2,6 +2,7 @@ local P, E = unpack(select(2, ...))
 
 local defaults = {
 	disabledCategories = {},
+	locked = true,
 	autoSellJunk = false,
 	autoDepositReagents = false,
 	containerOrder = {{},{}}, -- automatically filled on first run
@@ -26,6 +27,7 @@ end)
 function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
 		BackpackDB = BackpackDB or defaults
+		BackpackDB.locked = true -- lock on load
 
 		for key, value in next, defaults do
 			if(BackpackDB[key] == nil) then
