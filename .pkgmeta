@@ -6,7 +6,7 @@ manual-changelog:
 
 move-folders:
   Backpack/layout_ext: Backpack_Classic
-  Backpack/assets/semplice.ttf: Backpack_Classic/semplice.ttf
+  Backpack/assets/semplice.ttf: Backpack_Classic/font.ttf
 
 ignore:
   - README.md

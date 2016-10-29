@@ -1,4 +1,4 @@
-local FONT = [[Interface\AddOns\Backpack_Classic\semplice.ttf]]
+local FONT = [[Interface\AddOns\Backpack_Classic\font.ttf]]
 --@do-not-package@
 local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
 --@end-do-not-package@
