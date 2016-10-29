@@ -24,7 +24,7 @@ end
 Backpack:AddModule('DepositReagents', function(self)
 	local Button = P.CreateContainerButton('DepositReagents', categoryIndex, true)
 	Button:SetScript('OnClick', DepositReagentBank)
-	Button.tooltipText = REAGENTBANK_DEPOSIT
+	Button.tooltipText = L['Deposit All Reagents']
 	Button.overrideShouldShow = ShouldShow
 
 	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
@@ -66,7 +66,7 @@ Backpack:AddModule('PurchaseReagentBank', function()
 
 	local Button = CreateFrame('Button', '$parentPurchaseReagentBank', self, 'UIPanelButtonTemplate')
 	Button:SetPoint('CENTER')
-	Button:SetText(PURCHASE)
+	Button:SetText(L['Purchase'])
 	Button:SetWidth(Button:GetTextWidth() + 40)
 	Button:SetScript('OnClick', PurchaseReagentBankOnClick)
 	self.PurchaseReagentBank = Button

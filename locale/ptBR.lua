@@ -24,6 +24,11 @@ L['Toggle bag slots'] = 'Toggle bag slots' -- needs translation
 L['Restack'] = 'Restack' -- needs translation
 L['Restack Bank'] = 'Restack Bank' -- needs translation
 L['Restack Reagent Bank'] = 'Restack Reagent Bank' -- needs translation
+L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
+
+-- Misc messages
+L['Purchase'] = PURCHASE
+L['Equip Container'] = EQUIP_CONTAINER
 
 -- Error messages
 L['Enabled category "%s"'] = 'Enabled category "%s"' -- needs translation

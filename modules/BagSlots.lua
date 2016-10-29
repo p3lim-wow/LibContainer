@@ -61,9 +61,9 @@ local function OnEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_TOP')
 	if(not GameTooltip:SetInventoryItem('player', self:GetID())) then
 		if(self.PurchaseIcon:IsShown()) then
-			GameTooltip:SetText(PURCHASE)
+			GameTooltip:SetText(L['Purchase'])
 		else
-			GameTooltip:SetText(EQUIP_CONTAINER)
+			GameTooltip:SetText(L['Equip Container'])
 		end
 	end
 
