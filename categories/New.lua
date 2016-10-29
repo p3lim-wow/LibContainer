@@ -35,8 +35,6 @@ local function Init(self, isBank)
 	Button:SetScript('OnClick', OnClick)
 	Button.tooltipText = L['Mark items as known']
 	Button.parentContainer = self
-
-	Button.Texture:SetTexture([[Interface\Buttons\UI-RefreshButton]])
 	self.ResetNew = Button
 
 	P.Fire('PostCreateResetNew', Button)

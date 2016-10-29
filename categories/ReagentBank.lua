@@ -26,8 +26,6 @@ Backpack:AddModule('DepositReagents', function(self)
 	Button:SetScript('OnClick', DepositReagentBank)
 	Button.tooltipText = L['Deposit All Reagents']
 	Button.overrideShouldShow = ShouldShow
-
-	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 	self.DepositReagents = Button
 
 	P.Fire('PostCreateDepositReagents', Button)
@@ -35,7 +33,6 @@ end)
 
 local function AutoDepositOnClick(self)
 	BackpackDB.autoDepositReagents = not BackpackDB.autoDepositReagents
-	BackpackBankContainerReagentBank.AutoDeposit.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 end
 
 Backpack:AddModule('AutoDeposit', function(self)
@@ -45,8 +42,6 @@ Backpack:AddModule('AutoDeposit', function(self)
 	Button.overrideShouldShow = function()
 		return true
 	end
-
-	Button.Texture:SetDesaturated(not BackpackDB.autoDepositReagents)
 	BackpackBankContainerReagentBank.AutoDeposit = Button
 
 	P.Fire('PostCreateAutoDeposit', Button)
@@ -62,8 +57,6 @@ end
 
 Backpack:AddModule('PurchaseReagentBank', function()
 	local self = BackpackBankContainerReagentBank
-
-
 	local Button = CreateFrame('Button', '$parentPurchaseReagentBank', self, 'UIPanelButtonTemplate')
 	Button:SetPoint('CENTER')
 	Button:SetText(L['Purchase'])

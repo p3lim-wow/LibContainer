@@ -32,15 +32,12 @@ end
 
 local function OnClick(self)
 	BackpackDB.autoSellJunk = not BackpackDB.autoSellJunk
-	self.Texture:SetDesaturated(not BackpackDB.autoSellJunk)
 end
 
 local function Init(self)
 	local Button = P.CreateContainerButton('ToggleSellJunk', categoryIndex)
 	Button:SetScript('OnClick', OnClick)
 	Button.tooltipText = L['Toggle auto-vendoring']
-
-	Button.Texture:SetDesaturated(not BackpackDB.autoSellJunk)
 	self.ToggleSellJunk = Button
 
 	P.Fire('PostCreateSellJunk', Button)

@@ -15,23 +15,6 @@ local function CreateButton(self, categoryIndex, isBank)
 	Button:SetScript('OnClick', OnClick)
 	self.Restack = Button
 
-	local NormalTexture = Button.Texture
-	NormalTexture:SetAllPoints()
-	NormalTexture:SetAtlas('bags-button-autosort-up')
-
-	local PushedTexture = Button:CreateTexture('$parentPushed', 'ARTWORK')
-	PushedTexture:SetAllPoints()
-	PushedTexture:SetAtlas('bags-button-autosort-down')
-
-	local HighlightTexture = Button:CreateTexture('$parentPushed', 'ARTWORK')
-	HighlightTexture:SetAllPoints()
-	HighlightTexture:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
-	HighlightTexture:SetBlendMode('ADD')
-
-	Button:SetNormalTexture(NormalTexture)
-	Button:SetPushedTexture(PushedTexture)
-	Button:SetHighlightTexture(HighlightTexture)
-
 	if(self == Backpack) then
 		Button.tooltipText = L['Restack']
 	elseif(self == BackpackBank) then
