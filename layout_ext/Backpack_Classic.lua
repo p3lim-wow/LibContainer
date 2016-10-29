@@ -1,6 +1,8 @@
 local FONT = [[Interface\AddOns\Backpack_Classic\font.ttf]]
+local ICON_TEXTURES = [[Interface\AddOns\Backpack_Classic\icons]]
 --@do-not-package@
 local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
+local ICON_TEXTURES = [[Interface\AddOns\Backpack\assets\icons]]
 --@end-do-not-package@
 local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
@@ -166,8 +168,7 @@ local function OnSearchClosed(self)
 	self:GetParent().Icon:Show()
 end
 
-Backpack:On('PostCreateSearch', function(self)
-	local SearchBox = self.SearchBox
+Backpack:On('PostCreateSearch', function(SearchBox)
 	SearchBox:SetBackdrop(BACKDROP)
 	SearchBox:SetBackdropColor(0, 0, 0, 0.9)
 	SearchBox:SetBackdropBorderColor(0, 0, 0)
@@ -175,8 +176,9 @@ Backpack:On('PostCreateSearch', function(self)
 
 	local SearchBoxIcon = SearchBox:CreateTexture('$parentIcon', 'OVERLAY')
 	SearchBoxIcon:SetPoint('CENTER')
-	SearchBoxIcon:SetSize(14, 14)
-	SearchBoxIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
+	SearchBoxIcon:SetSize(16, 16)
+	SearchBoxIcon:SetTexture(ICON_TEXTURES)
+	SearchBoxIcon:SetTexCoord(0.75, 1, 0.75, 1)
 	SearchBox.Icon = SearchBoxIcon
 
 	local Editbox = SearchBox.Editbox
@@ -186,7 +188,73 @@ Backpack:On('PostCreateSearch', function(self)
 
 	local EditboxIcon = Editbox:CreateTexture('$parentIcon', 'OVERLAY')
 	EditboxIcon:SetPoint('RIGHT', Editbox, 'LEFT', -4, 0)
-	EditboxIcon:SetSize(14, 14)
-	EditboxIcon:SetTexture([[Interface\Common\UI-Searchbox-Icon]])
+	EditboxIcon:SetSize(16, 16)
+	EditboxIcon:SetTexture(ICON_TEXTURES)
+	EditboxIcon:SetTexCoord(0.75, 1, 0.75, 1)
 	Editbox.Icon = EditboxIcon
+end)
+
+Backpack:On('PostCreateContainerButton', function(Button)
+	Button.Texture:SetTexture(ICON_TEXTURES)
+end)
+
+Backpack:On('PostCreateBagSlots', function(Button)
+	Button:GetParent().ToggleBagSlots.Texture:SetTexCoord(0, 0.25, 0.25, 0.5)
+end)
+
+local function OnClickDepositReagents(self)
+	if(BackpackDB.autoDepositReagents) then
+		self.Texture:SetVertexColor(1, 1, 1)
+	else
+		self.Texture:SetVertexColor(0.3, 0.3, 0.3)
+	end
+end
+
+Backpack:On('PostCreateDepositReagents', function(Button)
+	Button.Texture:SetTexCoord(0.5, 0.75, 0, 0.25)
+	Button:HookScript('OnClick', OnClickDepositReagents)
+
+	OnClickDepositReagents(Button)
+end)
+
+local function OnClickAutoDeposit(self)
+	if(BackpackDB.autoDepositReagents) then
+		self.Texture:SetVertexColor(0, 0.6, 1)
+	else
+		self.Texture:SetVertexColor(0.3, 0.3, 0.3)
+	end
+end
+
+Backpack:On('PostCreateAutoDeposit', function(Button)
+	Button.Texture:SetTexCoord(0.5, 0.75, 0, 0.25)
+	Button:HookScript('OnClick', OnClickAutoDeposit)
+
+	OnClickAutoDeposit(Button)
+end)
+
+local function OnClickSellJunk(self)
+	if(BackpackDB.autoSellJunk) then
+		self.Texture:SetVertexColor(1, 0.1, 0.1)
+	else
+		self.Texture:SetVertexColor(0.3, 0.3, 0.3)
+	end
+end
+
+Backpack:On('PostCreateSellJunk', function(Button)
+	Button.Texture:SetTexCoord(0, 0.25, 0, 0.25)
+	Button:HookScript('OnClick', OnClickSellJunk)
+
+	OnClickSellJunk(Button)
+end)
+
+Backpack:On('PostCreateResetNew', function(Button)
+	Button.Texture:SetTexCoord(0.75, 1, 0, 0.25)
+end)
+
+Backpack:On('PostCreateRestack', function(Button, SecondButton)
+	Button.Texture:SetTexCoord(0.25, 0.5, 0, 0.25)
+
+	if(SecondButton) then
+		SecondButton.Texture:SetTexCoord(0.25, 0.5, 0, 0.25)
+	end
 end)
