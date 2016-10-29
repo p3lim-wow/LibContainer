@@ -25,7 +25,7 @@ local function SkinContainer(Container)
 	Container.extraPaddingY = 16 -- needs a little extra because of the title
 
 	if(Container == Backpack) then
-		Container.extraPaddingY = 32 -- needs more space for the footer
+		Container.extraPaddingY = 36 -- needs more space for the footer
 	end
 end
 
