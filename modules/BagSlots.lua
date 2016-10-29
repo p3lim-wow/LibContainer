@@ -173,13 +173,16 @@ local function Init(self, isBank)
 		-- might want to use something custom here though
 		local sizeX = self.slotSizeX or self.slotSize or 32
 		local sizeY = self.slotSizeY or self.slotSize or 32
+
 		local spacingX = self.spacingX or self.spacing or 4
+		local spacingY = self.spacingY or self.spacing or 4
 
 		local paddingX = self.paddingX or self.padding or 10
 		local paddingY = self.paddingY or self.padding or 10
+
 		local extraPaddingY = self.extraPaddingY or self.extraPadding or 0
 
-		BagSlots:SetPoint('BOTTOMRIGHT', - paddingX, extraPaddingY)
+		BagSlots:SetPoint('BOTTOMRIGHT', - paddingX, extraPaddingY - paddingY + spacingY)
 		BagSlots:SetSize(((sizeX + spacingX) * numBagSlots) - spacingX, sizeY)
 	end
 
