@@ -147,8 +147,9 @@ do
 	end)
 end
 
-Backpack:On('PostCreateMoney', function(self)
-	local Money = self.Money
+Backpack:On('PostCreateMoney', function(Money)
+	Money:ClearAllPoints()
+	Money:SetPoint('BOTTOMRIGHT', -8, 10)
 	Money:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 	Money:SetShadowOffset(0, 0)
 end)

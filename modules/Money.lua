@@ -19,7 +19,7 @@ end
 
 local function Init(self)
 	local Money = self:CreateFontString('$parentMoney', 'OVERLAY', 'GameFontHighlightSmall')
-	Money:SetPoint('BOTTOMRIGHT', -8, 10)
+	Money:SetPoint('BOTTOMRIGHT')
 	self.Money = Money
 
 	local Button = CreateFrame('Button', '$parentButton', self)
@@ -28,7 +28,7 @@ local function Init(self)
 	Button.info = MoneyTypeInfo.PLAYER
 	Money.Button = Button
 
-	P.Fire('PostCreateMoney', self)
+	P.Fire('PostCreateMoney', Money)
 	Update()
 end
 
