@@ -53,6 +53,8 @@ function P.CreateContainerButton(name, categoryIndex, forBank)
 
 	P.Fire('PostCreateContainerButton', Button)
 
+	Button.UpdateTooltip = ShowTooltip
+
 	if(not Parent.buttons) then
 		Parent.buttons = {}
 	end
