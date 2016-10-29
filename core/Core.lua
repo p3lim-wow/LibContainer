@@ -63,19 +63,7 @@ function E:PLAYER_LOGIN()
 		P.InitializeBank()
 	end
 
-	for _, moduleInfo in next, P.modules do
-		for _, event in next, moduleInfo.events do
-			E:RegisterEvent(event, moduleInfo.update)
-		end
-
-		if(moduleInfo.init) then
-			moduleInfo.init(Backpack)
-
-			if(moduleInfo.includeBank) then
-				moduleInfo.init(Bank, true)
-			end
-		end
-	end
+	P.LoadModules()
 
 	return true
 end
