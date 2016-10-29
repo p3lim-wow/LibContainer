@@ -119,23 +119,19 @@ end
 local function OnShow(self)
 	local Container = self:GetParent()
 
-	-- use the same position variables as the slots and containers use
-	-- might want to use something custom here though
-	local sizeY = Container.slotSizeY or Container.slotSize or 32
-	local paddingY = Container.paddingY or Container.padding or 10
+	local slotSizeY = Container.slotSizeY or Container.slotSize or 32
 	local extraPaddingY = Container.extraPaddingY or Container.extraPadding or 0
 
-	Container.extraPaddingY = extraPaddingY + sizeY + (paddingY * 2)
-	self.extraPaddingY = extraPaddingY
+	Container.overridePaddingY = extraPaddingY + (slotSizeY * 1.5)
 
-	P.UpdateContainerSizes(Container)
+	P.UpdateContainerSizes(Container, true)
 end
 
 local function OnHide(self)
 	local Container = self:GetParent()
-	Container.extraPaddingY = self.extraPaddingY
+	Container.overridePaddingY = nil
 
-	P.UpdateContainerSizes(Container)
+	P.UpdateContainerSizes(Container, true)
 end
 
 local function CreateParent(self)

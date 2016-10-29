@@ -55,8 +55,8 @@ function P.GetContainers(parentContainer)
 	return containers[parentContainer]
 end
 
-function P.UpdateContainerSizes(parentContainer)
-	local containers, changes = P.GetContainers(parentContainer)
+function P.UpdateContainerSizes(parentContainer, forceUpdate)
+	local containers = P.GetContainers(parentContainer)
 	for categoryIndex, Container in next, containers do
 		local numSlots = #Container.slots
 		if(categoryIndex == 1 or categoryIndex == 1002) then
@@ -64,9 +64,9 @@ function P.UpdateContainerSizes(parentContainer)
 			numSlots = numSlots + 1
 		end
 
-		if(numSlots ~= Container.numSlots) then
+		if(numSlots ~= Container.numSlots or forceUpdate) then
 			Container.numSlots = numSlots
-			changes = true
+			forceUpdate = true
 
 			if(numSlots > 0) then
 				-- defaults
@@ -82,11 +82,14 @@ function P.UpdateContainerSizes(parentContainer)
 				local extraPaddingX = Container.extraPaddingX or Container.extraPadding or 0
 				local extraPaddingY = Container.extraPaddingY or Container.extraPadding or 0
 
+				local overridePaddingX = Container.overridePaddingX or Container.overridePadding or extraPaddingX
+				local overridePaddingY = Container.overridePaddingY or Container.overridePadding or extraPaddingY
+
 				local cols = Container.columns or 8
 				local rows = math.ceil(numSlots / cols)
 
-				local width = (((sizeX + spacingX) * cols) - spacingX) + (paddingX * 2) + extraPaddingX
-				local height = (((sizeY + spacingY) * rows) - spacingY) + (paddingY * 2) + extraPaddingY
+				local width = (((sizeX + spacingX) * cols) - spacingX) + (paddingX * 2) + overridePaddingX
+				local height = (((sizeY + spacingY) * rows) - spacingY) + (paddingY * 2) + overridePaddingY
 
 				Container:SetSize(width, height)
 
@@ -100,7 +103,7 @@ function P.UpdateContainerSizes(parentContainer)
 		end
 	end
 
-	if(changes) then
+	if(forceUpdate) then
 		P.UpdateContainerPositions(parentContainer)
 	end
 end
