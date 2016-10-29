@@ -1,3 +1,15 @@
+### Changes in 70100.8-Beta:
+
+- Added: Position lock/unlock toggle button
+- Added: New icons to all the container buttons
+- Added: UpdateTooltip method to container buttons
+- Changed: Renamed the font file
+- Changed: Restack tooltip string (requires localization update)
+- Removed: Default container button texture handling
+- Fixed: Modules' callbacks inconsistency
+- Fixed: BagSlots not displaying properly
+- Fixed: BagSlots alignment
+
 ### Changes in 70100.7-Beta:
 
 - Added: deDE translations (thanks to @bullsei on GitHub!)
