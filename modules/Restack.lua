@@ -1,4 +1,4 @@
-local P = unpack(select(2, ...))
+local P, E, L = unpack(select(2, ...))
 
 local function OnClick(self)
 	if(self:GetParent() == Backpack) then
