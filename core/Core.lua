@@ -177,7 +177,8 @@ function E.GET_ITEM_INFO_RECEIVED(event)
 	if(#P.query > 0) then
 		for index, Slot in next, P.query do
 			local bagID, slotID = Slot.bagID, Slot.slotID
-			if(GetItemInfo(Backpack:GetContainerItemLink(bagID, slotID))) then
+			local itemLink = Backpack:GetContainerItemLink(bagID, slotID)
+			if(itemLink and GetItemInfo(itemLink)) then
 				table.remove(P.query, index)
 				P.UpdateSlot(bagID, slotID, event)
 			end
