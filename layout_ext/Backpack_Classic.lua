@@ -133,7 +133,7 @@ do
 						if(line) then
 							local artifactPower = string.match(line:GetText(), '([0-9?,?.]+) ' .. ARTIFACT_POWER)
 							if(artifactPower) then
-								totalArtifactPower = totalArtifactPower + tonumber((artifactPower:gsub(',', ''):gsub('.', '')))
+								totalArtifactPower = totalArtifactPower + tonumber((artifactPower:gsub(',', ''):gsub('%.', '')))
 								break
 							end
 						end
