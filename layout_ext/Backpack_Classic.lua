@@ -180,10 +180,13 @@ end)
 
 local function OnSearchOpen(self)
 	self.Icon:Hide()
+	self:SetFrameLevel(self:GetFrameLevel() + 1)
 end
 
 local function OnSearchClosed(self)
-	self:GetParent().Icon:Show()
+	local SearchBox = self:GetParent()
+	SearchBox.Icon:Show()
+	SearchBox:SetFrameLevel(SearchBox:GetFrameLevel() - 1)
 end
 
 Backpack:On('PostCreateSearch', function(SearchBox)
