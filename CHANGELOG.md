@@ -1,3 +1,15 @@
+### Changes in 70100.9-Beta:
+
+- Added: Currency icons as a separate element
+- Added: New bagslots icon
+- Changed: Money module callbacks
+- Changed: Currency module callbacks
+- Fixed: Currencies drawn inproperly
+- Fixed: Incorrect Artifact Power counter for german clients
+- Fixed: Item link caching issues
+- Fixed: Search module drawn below Currencies and Money
+- Removed: Default positions for the Money module
+
 ### Changes in 70100.8-Beta:
 
 - Added: Position lock/unlock toggle button
