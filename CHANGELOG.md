@@ -1,3 +1,11 @@
+### Changes in 70100.10-Beta:
+
+- Added: zhTW translations (thanks to @solor)
+- Added: zhCN translations (thanks to @solor)
+- Added: koKR translations (thanks to @WetU)
+- Changed: deDE translations (thanks to @bullsei)
+- Fixed: Incorrect paths for assets (packager issue)
+
 ### Changes in 70100.9-Beta:
 
 - Added: Currency icons as a separate element
