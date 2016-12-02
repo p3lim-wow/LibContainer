@@ -19,11 +19,11 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 
 -- Container button tooltips
 L['Mark items as known'] = 'Отметить предметы как известные'
-L['Toggle auto-deposit'] = 'Включить auto-deposit'
+L['Toggle auto-deposit'] = 'Автоматически складывать материалы в банк'
 L['Toggle bag slots'] = 'Отобразить сумки'
-L['Restack'] = 'Сортировать'
-L['Restack Bank'] = 'Сортировать банк'
-L['Restack Reagent Bank'] = 'Сортировать банк реагентов'
+L['Restack'] = 'Упорядочить'
+L['Restack Bank'] = 'Упорядочить банк'
+L['Restack Reagent Bank'] = 'Упорядочить банк материалов'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
 L['Lock'] = LOCK
 L['Unlock'] = UNLOCK
@@ -34,11 +34,11 @@ L['Equip Container'] = EQUIP_CONTAINER
 
 -- Error messages
 L['Enabled category "%s"'] = 'Включить категорию "%s"'
-L['Disabled category "%s"'] = 'Выключить категорию "%s"'
+L['Disabled category "%s"'] = 'Отключить категорию "%s"'
 L['Category "%s" is already enabled'] = 'Категория "%s" уже включена'
-L['Category "%s" is already disabled'] = 'Категория "%s" уже выключена'
+L['Category "%s" is already disabled'] = 'Категория "%s" уже отключена'
 L['Can\'t disable protected category "%s"'] = 'Нельзя отключить защищеную категорию "%s"'
 L['Found no category with index %s'] = 'Не найдено категории с индексом %s'
-L['/reload for changes to take effect'] = '/reload чтобы изменения вступили в силу'
+L['/reload for changes to take effect'] = 'Введи /reload чтобы изменения вступили в силу'
 L['A layout already exists (%s)'] = 'Макет уже существует (%s)'
 L['Override for "%s" already exists'] = 'Определение для "%s" уже существует'
