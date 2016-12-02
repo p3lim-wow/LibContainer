@@ -39,6 +39,6 @@ L['Category "%s" is already enabled'] = 'Категория "%s" уже вклю
 L['Category "%s" is already disabled'] = 'Категория "%s" уже отключена'
 L['Can\'t disable protected category "%s"'] = 'Нельзя отключить защищённую категорию "%s"'
 L['Found no category with index %s'] = 'Не найдено категории с индексом %s'
-L['/reload for changes to take effect'] = 'Введите /reload чтобы изменения вступили в силу'
+L['/reload for changes to take effect'] = 'Введите /reload, чтобы изменения вступили в силу'
 L['A layout already exists (%s)'] = 'Макет уже существует (%s)'
 L['Override for "%s" already exists'] = 'Определение для "%s" уже существует'
