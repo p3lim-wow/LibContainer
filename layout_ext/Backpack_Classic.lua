@@ -94,22 +94,22 @@ Backpack:Override('UpdateSlot', function(Slot)
 	Icon:SetDesaturated(isLocked)
 
 	Slot.Count:SetText(itemCount > 1e3 and '*' or itemCount > 1 and itemCount or '')
---[[
-	local _, _, _, _, _, itemClass, itemSubClass = GetItemInfoInstant(itemID)
-	if(itemQuality >= LE_ITEM_QUALITY_UNCOMMON and (itemClass == LE_ITEM_CLASS_WEAPON or itemClass == LE_ITEM_CLASS_ARMOR or (itemClass == LE_ITEM_CLASS_GEM and itemSubClass == 11))) then
-		local ItemLevel = Slot.ItemLevel
-		ItemLevel:SetFormattedText('|c%s%s|r', hex, Slot.itemLevel)
-		ItemLevel:Show()
-	else
-		Slot.ItemLevel:Hide()
-	end
---]]
-	if(itemQuestID or questItem) then
-		Slot:SetBackdropBorderColor(1, 1, 0)
-	elseif(itemQuality >= LE_ITEM_QUALITY_UNCOMMON) then
-		Slot:SetBackdropBorderColor(r, g, b)
-	else
-		Slot:SetBackdropBorderColor(0, 0, 0)
+	if itemID then
+		local _, _, _, _, _, itemClass, itemSubClass = GetItemInfoInstant(itemID)
+		if(itemQuality >= LE_ITEM_QUALITY_UNCOMMON and (itemClass == LE_ITEM_CLASS_WEAPON or itemClass == LE_ITEM_CLASS_ARMOR or (itemClass == LE_ITEM_CLASS_GEM and itemSubClass == 11))) then
+			local ItemLevel = Slot.ItemLevel
+			ItemLevel:SetFormattedText('|c%s%s|r', hex, Slot.itemLevel)
+			ItemLevel:Show()
+		else
+			Slot.ItemLevel:Hide()
+		end
+		if(itemQuestID or questItem) then
+			Slot:SetBackdropBorderColor(1, 1, 0)
+		elseif(itemQuality >= LE_ITEM_QUALITY_UNCOMMON) then
+			Slot:SetBackdropBorderColor(r, g, b)
+		else
+			Slot:SetBackdropBorderColor(0, 0, 0)
+		end
 	end
 end)
 
