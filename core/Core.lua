@@ -225,11 +225,10 @@ end
 -- @name Backpack:Toggle
 -- @usage Backpack:Toggle([force])
 -- @param force - Boolean to force open/close the bags
-P.Expose('Toggle', function(self, force)
+P.Expose('Toggle', function(self, force, includeBank)
 	local shouldShow, shouldShowBank
 
-	local includeBank
-	if(BackpackDB.bankmodifier and _G[BackpackDB.bankmodifier]) then
+	if(not includeBank and BackpackDB.bankmodifier and _G[BackpackDB.bankmodifier]) then
 		includeBank = _G[BackpackDB.bankmodifier]()
 	end
 

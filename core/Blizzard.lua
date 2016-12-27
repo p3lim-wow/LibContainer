@@ -6,7 +6,9 @@ end
 
 ToggleAllBags = ToggleBackpack
 
-OpenAllBags = ToggleBackpack
+function OpenAllBags()
+	Backpack:Toggle(true)
+end
 
 function CloseAllBags()
 	Backpack:Toggle(false)
