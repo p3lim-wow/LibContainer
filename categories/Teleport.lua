@@ -43,6 +43,9 @@ local teleporters = {
 	95050, -- The Brassiest Knuckle
 	103678, -- Time-Lost Artifact
 	110560, -- Garrison Hearthstone
+	128353, -- Admiral's Compass
+	128502, -- Hunter's Seeking Crystal
+	128503, -- Master Hunter's Seeking Crystal
 	129276, -- Beginner's Guide to Dimensional Rifting
 	140192, -- Dalaran Hearthstone
 	141013, -- Scroll of Town Portal: Shala'nir
