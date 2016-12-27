@@ -134,6 +134,10 @@ do
 	scanTip.name = scanTip:GetName()
 
 	Backpack:HookScript('OnShow', function(self)
+		if(not BackpackCategoriesDB.categories[10].enabled) then
+			return
+		end
+
 		local totalArtifactPower = 0
 
 		for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
