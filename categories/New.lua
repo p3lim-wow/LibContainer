@@ -4,10 +4,10 @@ local categoryName = L['New Items']
 local categoryIndex = 1001
 
 local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackCustomCategory[itemID]
+	local custom = BackpackKnownItems[itemID]
 	if(custom and custom == categoryIndex) then
 		return true
-	elseif(not custom) then
+	else
 		local _, _, _, itemQuality = Backpack:GetContainerItemInfo(bagID, slotID)
 		if(itemQuality > LE_ITEM_QUALITY_POOR) then
 			-- don't mark junk as new items
@@ -23,7 +23,6 @@ local function OnClick(self)
 	for _, Slot in next, Container.slots do
 		local itemID = Slot.itemID
 		BackpackKnownItems[itemID] = true
-		BackpackCustomCategory[itemID] = nil
 	end
 
 	P.UpdateAllSlots('ResetNew')

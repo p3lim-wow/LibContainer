@@ -4,10 +4,10 @@ local categoryName = L['World Event']
 local categoryIndex = 70
 
 local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackCustomCategory[itemID]
+	local custom = BackpackKnownItems[itemID]
 	if(custom and custom == categoryIndex) then
 		return true
-	elseif(not custom) then
+	else
 		local _, _, _, _, _, itemClass, itemSubClass = GetItemInfoInstant(itemID)
 		if(itemClass == LE_ITEM_CLASS_QUESTITEM) then
 			-- quest items that is not part of, or starts, a quest can be considered holiday related

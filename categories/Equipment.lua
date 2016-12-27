@@ -4,10 +4,10 @@ local categoryName = L['Equipment']
 local categoryIndex = 30
 
 local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackCustomCategory[itemID]
+	local custom = BackpackKnownItems[itemID]
 	if(custom and custom == categoryIndex) then
 		return true
-	elseif(not custom) then
+	else
 		local cached, _, itemQuality, _, _, _, _, _, _, _, _, itemClass, itemSubClass = GetItemInfo(itemID)
 		if(cached and itemQuality >= LE_ITEM_QUALITY_UNCOMMON) then
 			if(itemClass == LE_ITEM_CLASS_WEAPON or itemClass == LE_ITEM_CLASS_ARMOR) then

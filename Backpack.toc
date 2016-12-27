@@ -3,7 +3,7 @@
 ## Version: @project-version@
 ## Title: Backpack
 ## Notes: WIP
-## SavedVariables: BackpackDB, BackpackKnownItems, BackpackCustomCategory
+## SavedVariables: BackpackDB, BackpackKnownItems
 ## SavedVariablesPerCharacter: BackpackBankDB, BackpackPosition
 ## OptionalDeps: Wasabi
 

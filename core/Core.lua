@@ -20,7 +20,6 @@ end)
 function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
 		BackpackBankDB = BackpackBankDB or {}
-		BackpackCustomCategory = BackpackCustomCategory or {}
 		BackpackKnownItems = BackpackKnownItems or {}
 
 		BackpackDB = BackpackDB or {categories={}} -- rest of defaults set by Wasabi

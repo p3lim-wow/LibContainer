@@ -64,10 +64,10 @@ local categoryName = L['Teleporters']
 local categoryIndex = 60
 
 local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackCustomCategory[itemID]
+	local custom = BackpackKnownItems[itemID]
 	if(custom and custom == categoryIndex) then
 		return true
-	elseif(not custom) then
+	else
 		local itemID = Backpack:GetContainerItemID(bagID, slotID)
 		return teleporters[itemID]
 	end
