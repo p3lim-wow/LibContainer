@@ -1,15 +1,8 @@
 local P, E = unpack(select(2, ...))
 
-local defaults = {
-	disabledCategories = {},
-	locked = true,
-	autoSellJunk = false,
-	autoDepositReagents = false,
-	containerOrder = {{},{}}, -- automatically filled on first run
-}
-
 local Backpack = CreateFrame('Frame', P.name, UIParent)
 Backpack:Hide()
+Backpack.locked = true
 P.MixinAPI(Backpack)
 
 local Bank = CreateFrame('Frame', '$parentBank', Backpack)
@@ -26,19 +19,11 @@ end)
 
 function E:ADDON_LOADED(addon)
 	if(addon == P.name) then
-		BackpackDB = BackpackDB or defaults
-		BackpackDB.locked = true -- lock on load
-
-		for key, value in next, defaults do
-			if(BackpackDB[key] == nil) then
-				BackpackDB[key] = value
-			end
-		end
-
 		BackpackBankDB = BackpackBankDB or {}
 		BackpackCustomCategory = BackpackCustomCategory or {}
 		BackpackKnownItems = BackpackKnownItems or {}
 
+		BackpackDB = BackpackDB or {categories={}} -- rest of defaults set by Wasabi
 		for _, categoryInfo in next, P.categories do
 			local categoryIndex = categoryInfo.index
 			if(not BackpackDB.disabledCategories[categoryIndex]) then
@@ -233,8 +218,13 @@ end
 -- @name Backpack:Toggle
 -- @usage Backpack:Toggle([force])
 -- @param force - Boolean to force open/close the bags
-P.Expose('Toggle', function(self, force, includeBank)
+P.Expose('Toggle', function(self, force)
 	local shouldShow, shouldShowBank
+
+	local includeBank
+	if(BackpackDB.bankmodifier and _G[BackpackDB.bankmodifier]) then
+		includeBank = _G[BackpackDB.bankmodifier]()
+	end
 
 	local isShown = self:IsShown()
 	if(((not isShown and force ~= false) or force) and not (isShown and not force)) then

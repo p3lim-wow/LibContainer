@@ -1,4 +1,6 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui'>
+	<Include file='libs\Wasabi\embed.xml'/>
+
 	<Script file='core\Private.lua'/>
 
 	<Script file='locale\initialize.lua'/>
@@ -46,4 +48,7 @@
 	<Script file='categories\ReagentBank.lua'/>
 	<Script file='categories\Teleport.lua'/>
 	<Script file='categories\TradeGoods.lua'/>
+
+	<!-- Maybe make this an external and LoD -->
+	<Script file='core\Config.lua'/>
 </Ui>

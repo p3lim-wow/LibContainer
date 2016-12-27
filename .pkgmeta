@@ -1,5 +1,13 @@
 package-as: Backpack
 
+externals:
+  libs/Wasabi:
+    url: https://github.com/p3lim-wow/Wasabi
+    tag: latest
+
+optional-dependencies:
+  - wasabi
+
 manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown

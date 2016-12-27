@@ -6,7 +6,7 @@ local defaultPositions = {
 }
 
 local function OnDragStop(self)
-	if(BackpackDB.locked) then
+	if(Backpack.locked) then
 		return
 	end
 
@@ -44,7 +44,7 @@ local function OnDragStop(self)
 end
 
 local function OnDragStart(self)
-	if(not BackpackDB.locked) then
+	if(not Backpack.locked) then
 		self:StartMoving()
 	end
 end
@@ -67,9 +67,9 @@ function P.InitializePosition(self)
 end
 
 local function OnClick(self)
-	BackpackDB.locked = not BackpackDB.locked
+	Backpack.locked = not Backpack.locked
 
-	self.tooltipText = BackpackDB.locked and L['Unlock'] or L['Lock']
+	self.tooltipText = Backpack.locked and L['Unlock'] or L['Lock']
 	self:UpdateTooltip()
 end
 

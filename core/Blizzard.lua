@@ -4,13 +4,9 @@ function ToggleBackpack()
 	Backpack:Toggle()
 end
 
-function ToggleAllBags()
-	Backpack:Toggle(nil, true)
-end
+ToggleAllBags = ToggleBackpack
 
-function OpenAllBags()
-	Backpack:Toggle(true)
-end
+OpenAllBags = ToggleBackpack
 
 function CloseAllBags()
 	Backpack:Toggle(false)

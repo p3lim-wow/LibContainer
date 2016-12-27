@@ -311,7 +311,7 @@ Backpack:On('PostCreateRestack', function(Button, SecondButton)
 end)
 
 local function OnClickToggleLock(self)
-	if(BackpackDB.locked) then
+	if(Backpack.locked) then
 		self.Texture:SetTexCoord(0, 0.25, 0.75, 1)
 		self.Texture:SetVertexColor(1, 1, 1)
 	else

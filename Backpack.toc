@@ -5,6 +5,7 @@
 ## Notes: WIP
 ## SavedVariables: BackpackDB, BackpackKnownItems, BackpackCustomCategory
 ## SavedVariablesPerCharacter: BackpackBankDB, BackpackPosition
+## OptionalDeps: Wasabi
 
 embed.xml
 
