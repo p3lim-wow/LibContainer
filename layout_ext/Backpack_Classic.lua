@@ -149,7 +149,7 @@ do
 
 					for index = 1, scanTip:NumLines() do
 						local line = _G[scanTip.name .. 'TextLeft' .. index]
-						if(line) then
+						if(line and line:GetText()) then
 							local artifactPower = string.match(line:GetText(), '([0-9?,?.]+) ' .. ARTIFACT_POWER)
 							if(artifactPower) then
 								totalArtifactPower = totalArtifactPower + tonumber((artifactPower:gsub(',', ''):gsub('%.', '')))
