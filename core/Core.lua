@@ -223,8 +223,9 @@ function P.Expose(name, reference)
 end
 
 -- @name Backpack:Toggle
--- @usage Backpack:Toggle([force])
--- @param force - Boolean to force open/close the bags
+-- @usage Backpack:Toggle([force, [includeBank]])
+-- @param force       - Boolean to force open/close the bags
+-- @param includeBank - Boolean to open "offline" bank as well
 P.Expose('Toggle', function(self, force, includeBank)
 	local shouldShow, shouldShowBank
 
