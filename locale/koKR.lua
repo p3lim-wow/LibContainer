@@ -33,12 +33,9 @@ L['Purchase'] = PURCHASE
 L['Equip Container'] = EQUIP_CONTAINER
 
 -- Error messages
-L['Enabled category "%s"'] = '"%s" 범주 사용'
-L['Disabled category "%s"'] = '"%s" 범주 사용 안함'
-L['Category "%s" is already enabled'] = '"%s" 범주는 이미 사용 중입니다'
-L['Category "%s" is already disabled'] = '"%s" 범주는 이미 사용 중이 아닙니다'
-L['Can\'t disable protected category "%s"'] = '보호된 범주 "%s"을 비활성할 수 있습니다/없습니다'
-L['Found no category with index %s'] = '색인 %s으로 범주를 찾을 수 없습니다'
-L['/reload for changes to take effect'] = '/reload 해야 변경 사항이 적용됩니다'
 L['A layout already exists (%s)'] = '배치가 이미 존재 합니다 (%s)'
 L['Override for "%s" already exists'] = '이미 존재하는 "%s"에 강제 적용'
+
+-- Config
+L['Here you can toggle categories or even create new ones!'] = 'Here you can toggle categories or even create new ones!' -- needs translation
+L['Modifier to show bank when toggling Backpack'] = 'Modifier to show bank when toggling Backpack' -- needs translation

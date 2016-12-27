@@ -33,12 +33,9 @@ L['Purchase'] = PURCHASE
 L['Equip Container'] = EQUIP_CONTAINER
 
 -- Error messages
-L['Enabled category "%s"'] = 'Enabled category "%s"' -- needs translation
-L['Disabled category "%s"'] = 'Disabled category "%s"' -- needs translation
-L['Category "%s" is already enabled'] = 'Category "%s" is already enabled' -- needs translation
-L['Category "%s" is already disabled'] = 'Category "%s" is already disabled' -- needs translation
-L['Can\'t disable protected category "%s"'] = 'Can\'t disable protected category "%s"' -- needs translation
-L['Found no category with index %s'] = 'Found no category with index %s' -- needs translation
-L['/reload for changes to take effect'] = '/reload for changes to take effect' -- needs translation
 L['A layout already exists (%s)'] = 'A layout already exists (%s)' -- needs translation
 L['Override for "%s" already exists'] = 'Override for "%s" already exists' -- needs translation
+
+-- Config
+L['Here you can toggle categories or even create new ones!'] = 'Here you can toggle categories or even create new ones!' -- needs translation
+L['Modifier to show bank when toggling Backpack'] = 'Modifier to show bank when toggling Backpack' -- needs translation

@@ -33,12 +33,9 @@ L['Purchase'] = PURCHASE
 L['Equip Container'] = EQUIP_CONTAINER
 
 -- Error messages
-L['Enabled category "%s"'] = '啟用分類 "%s"'
-L['Disabled category "%s"'] = '禁用分類 "%s"'
-L['Category "%s" is already enabled'] = '分類 "%s" 已存在'
-L['Category "%s" is already disabled'] = '分類 "%s" 已禁用'
-L['Can\'t disable protected category "%s"'] = '無法禁用受保護的分類 "%s"'
-L['Found no category with index %s'] = '無法找到分類 %s'
-L['/reload for changes to take effect'] = '輸入 /reload 來重載介面使改動生效'
 L['A layout already exists (%s)'] = '佈局已存在 (%s)'
 L['Override for "%s" already exists'] = '替代 "%s" 已存在'
+
+-- Config
+L['Here you can toggle categories or even create new ones!'] = 'Here you can toggle categories or even create new ones!' -- needs translation
+L['Modifier to show bank when toggling Backpack'] = 'Modifier to show bank when toggling Backpack' -- needs translation

@@ -23,10 +23,16 @@ function E:ADDON_LOADED(addon)
 		BackpackKnownItems = BackpackKnownItems or {}
 
 		BackpackDB = BackpackDB or {categories={}} -- rest of defaults set by Wasabi
+
+		BackpackCategoriesDB = BackpackCategoriesDB or {categories={}} -- weird, I know
 		for _, categoryInfo in next, P.categories do
 			local categoryIndex = categoryInfo.index
-			if(not BackpackDB.disabledCategories[categoryIndex]) then
-				if(categoryIndex ~= 1002) then -- no reagentbank for inventory
+			if(not BackpackCategoriesDB.categories[categoryIndex]) then
+				BackpackCategoriesDB.categories[categoryIndex] = {enabled = true}
+			end
+
+			if(BackpackCategoriesDB.categories[categoryIndex].enabled) then
+				if(categoryIndex ~= 1002) then -- no reagentbank for default inventory
 					P.CreateContainer(categoryInfo, Backpack)
 				end
 

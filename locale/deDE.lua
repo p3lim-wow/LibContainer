@@ -33,12 +33,9 @@ L['Purchase'] = PURCHASE
 L['Equip Container'] = EQUIP_CONTAINER
 
 -- Error messages
-L['Enabled category "%s"'] = 'Kategorie "%s" wurde aktiviert'
-L['Disabled category "%s"'] = 'Kategorie "%s" wurde deaktiviert'
-L['Category "%s" is already enabled'] = 'Kategorie "%s" ist bereits aktiviert'
-L['Category "%s" is already disabled'] = 'Kategorie "%s" ist bereits deaktiviert'
-L['Can\'t disable protected category "%s"'] = 'Die geschützte Kategorie "%s" kann nicht deaktiviert werden'
-L['Found no category with index %s'] = 'Es wurde keine Kategorie mit dem Index %s gefunden'
-L['/reload for changes to take effect'] = '/reload, um die Änderungen zu übernehmen'
 L['A layout already exists (%s)'] = 'Ein Layout existiert bereits (%s)'
 L['Override for "%s" already exists'] = 'Eine Überschreibung für "%s" existiert bereits'
+
+-- Config
+L['Here you can toggle categories or even create new ones!'] = 'Here you can toggle categories or even create new ones!' -- needs translation
+L['Modifier to show bank when toggling Backpack'] = 'Modifier to show bank when toggling Backpack' -- needs translation

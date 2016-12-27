@@ -55,6 +55,10 @@ function P.GetContainers(parentContainer)
 	return containers[parentContainer]
 end
 
+function P.HasContainer(parentContainer, categoryIndex)
+	return containers[parentContainer] and containers[parentContainer][categoryIndex] and true
+end
+
 function P.UpdateContainerSizes(parentContainer, forceUpdate)
 	local containers = P.GetContainers(parentContainer)
 	for categoryIndex, Container in next, containers do
@@ -133,7 +137,7 @@ function P.UpdateContainerPositions(parentContainer)
 	local visibleContainers = {}
 	for index, containerName in next, BackpackDB.containerOrder[parentContainer.type] do
 		local Container = _G[containerName]
-		if(Container:IsShown()) then
+		if(Container and Container:IsShown()) then
 			table.insert(visibleContainers, Container)
 		end
 	end
