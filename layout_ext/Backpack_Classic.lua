@@ -1,5 +1,4 @@
-local FONT = [[Interface\AddOns\Backpack_Classic\font.ttf]]
-local ICON_TEXTURES = [[Interface\AddOns\Backpack_Classic\icons]]
+local ICON_TEXTURES = [[Interface\AddOns\Backpack_Classic\assets\icons]]
 --@do-not-package@
 local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
 local ICON_TEXTURES = [[Interface\AddOns\Backpack\assets\icons]]
@@ -10,7 +9,12 @@ local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
 local function SkinContainer(Container)
 	local Title = Container:CreateFontString('$parentTitle', 'ARTWORK')
 	Title:SetPoint('TOPLEFT', 11, -10)
+	--@do-not-package@
 	Title:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	--@end-do-not-package@
+	--[===[@non-debug@
+	Title:SetFontObject('BackpackClassicFont')
+	--@end-non-debug@]===]
 	Title:SetText(Container.name)
 	Container.Title = Title
 
@@ -37,7 +41,12 @@ local function SkinSlot(Slot)
 
 	local ItemLevel = Slot:CreateFontString('$parentItemLevel', 'ARTWORK')
 	ItemLevel:SetPoint('BOTTOM', 2, 2)
+	--@do-not-package@
 	ItemLevel:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	--@end-do-not-package@
+	--[===[@non-debug@
+	ItemLevel:SetFontObject('BackpackClassicFont')
+	--@end-non-debug@]===]
 	ItemLevel:SetJustifyH('CENTER')
 	Slot.ItemLevel = ItemLevel
 
@@ -49,7 +58,12 @@ local function SkinSlot(Slot)
 
 	local Count = Slot.Count
 	Count:SetPoint('BOTTOMRIGHT', 0, 2)
+	--@do-not-package@
 	Count:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	--@end-do-not-package@
+	--[===[@non-debug@
+	Count:SetFontObject('BackpackClassicFont')
+	--@end-non-debug@]===]
 	Count:Show()
 
 	local Pushed = Slot.PushedTexture
@@ -151,14 +165,24 @@ end
 Backpack:On('PostCreateMoney', function(Money)
 	Money:ClearAllPoints()
 	Money:SetPoint('BOTTOMRIGHT', -8, 10)
+	--@do-not-package@
 	Money:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	--@end-do-not-package@
+	--[===[@non-debug@
+	Money:SetFontObject('BackpackClassicFont')
+	--@end-non-debug@]===]
 	Money:SetShadowOffset(0, 0)
 end)
 
 Backpack:On('PostCreateCurrencies', function(Currencies)
 	for index, Button in next, Currencies do
 		local Label = Button.Label
+		--@do-not-package@
 		Label:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+		--@end-do-not-package@
+		--[===[@non-debug@
+		Label:SetFontObject('BackpackClassicFont')
+		--@end-non-debug@]===]
 		Label:SetShadowOffset(0, 0)
 
 		local Icon = Button.Icon
@@ -204,7 +228,12 @@ Backpack:On('PostCreateSearch', function(SearchBox)
 	SearchBox.Icon = SearchBoxIcon
 
 	local Editbox = SearchBox.Editbox
+	--@do-not-package@
 	Editbox:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	--@end-do-not-package@
+	--[===[@non-debug@
+	Editbox:SetFontObject('BackpackClassicFont')
+	--@end-non-debug@]===]
 	Editbox:SetShadowOffset(0, 0)
 	Editbox:HookScript('OnEscapePressed', OnSearchClosed)
 

@@ -5,4 +5,6 @@
 ## Notes: Basic layout for the Backpack addon
 ## RequiredDeps: Backpack
 
+Fonts.xml
+
 Backpack_Classic.lua
