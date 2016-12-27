@@ -26,6 +26,10 @@ Options:Initialize(function(self)
 end)
 
 local categories = {categories={}} -- Gets populated by the core on first load
+local protectedCategories = {
+	[1] = true, -- Inventory
+	[1002] = true, -- Reagent Bank
+}
 
 local Categories = Options:CreateChild('Categories', 'BackpackCategoriesDB', categories)
 Categories:Initialize(function(self)
@@ -55,21 +59,13 @@ Categories:Initialize(function(self)
 	end
 
 	local OnToggleClick = function(self)
-		local categoryIndex = self:GetParent().key
-		BackpackCategoriesDB.categories[categoryIndex].enabled = not BackpackCategoriesDB.categories[categoryIndex].enabled
+		local Object = self:GetParent()
+		local Panel = Object.parent.panel
 
-		-- Have to create containers if they don't exist
-		if(not P.HasContainer(Backpack, categoryIndex)) then
-			P.CreateContainer(P.categories[categoryIndex], Backpack)
-		end
+		local info = Panel:GetVariable(Object.key, Object.parent.key)
+		info.enabled = self:GetChecked()
 
-		if(not P.HasContainer(BackpackBank, categoryIndex)) then
-			P.CreateContainer(P.categories[categoryIndex], BackpackBank)
-		end
-
-		P.UpdateAllSlots('CategoriesToggle')
-		P.PositionSlots()
-
+		Panel:SetVariable(Object.key, info, Object.parent.key)
 		OnToggleEnter(self) -- Update tooltip
 	end
 
@@ -115,7 +111,7 @@ Categories:Initialize(function(self)
 
 	Items:On('ObjectUpdate', function(self, event, Object)
 		Object:SetText(P.categories[Object.key].name)
-		Object.Toggle:SetChecked(BackpackCategoriesDB.categories[Object.key].enabled)
+		Object.Toggle:SetChecked(self.panel:GetVariable(Object.key, 'categories').enabled)
 
 		if(Object.key >= 1e2 and Object.key < 1000) then -- Any custom categories
 			Object.Delete:Enable()
@@ -123,10 +119,30 @@ Categories:Initialize(function(self)
 			Object.Delete:Disable()
 		end
 
-		if(Object.key == 1 or Object.key == 1002) then -- Inventory and ReagentBank
+		if(protectedCategories[Object.key]) then
 			Object.Toggle:Disable()
 		else
 			Object.Toggle:Enable()
 		end
 	end)
+end)
+
+Categories:On('Okay', function()
+	for categoryIndex, info in next, BackpackCategoriesDB.categories do
+		if(info.enabled and not protectedCategories[categoryIndex]) then
+			-- Have to create containers if they don't exist
+			if(not P.HasContainer(Backpack, categoryIndex)) then
+				P.CreateContainer(P.categories[categoryIndex], Backpack)
+			end
+
+			if(not P.HasContainer(BackpackBank, categoryIndex)) then
+				P.CreateContainer(P.categories[categoryIndex], BackpackBank)
+			end
+
+
+		end
+	end
+
+	P.UpdateAllSlots('CategoriesToggle')
+	P.PositionSlots()
 end)
