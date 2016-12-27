@@ -1,4 +1,4 @@
-local L = select(2, ...)[3]
+local P, E, L = unpack(select(2, ...))
 
 local categoryName = L['Equipment Sets']
 local categoryIndex = 31
@@ -8,4 +8,4 @@ local function categoryFilter(bagID, slotID, itemID)
 	return isInSet
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, 'EquipmentSets', categoryFilter)
+P.AddCategory(categoryIndex, categoryName, 'EquipmentSets', categoryFilter)

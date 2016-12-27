@@ -1,4 +1,4 @@
-local L = select(2, ...)[3]
+local P, E, L = unpack(select(2, ...))
 
 local categoryName = L['Professions']
 local categoryIndex = 50
@@ -22,4 +22,4 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, 'Professions', categoryFilter)
+P.AddCategory(categoryIndex, categoryName, 'Professions', categoryFilter)

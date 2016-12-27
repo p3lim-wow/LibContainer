@@ -76,4 +76,4 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, 'Teleporters', categoryFilter)
+P.AddCategory(categoryIndex, categoryName, 'Teleporters', categoryFilter)

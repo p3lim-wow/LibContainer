@@ -9,7 +9,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, 'ReagentBank', categoryFilter)
+P.AddCategory(categoryIndex, categoryName, 'ReagentBank', categoryFilter)
 
 local function ShouldShow(self, atBank)
 	if(self.hideOfflineBank) then

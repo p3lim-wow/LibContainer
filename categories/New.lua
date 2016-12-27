@@ -16,7 +16,7 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-Backpack:AddCategory(categoryIndex, categoryName, 'NewItems', categoryFilter)
+P.AddCategory(categoryIndex, categoryName, 'NewItems', categoryFilter)
 
 local function OnClick(self)
 	local Container = P.GetCategoryContainer(self.parentContainer, 1001)
