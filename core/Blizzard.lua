@@ -19,7 +19,7 @@ end
 ToggleBag = P.noop
 
 do
-	MainMenuBarBackpackButton:UnregisterAllEvents()
+	MainMenuBarBackpackButton:UnregisterEvent('INVENTORY_SEARCH_UPDATE')
 	BankFrame:UnregisterAllEvents()
 	ReagentBankFrame:UnregisterAllEvents()
 
