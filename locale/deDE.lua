@@ -37,5 +37,5 @@ L['A layout already exists (%s)'] = 'Ein Layout existiert bereits (%s)'
 L['Override for "%s" already exists'] = 'Eine Überschreibung für "%s" existiert bereits'
 
 -- Config
-L['Here you can toggle categories or even create new ones!'] = 'Here you can toggle categories or even create new ones!' -- needs translation
-L['Modifier to show bank when toggling Backpack'] = 'Modifier to show bank when toggling Backpack' -- needs translation
+L['Here you can toggle categories or even create new ones!'] = 'Hier kannst du Kategorien aktivieren, deaktivieren oder sogar neue erstellen!'
+L['Modifier to show bank when toggling Backpack'] = 'Modifikator zur Anzeige der Bank beim Öffnen des Rucksacks'
