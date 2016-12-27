@@ -25,6 +25,8 @@ function E:ADDON_LOADED(addon)
 		BackpackDB = BackpackDB or {categories={}} -- rest of defaults set by Wasabi
 
 		BackpackCategoriesDB = BackpackCategoriesDB or {categories={}} -- weird, I know
+		BackpackContainerOrderDB = BackpackContainerOrderDB or {{},{}}
+
 		for _, categoryInfo in next, P.categories do
 			local categoryIndex = categoryInfo.index
 			if(not BackpackCategoriesDB.categories[categoryIndex]) then

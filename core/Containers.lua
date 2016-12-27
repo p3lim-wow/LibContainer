@@ -117,7 +117,7 @@ local function UpdateContainerOrders(parentContainer)
 	for categoryIndex, Container in next, containers[parentContainer] do
 		if(categoryIndex ~= 1) then
 			local found
-			for index, containerName in next, BackpackDB.containerOrder[parentContainerType] do
+			for index, containerName in next, BackpackContainerOrderDB[parentContainerType] do
 				if(Container:GetName() == containerName) then
 					found = true
 					break
@@ -125,7 +125,7 @@ local function UpdateContainerOrders(parentContainer)
 			end
 
 			if(not found) then
-				table.insert(BackpackDB.containerOrder[parentContainerType], Container:GetName())
+				table.insert(BackpackContainerOrderDB[parentContainerType], Container:GetName())
 			end
 		end
 	end
@@ -135,7 +135,7 @@ function P.UpdateContainerPositions(parentContainer)
 	UpdateContainerOrders(parentContainer)
 
 	local visibleContainers = {}
-	for index, containerName in next, BackpackDB.containerOrder[parentContainer.type] do
+	for index, containerName in next, BackpackContainerOrderDB[parentContainer.type] do
 		local Container = _G[containerName]
 		if(Container and Container:IsShown()) then
 			table.insert(visibleContainers, Container)
