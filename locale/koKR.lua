@@ -37,5 +37,5 @@ L['A layout already exists (%s)'] = '배치가 이미 존재 합니다 (%s)'
 L['Override for "%s" already exists'] = '이미 존재하는 "%s"에 강제 적용'
 
 -- Config
-L['Here you can toggle categories or even create new ones!'] = 'Here you can toggle categories or even create new ones!' -- needs translation
-L['Modifier to show bank when toggling Backpack'] = 'Modifier to show bank when toggling Backpack' -- needs translation
+L['Here you can toggle categories or even create new ones!'] = '여기서 범주를 사용 전환하거나 새로운 것을 만들 수 있습니다!'
+L['Modifier to show bank when toggling Backpack'] = 'Backpack과 함께 은행 표시 단축키'
