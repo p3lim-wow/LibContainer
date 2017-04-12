@@ -229,8 +229,11 @@ end
 P.Expose('Toggle', function(self, force, includeBank)
 	local shouldShow, shouldShowBank
 
-	if(not includeBank and BackpackDB.bankmodifier and _G[BackpackDB.bankmodifier]) then
-		includeBank = _G[BackpackDB.bankmodifier]()
+	if(not includeBank and BackpackDB.bankmodifier) then
+		local mod = BackpackDB.bankmodifier
+		if(mod ~= 0) then
+			includeBank = _G[BackpackDB.bankmodifier]()
+		end
 	end
 
 	local isShown = self:IsShown()
