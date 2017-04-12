@@ -1,5 +1,7 @@
 package-as: Backpack
 
+enable-nolib-creation: no
+
 externals:
   libs/Wasabi:
     url: https://github.com/p3lim-wow/Wasabi
