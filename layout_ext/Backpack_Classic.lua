@@ -129,11 +129,14 @@ Backpack:Override('UpdateSlot', function(Slot)
 end)
 
 do
+	local _ARTIFACT_POWER_LOW = '([0-9,.]+) ' .. ARTIFACT_POWER
+	local _ARTIFACT_POWER_HIGH = '([0-9,.]+) ' .. SECOND_NUMBER .. ' ' .. ARTIFACT_POWER
+
 	local scanTip = CreateFrame('GameTooltip', (...) .. 'ScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
 	scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
 	scanTip.name = scanTip:GetName()
 
-	Backpack:HookScript('OnShow', function(self)
+	local function UpdateArtifactPower()
 		if(not BackpackCategoriesDB.categories[10].enabled) then
 			return
 		end
@@ -141,8 +144,8 @@ do
 		local totalArtifactPower = 0
 
 		for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-			for slotID = 1, self:GetContainerNumSlots(bagID) do
-				local itemID = self:GetContainerItemID(bagID, slotID)
+			for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
+				local itemID = Backpack:GetContainerItemID(bagID, slotID)
 				if(itemID) then
 					scanTip:SetBagItem(bagID, slotID)
 					scanTip:Show()
@@ -150,9 +153,15 @@ do
 					for index = 1, scanTip:NumLines() do
 						local line = _G[scanTip.name .. 'TextLeft' .. index]
 						if(line and line:GetText()) then
-							local artifactPower = string.match(line:GetText(), '([0-9?,?.]+) ' .. ARTIFACT_POWER)
+							local artifactPower = string.match(line:GetText(), _ARTIFACT_POWER_LOW)
 							if(artifactPower) then
-								totalArtifactPower = totalArtifactPower + tonumber((artifactPower:gsub(',', ''):gsub('%.', '')))
+								totalArtifactPower = totalArtifactPower + tonumber((artifactPower:gsub(',', '')))
+								break
+							end
+
+							artifactPower = string.match(line:GetText(), _ARTIFACT_POWER_HIGH)
+							if(artifactPower) then
+								totalArtifactPower = totalArtifactPower + (tonumber((artifactPower:gsub(',', '.'))) * 1e6)
 								break
 							end
 						end
@@ -163,6 +172,17 @@ do
 
 		local Container = BackpackContainerArtifactPower
 		Container.Title:SetFormattedText('%s |cff00ff00(%s)|r', Container.name, BreakUpLargeNumbers(totalArtifactPower))
+	end
+
+	scanTip:SetScript('OnEvent', UpdateArtifactPower)
+
+	Backpack:HookScript('OnShow', function()
+		scanTip:RegisterEvent('BAG_UPDATE_DELAYED')
+		UpdateArtifactPower()
+	end)
+
+	Backpack:HookScript('OnHide', function()
+		scanTip:UnregisterEvent('BAG_UPDATE_DELAYED')
 	end)
 end
 
