@@ -23,6 +23,10 @@ local function Update(event)
 
 			local Container = P.GetCategoryContainer(Backpack, 1e3)
 			for _, Slot in next, Container.slots do
+				if(not MerchantFrame:IsShown()) then
+					return
+				end
+
 				lastNumItems = lastNumItems + 1
 				UseContainerItem(Slot.bagID, Slot.slotID)
 			end
