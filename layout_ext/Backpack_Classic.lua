@@ -6,6 +6,35 @@ local ICON_TEXTURES = [[Interface\AddOns\Backpack\assets\icons]]
 local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {bgFile = TEXTURE, edgeFile = TEXTURE, edgeSize = 1}
 
+local normalFont = CreateFont('Backpack_ClassicFontNormal')
+normalFont:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+normalFont:SetShadowOffset(0, 0)
+
+local disabledFont = CreateFont('Backpack_ClassicFontDisabled')
+disabledFont:CopyFontObject(normalFont)
+disabledFont:SetTextColor(DISABLED_FONT_COLOR:GetRGB())
+
+local titleFont = CreateFont('Backpack_ClassicFontYellow')
+titleFont:CopyFontObject(normalFont)
+titleFont:SetTextColor(NORMAL_FONT_COLOR:GetRGB())
+
+LibDropDown:RegisterStyle('PIXEL', {
+	gap = 18,
+	padding = 8,
+	spacing = 0,
+	backdrop = {
+		bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
+		edgeFile = [[Interface\ChatFrame\ChatFrameBackground]], edgeSize = 1
+	},
+	backdropColor = CreateColor(0, 0, 0, 0.9),
+	backdropBorderColor = CreateColor(0, 0, 0),
+	normalFont = normalFont,
+	disabledFont = disabledFont,
+	titleFont = titleFont,
+})
+
+Backpack.Dropdown:SetStyle('PIXEL')
+
 local function SkinContainer(Container)
 	local Title = Container:CreateFontString('$parentTitle', 'ARTWORK')
 	Title:SetPoint('TOPLEFT', 11, -10)
