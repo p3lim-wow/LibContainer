@@ -3,6 +3,7 @@ local P, E = unpack(select(2, ...))
 local Backpack = CreateFrame('Frame', P.name, UIParent)
 Backpack:Hide()
 Backpack.locked = true
+Backpack.Dropdown = LibDropDown:CreateMenu(Backpack)
 P.MixinAPI(Backpack)
 
 local Bank = CreateFrame('Frame', '$parentBank', Backpack)

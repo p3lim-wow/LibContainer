@@ -1,6 +1,53 @@
 ﻿local P = unpack(select(2, ...))
 P.categorySlots = {}
 
+local currentSlot
+local function onMenuClick(_, categoryIndex)
+	BackpackKnownItems[currentSlot.itemID] = categoryIndex or false
+	P.UpdateAllSlots('UpdateCategory')
+	P.PositionSlots()
+end
+
+local function onSlotClick(self, button)
+	if(button == 'RightButton' and IsControlKeyDown()) then
+		if(not Backpack.Dropdown.initialized) then
+			local info = {func = onMenuClick}
+
+			info.text = 'Mark as new'
+			info.args = {false}
+			Backpack.Dropdown:AddLine(info)
+
+			info.text = 'Mark as known'
+			info.args = {true}
+			Backpack.Dropdown:AddLine(info)
+
+			Backpack.Dropdown:AddLine({isSpacer = true})
+
+			for index, data in next, P.categories do
+				if(index ~= 2 and index ~= 1001 and index ~= 1002) then
+					-- ignoring "New Items", "Erronous" and "Reagent Bank" categories
+					info.text = data.name or data.frameName
+					info.args = {index}
+
+					Backpack.Dropdown:AddLine(info)
+				end
+			end
+
+			Backpack.Dropdown:AddLine({isSpacer = true})
+
+			info.text = 'Reset category'
+			info.args = {true}
+			Backpack.Dropdown:AddLine(info)
+
+			Backpack.Dropdown.initialized = true
+		end
+
+		currentSlot = self
+		Backpack.Dropdown:SetAnchor('TOPRIGHT', self)
+		Backpack.Dropdown:Toggle()
+	end
+end
+
 local parents, slots = {}, {}
 local function CreateParent(bagID)
 	local parentContainer
@@ -36,6 +83,7 @@ function P.CreateSlot(bagID, slotID)
 	local slotName = Slot:GetName()
 
 	Slot:Hide()
+	Slot:HookScript('OnClick', onSlotClick)
 	Slot:SetID(slotID)
 	Slot.slotID = slotID
 	Slot.bagID = bagID
