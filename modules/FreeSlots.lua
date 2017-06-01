@@ -5,9 +5,7 @@ local emptySlots = {}
 local function GetFreeSlots(containerID)
 	local freeSlots = 0
 	if(containerID == BACKPACK_CONTAINER) then
-		for bagID = containerID, NUM_BAG_SLOTS do
-			freeSlots = freeSlots + Backpack:GetContainerNumFreeSlots(bagID)
-		end
+		freeSlots = CalculateTotalNumberOfFreeBagSlots()
 	elseif(containerID == BANK_CONTAINER and (P.atBank or BackpackBankDB ~= nil)) then
 		freeSlots = Backpack:GetContainerNumFreeSlots(containerID)
 
