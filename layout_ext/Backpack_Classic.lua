@@ -175,7 +175,7 @@ do
 		for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 			for slotID = 1, Backpack:GetContainerNumSlots(bagID) do
 				local itemID = Backpack:GetContainerItemID(bagID, slotID)
-				if(itemID) then
+				if(itemID and IsArtifactPowerItem(itemID)) then
 					scanTip:SetBagItem(bagID, slotID)
 					scanTip:Show()
 
