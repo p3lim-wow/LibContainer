@@ -1,4 +1,5 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui'>
+	<Script file='libs\LibStub\LibStub.lua'/>
 	<Include file='libs\Wasabi\embed.xml'/>
 
 	<Script file='core\Private.lua'/>
