@@ -1,5 +1,5 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui/'>
-	<FontFamily name='BackpackClassicFont' virtual='true'>
+	<FontFamily name='Backpack_ClassicFontNormal' virtual='true'>
 		<Member alphabet='roman'>
 			<Font font='Interface\AddOns\Backpack_Classic\assets\semplice.ttf' height='8' outline='NORMAL' monochrome='true'/>
 		</Member>
