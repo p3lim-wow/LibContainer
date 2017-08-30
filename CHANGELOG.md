@@ -1,3 +1,7 @@
+### Changes in 70300.12-Beta:
+
+- Fixed: Missing LibDropDown embed
+
 ### Changes in 70300.11-Beta:
 
 - Added: Item level on slots (#26, thanks to @bullsei)
