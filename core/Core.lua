@@ -246,6 +246,18 @@ P.Expose('Toggle', function(self, force, includeBank)
 		shouldShowBank = true
 	end
 
+	if(not P.HasParent(BACKPACK_CONTAINER)) then
+		-- BAG_UPDATE doesn't fire after reloads when the character doesn't have any additional bags.
+		-- we force update for the backpack, then for each container that has slots.
+		E.BAG_UPDATE('OnShow', BACKPACK_CONTAINER)
+
+		for bagID = 1, 4 do
+			if(GetContainerNumSlots(bagID) > 0) then
+				E.BAG_UPDATE('OnShow', bagID)
+			end
+		end
+	end
+
 	if(shouldShow or shouldShowBank) then
 		if(not isShown) then
 			P.UpdateAllSlots('OnShow')
