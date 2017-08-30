@@ -1,3 +1,8 @@
+### Changes in 70300.13-Beta:
+
+- Fixed: Missing font objects
+- Fixed: Errors after reloads for characters without bags
+
 ### Changes in 70300.12-Beta:
 
 - Fixed: Missing LibDropDown embed
