@@ -1,3 +1,22 @@
+### Changes in 70300.11-Beta:
+
+- Added: Item level on slots (#26, thanks to @bullsei)
+- Added: Option to change the bank frame modifier
+- Added: Option to toggle/delete categories (adding will come later)
+- Added: Alternative font with russian glyphs
+- Added: Custom dropdown for choosing item category per itemID (ctrl+right click a slot)
+- Added: Multiple items to the teleport category database
+- Changed: ruRU translations (thanks to @Devimax)
+- Changed: deDE translations (thanks to @bullsei)
+- Changed: koKR translations (thanks to @WetU)
+- Changed: Artifact category now uses a new API to determine item type
+- Changed: Update Interface version
+- Fixed: Slot count on MainMenuBar not updating (#19)
+- Fixed: Artifact Power total on the category frame for the layout
+- Fixed: Issues with visibility when visiting vendors and banks
+- Fixed: Issue where the auto-junk would not stop after leaving a vendor
+- Fixed: Missing libraries when installed on its own
+
 ### Changes in 70100.10-Beta:
 
 - Added: zhTW translations (thanks to @solor)
