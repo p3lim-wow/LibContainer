@@ -201,12 +201,7 @@ end
 Backpack:On('PostCreateMoney', function(Money)
 	Money:ClearAllPoints()
 	Money:SetPoint('BOTTOMRIGHT', -8, 10)
-	--@do-not-package@
-	Money:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
-	--@end-do-not-package@
-	--[===[@non-debug@
-	Money:SetFontObject('BackpackClassicFont')
-	--@end-non-debug@]===]
+	Money:SetFontObject('Backpack_ClassicFontNormal')
 	Money:SetShadowOffset(0, 0)
 end)
 
