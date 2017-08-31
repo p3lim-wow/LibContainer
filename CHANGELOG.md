@@ -1,3 +1,7 @@
+### Changes in 70300.14-Beta:
+
+- Fixed: Missing font objects (part two)
+
 ### Changes in 70300.13-Beta:
 
 - Fixed: Missing font objects
