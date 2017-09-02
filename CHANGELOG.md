@@ -1,3 +1,7 @@
+### Changes in 70300.15-Beta:
+
+- Changed: Update LibDropDown embed
+
 ### Changes in 70300.14-Beta:
 
 - Fixed: Missing font objects (part two)
