@@ -2,7 +2,7 @@
 P.categorySlots = {}
 
 local currentSlot
-local function onMenuClick(_, categoryIndex)
+local function onMenuClick(_, _, categoryIndex)
 	BackpackKnownItems[currentSlot.itemID] = categoryIndex or false
 	P.UpdateAllSlots('UpdateCategory')
 	P.PositionSlots()
