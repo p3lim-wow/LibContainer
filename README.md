@@ -12,6 +12,7 @@ It has the following features:
 - Category based, container separated system:
 	- Comes with 15 categories
 	- Can be extended with plugins
+	- Items can be assigned manually (ctrl+right click)
 - Modular features
 	- Such as _money, search, auto-vendor junk, restack_ and more
 	- Can be extended with plugins
@@ -28,7 +29,6 @@ It has the following features:
 	- Add/remove custom categories/containers
 	- Enable/disable categories and modules
 - Individual container movement
-- Menu for assigning category
 
 ## Feedback
 
