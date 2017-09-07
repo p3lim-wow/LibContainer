@@ -5,7 +5,7 @@ local categoryIndex = 20
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackKnownItems[itemID]
-	if(custom) then
+	if(custom and type(custom) == 'number') then
 		return custom == categoryIndex
 	else
 		-- any item that is part of, or starts, a quest

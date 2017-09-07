@@ -5,7 +5,7 @@ local categoryIndex = 31
 
 local function categoryFilter(bagID, slotID, itemID)
 	local custom = BackpackKnownItems[itemID]
-	if(custom) then
+	if(custom and type(custom) == 'number') then
 		return custom == categoryIndex
 	else
 		local isInSet = Backpack:GetContainerItemEquipmentSetInfo(bagID, slotID)

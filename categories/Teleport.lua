@@ -89,7 +89,7 @@ local categoryIndex = 60
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackKnownItems[itemID]
-	if(custom) then
+	if(custom and type(custom) == 'number') then
 		return custom == categoryIndex
 	else
 		local itemID = Backpack:GetContainerItemID(bagID, slotID)
