@@ -13,7 +13,13 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'Junk', categoryFilter)
+local sortFunc = function(slotA, slotB)
+	local _, _, _, _, _, _, _, _, _, _, worthA = GetItemInfo(slotA.itemID)
+	local _, _, _, _, _, _, _, _, _, _, worthB = GetItemInfo(slotB.itemID)
+	return ((worthA or 0) * slotA.itemCount) > ((worthB or 0) * slotB.itemCount)
+end
+
+P.AddCategory(categoryIndex, categoryName, 'Junk', categoryFilter, sortFunc)
 
 local lastNumItems = 0
 local function Update(event)
