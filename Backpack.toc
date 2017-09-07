@@ -7,6 +7,9 @@
 ## SavedVariablesPerCharacter: BackpackBankDB, BackpackPosition
 ## OptionalDeps: LibStub, LibDropDown, Wasabi
 
+## X-Curse-Project-ID: 102789
+## X-WoWI-ID: 16997
+
 #@do-not-package@
 ..\LibStub\LibStub.lua
 ..\LibDropDown\embed.xml
