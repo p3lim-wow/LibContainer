@@ -5,9 +5,10 @@
 ## Notes: WIP
 ## SavedVariables: BackpackDB, BackpackCategoriesDB, BackpackContainerOrderDB, BackpackKnownItems
 ## SavedVariablesPerCharacter: BackpackBankDB, BackpackPosition
-## OptionalDeps: Wasabi, LibDropDown
+## OptionalDeps: LibStub, LibDropDown, Wasabi
 
 #@do-not-package@
+..\LibStub\LibStub.lua
 ..\LibDropDown\embed.xml
 ..\Wasabi\embed.xml
 #@end-do-not-package@
