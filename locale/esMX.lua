@@ -21,6 +21,7 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Mark items as known'] = 'Mark items as known' -- needs translation
 L['Toggle auto-deposit'] = 'Toggle auto-deposit' -- needs translation
 L['Toggle bag slots'] = 'Toggle bag slots' -- needs translation
+L['Toggle auto-vendoring'] = 'Toggle auto-vendoring' -- needs translation
 L['Restack'] = 'Restack' -- needs translation
 L['Restack Bank'] = 'Restack Bank' -- needs translation
 L['Restack Reagent Bank'] = 'Restack Reagent Bank' -- needs translation

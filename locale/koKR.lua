@@ -21,6 +21,7 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Mark items as known'] = '아이템 분류 별 표시'
 L['Toggle auto-deposit'] = '자동 보관 사용 전환'
 L['Toggle bag slots'] = '가방 칸 표시 전환'
+L['Toggle auto-vendoring'] = 'Toggle auto-vendoring' -- needs translation
 L['Restack'] = '정리'
 L['Restack Bank'] = '은행 정리'
 L['Restack Reagent Bank'] = '재료 은행 정리'

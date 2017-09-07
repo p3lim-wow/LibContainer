@@ -21,6 +21,7 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Mark items as known'] = 'Отметить предметы как известные'
 L['Toggle auto-deposit'] = 'Автоматически складывать материалы в банк'
 L['Toggle bag slots'] = 'Отобразить сумки'
+L['Toggle auto-vendoring'] = 'Toggle auto-vendoring' -- needs translation
 L['Restack'] = 'Упорядочить'
 L['Restack Bank'] = 'Упорядочить банк'
 L['Restack Reagent Bank'] = 'Упорядочить банк материалов'
