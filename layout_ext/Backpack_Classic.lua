@@ -18,7 +18,7 @@ local titleFont = CreateFont('Backpack_ClassicFontYellow')
 titleFont:CopyFontObject('Backpack_ClassicFontNormal')
 titleFont:SetTextColor(NORMAL_FONT_COLOR:GetRGB())
 
-LibDropDown:RegisterStyle('PIXEL', {
+LibStub('LibDropDown'):RegisterStyle('PIXEL', {
 	gap = 18,
 	padding = 8,
 	spacing = 0,
