@@ -1,3 +1,5 @@
+local addonName = ...
+
 local ICON_TEXTURES = [[Interface\AddOns\Backpack_Classic\assets\icons]]
 --@do-not-package@
 local FONT = [[Interface\AddOns\Backpack\assets\semplice.ttf]]
@@ -18,7 +20,7 @@ local titleFont = CreateFont('Backpack_ClassicFontYellow')
 titleFont:CopyFontObject('Backpack_ClassicFontNormal')
 titleFont:SetTextColor(NORMAL_FONT_COLOR:GetRGB())
 
-LibStub('LibDropDown'):RegisterStyle('PIXEL', {
+LibStub('LibDropDown'):RegisterStyle(addonName, {
 	gap = 18,
 	padding = 8,
 	spacing = 0,
@@ -33,7 +35,7 @@ LibStub('LibDropDown'):RegisterStyle('PIXEL', {
 	titleFont = titleFont,
 })
 
-Backpack.Dropdown:SetStyle('PIXEL')
+Backpack.Dropdown:SetStyle(addonName)
 
 local function SkinContainer(Container)
 	local Title = Container:CreateFontString('$parentTitle', 'ARTWORK', 'Backpack_ClassicFontNormal')
