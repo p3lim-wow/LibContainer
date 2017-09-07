@@ -10,7 +10,6 @@ local categoryFilter = function(bagID, slotID, itemID)
 		return true
 	else
 		if(IsArtifactPowerItem(itemID)) then
-			-- pretty much unique
 			return true
 		end
 	end
