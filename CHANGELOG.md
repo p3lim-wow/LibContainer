@@ -1,3 +1,7 @@
+### Changes in 70300.17-Beta:
+
+- Fixed: Custom categories not being respected properly
+
 ### Changes in 70300.16-Beta:
 
 - Changed: Junk is now sorted by vendor value (high -> low)
