@@ -1,3 +1,9 @@
+### Changes in 70300.16-Beta:
+
+- Changed: Junk is now sorted by vendor value (high -> low)
+- Changed: ptBR translations (thanks to @Cazzbr)
+- Changed: Update LibDropDown embed
+
 ### Changes in 70300.15-Beta:
 
 - Changed: Update LibDropDown embed
