@@ -5,8 +5,8 @@ local categoryIndex = 40
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackKnownItems[itemID]
-	if(custom and custom == categoryIndex) then
-		return true
+	if(custom) then
+		return custom == categoryIndex
 	else
 		-- tradegoods/reagents
 		local _, _, _, _, _, itemClass = GetItemInfoInstant(itemID)

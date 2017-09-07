@@ -5,8 +5,8 @@ local categoryIndex = 1001
 
 local categoryFilter = function(bagID, slotID, itemID)
 	local custom = BackpackKnownItems[itemID]
-	if(custom and custom == categoryIndex) then
-		return true
+	if(custom) then
+		return custom == categoryIndex
 	else
 		local _, _, _, itemQuality = Backpack:GetContainerItemInfo(bagID, slotID)
 		if(itemQuality > LE_ITEM_QUALITY_POOR) then
