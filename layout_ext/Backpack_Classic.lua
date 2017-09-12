@@ -108,6 +108,13 @@ local function SkinSlot(Slot)
 	if(BattlePay) then
 		BattlePay:Hide()
 	end
+
+	local NewItem = Slot.NewItem
+	if(NewItem) then
+		NewItem:ClearAllPoints()
+		NewItem:SetPoint('TOPLEFT', 1, -1)
+		NewItem:SetPoint('BOTTOMRIGHT', -1, 1)
+	end
 end
 
 Backpack:AddLayout('Classic', SkinContainer, SkinSlot)
@@ -120,6 +127,18 @@ Backpack:Override('UpdateSlot', function(Slot)
 	local Icon = Slot.Icon
 	Icon:SetTexture(itemTexture)
 	Icon:SetDesaturated(isLocked)
+
+	local NewItem = Slot.NewItem
+	if(NewItem) then
+		if(itemQuality > LE_ITEM_QUALITY_POOR and C_NewItems.IsNewItem(Slot.bagID, Slot.slotID)) then
+			NewItem:SetColorTexture(r, g, b, 0.5)
+			NewItem:Show()
+			Slot.NewItemAnim:Play()
+		else
+			NewItem:Hide()
+			Slot.NewItemAnim:Stop()
+		end
+	end
 
 	Slot.Count:SetText(itemCount > 1e3 and '*' or itemCount > 1 and itemCount or '')
 	if(itemID) then
