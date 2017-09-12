@@ -44,12 +44,12 @@
 	<Script file='categories\Invalid.lua'/>
 	<Script file='categories\Inventory.lua'/>
 	<Script file='categories\Junk.lua'/>
-	<Script file='categories\New.lua'/>
 	<Script file='categories\Professions.lua'/>
 	<Script file='categories\Quests.lua'/>
 	<Script file='categories\ReagentBank.lua'/>
 	<Script file='categories\Teleport.lua'/>
 	<Script file='categories\TradeGoods.lua'/>
+	<Script file='categories\Unknown.lua'/>
 
 	<!-- Maybe make this an external and LoD -->
 	<Script file='core\Config.lua'/>
