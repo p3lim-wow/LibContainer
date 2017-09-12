@@ -1,4 +1,4 @@
-﻿local P = unpack(select(2, ...))
+﻿local P, E, L = unpack(select(2, ...))
 P.categorySlots = {}
 
 local currentSlot
@@ -13,11 +13,11 @@ local function onSlotClick(self, button)
 		if(not Backpack.Dropdown.initialized) then
 			local info = {func = onMenuClick}
 
-			info.text = 'Mark as new'
+			info.text = L['Mark as new']
 			info.args = {false}
 			Backpack.Dropdown:AddLine(info)
 
-			info.text = 'Mark as known'
+			info.text = L['Mark as known']
 			info.args = {true}
 			Backpack.Dropdown:AddLine(info)
 
@@ -35,7 +35,7 @@ local function onSlotClick(self, button)
 
 			Backpack.Dropdown:AddLine({isSpacer = true})
 
-			info.text = 'Reset category'
+			info.text = L['Reset category']
 			info.args = {true}
 			Backpack.Dropdown:AddLine(info)
 

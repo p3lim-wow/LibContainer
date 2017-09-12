@@ -19,6 +19,9 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 
 -- Container button tooltips
 L['Mark items as known'] = '标记物品为已知'
+L['Mark as new'] = 'Mark as new' -- needs translation
+L['Mark as known'] = 'Mark as known' -- needs translation
+L['Reset category'] = 'Reset category' -- needs translation
 L['Toggle auto-deposit'] = '启用材料自动存入'
 L['Toggle bag slots'] = '显示背包栏位'
 L['Toggle auto-vendoring'] = 'Toggle auto-vendoring' -- needs translation
