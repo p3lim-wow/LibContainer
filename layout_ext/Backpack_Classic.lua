@@ -114,6 +114,7 @@ local function SkinSlot(Slot)
 		NewItem:ClearAllPoints()
 		NewItem:SetPoint('TOPLEFT', 1, -1)
 		NewItem:SetPoint('BOTTOMRIGHT', -1, 1)
+		NewItem:SetBlendMode('BLEND')
 	end
 end
 
