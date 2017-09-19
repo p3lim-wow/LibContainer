@@ -99,6 +99,7 @@ function P.CreateSlot(bagID, slotID)
 	Slot.JunkIcon = Slot.JunkIcon
 	Slot.Flash = Slot.flash
 	Slot.NewItem = Slot.NewItemTexture
+	Slot.NewItemAnim = Slot.newitemglowAnim
 	Slot.BattlePay = Slot.BattlepayItemTexture
 	Slot.Cooldown = _G[slotName .. 'Cooldown']
 
@@ -214,6 +215,18 @@ function P.UpdateSlotInfo(Slot)
 	local JunkIcon = Slot.JunkIcon
 	if(JunkIcon) then
 		JunkIcon:SetShown(itemQuality == LE_ITEM_QUALITY_POOR)
+	end
+
+	local NewItem = Slot.NewItem
+	if(NewItem) then
+		if(itemQuality > LE_ITEM_QUALITY_POOR and C_NewItems.IsNewItem(Slot.bagID, Slot.slotID)) then
+			NewItem:SetAtlas(NEW_ITEM_ATLAS_BY_QUALITY[itemQuality])
+			NewItem:Show()
+			Slot.NewItemAnim:Play()
+		else
+			NewItem:Hide()
+			Slot.NewItemAnim:Stop()
+		end
 	end
 end
 
