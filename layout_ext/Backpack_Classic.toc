@@ -7,4 +7,5 @@
 
 Fonts.xml
 
+GetItemArtifactPower.lua
 Backpack_Classic.lua

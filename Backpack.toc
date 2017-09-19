@@ -19,5 +19,6 @@
 embed.xml
 
 #@do-not-package@
+layout_ext\GetItemArtifactPower.lua
 layout_ext\Backpack_Classic.lua
 #@end-do-not-package@
