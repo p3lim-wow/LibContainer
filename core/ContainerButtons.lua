@@ -11,7 +11,7 @@ function P.PositionButtons()
 				local sizeY = Container.buttonSizeY or Container.buttonSize or 16
 
 				local spacingX = Container.buttonSpacingX or Container.buttonSpacing or 4
-				local spacingY = Container.buttonSpacingY or Container.spacing or 4
+				local spacingY = Container.buttonSpacingY or Container.buttonSpacing or 4
 
 				local paddingX = Container.buttonPaddingX or Container.buttonPadding or 8
 				local paddingY = Container.buttonPaddingY or Container.buttonPadding or 6
