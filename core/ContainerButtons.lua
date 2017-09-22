@@ -5,6 +5,22 @@ local function UpdatePositions()
 	for parentContainer, containers in next, P.GetAllContainers() do
 		for categoryIndex, Container in next, containers do
 			if(Container.buttons) then
+				local anchorPoint = Container.buttonAnchorPoint or 'TOPRIGHT'
+
+				local sizeX = Container.buttonSizeX or Container.buttonSize or 16
+				local sizeY = Container.buttonSizeY or Container.buttonSize or 16
+
+				local spacingX = Container.buttonSpacingX or Container.buttonSpacing or 4
+				local spacingY = Container.buttonSpacingY or Container.spacing or 4
+
+				local paddingX = Container.buttonPaddingX or Container.buttonPadding or 8
+				local paddingY = Container.buttonPaddingY or Container.buttonPadding or 6
+
+				local growX = Container.buttonGrowX == 'RIGHT' and 1 or -1
+				local growY = Container.buttonGrowY == 'UP' and 1 or -1
+
+				local cols = Container.columns or 4
+
 				local index = 1
 				for _, Button in next, Container.buttons do
 					local shouldShow
@@ -17,8 +33,11 @@ local function UpdatePositions()
 					Button:SetShown(shouldShow)
 
 					if(Button:IsShown()) then
+						local col = (index - 1) % cols
+						local row = math.floor((index - 1) / cols)
+
 						Button:ClearAllPoints()
-						Button:SetPoint('TOPRIGHT', -8 - (20 * (index - 1)), -6)
+						Button:SetPoint(anchorPoint, (paddingX + (sizeX + spacingX) * col) * growX, (paddingY + (sizeY + spacingY) * row) * growY)
 
 						index = index + 1
 					end
@@ -40,8 +59,11 @@ function P.CreateContainerButton(name, categoryIndex, forBank)
 	local parentContainer = forBank and BackpackBank or Backpack
 	local Parent = P.GetCategoryContainer(parentContainer, categoryIndex)
 
+	local sizeX = Parent.buttonSizeX or Parent.buttonSize or 16
+	local sizeY = Parent.buttonSizeY or Parent.buttonSize or 16
+
 	local Button = CreateFrame('Button', '$parent' .. name, Parent)
-	Button:SetSize(16, 16)
+	Button:SetSize(sizeX, sizeY)
 	Button:SetScript('OnEnter', ShowTooltip)
 	Button:SetScript('OnLeave', GameTooltip_Hide)
 	Button.hideOfflineBank = forBank
