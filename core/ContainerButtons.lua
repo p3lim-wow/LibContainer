@@ -1,7 +1,7 @@
 local P, E, L = unpack(select(2, ...))
 
 local atBank
-local function UpdatePositions()
+function P.PositionButtons()
 	for parentContainer, containers in next, P.GetAllContainers() do
 		for categoryIndex, Container in next, containers do
 			if(Container.buttons) then
@@ -82,23 +82,23 @@ function P.CreateContainerButton(name, categoryIndex, forBank)
 	end
 
 	table.insert(Parent.buttons, Button)
-	UpdatePositions()
+	P.PositionButtons()
 
 	return Button
 end
 
-BackpackBank:HookScript('OnShow', UpdatePositions)
+BackpackBank:HookScript('OnShow', P.PositionButtons)
 
 function E:BANKFRAME_OPENED()
 	atBank = true
-	UpdatePositions()
+	P.PositionButtons()
 end
 
 function E:BANKFRAME_CLOSED()
 	atBank = false
-	UpdatePositions()
+	P.PositionButtons()
 end
 
 function E:REAGENTBANK_PURCHASED()
-	UpdatePositions()
+	P.PositionButtons()
 end
