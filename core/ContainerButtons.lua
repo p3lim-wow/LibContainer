@@ -102,3 +102,18 @@ end
 function E:REAGENTBANK_PURCHASED()
 	P.PositionButtons()
 end
+
+-- @name Backpack:CreateContainerButton
+-- @usage button = Backpack:CreateContainerButton(name, categoryIndex[, forBank])
+-- @param name          - description
+-- @param categoryIndex - description
+-- @param forBank       - description (optional)
+-- @return button       - Button
+P.Expose('CreateContainerButton', function(_, name, categoryIndex, forBank)
+	assert(name, 'Missing required parameter "name".')
+	assert(type(name) == 'string', 'Parameter "name" must be a string.')
+	assert(categoryIndex, 'Missing required parameter "categoryIndex".')
+	assert(type(categoryIndex) == 'number', 'Parameter "categoryIndex" must be a number.')
+
+	return P.CreateContainerButton(name, categoryIndex, forBank)
+end)
