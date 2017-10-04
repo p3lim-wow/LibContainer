@@ -33,8 +33,11 @@ local function Update(event)
 					return
 				end
 
-				lastNumItems = lastNumItems + 1
-				UseContainerItem(Slot.bagID, Slot.slotID)
+				local _, _, _, _, _, _, _, _, noValue = Backpack:GetContainerItemInfo(Slot.bagID, Slot.slotID)
+				if(not noValue) then
+					lastNumItems = lastNumItems + 1
+					UseContainerItem(Slot.bagID, Slot.slotID)
+				end
 			end
 		end
 	end
