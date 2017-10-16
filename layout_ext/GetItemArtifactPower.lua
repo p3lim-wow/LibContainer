@@ -12,15 +12,15 @@ local MULTS_BILLION = {
 	zhTW = 1e8,
 }
 
-local PATTERN = '(%d+[%p%s]?%d*)%s?'
+local PATTERN = '(%d+[%p%s]?%d*)%s-'
 local WORDS_MILLION = {
-	deDE = 'Millione?n?',
+	deDE = 'Million',
 	enGB = 'million',
 	enUS = 'million',
 	esES = 'mill',
 	esMX = 'mill',
-	frFR = 'millions?',
-	itIT = 'milion[ei]',
+	frFR = 'million',
+	itIT = 'milion',
 	koKR = '만',
 	ptBR = 'milh',
 	ruRU = 'млн',
@@ -29,13 +29,13 @@ local WORDS_MILLION = {
 }
 
 local WORDS_BILLION = {
-	deDE = 'Milliarden?',
+	deDE = 'Milliarde',
 	enGB = 'billion',
 	enUS = 'billion',
 	esES = 'mil millones',
 	esMX = 'mil millones',
-	frFR = 'milliards?',
-	itIT = 'mil[ai][ar][dr][di][io]?',
+	frFR = 'milliard',
+	itIT = 'mil[ai][ar][dr][di]',
 	koKR = '억',
 	ptBR = 'bilh',
 	ruRU = 'млрд',
@@ -44,7 +44,6 @@ local WORDS_BILLION = {
 }
 
 local locale = GetLocale()
-local WORD_ARTIFACT = '(%d+[%p%s]?%d*)%s-'
 local WORD_MILLION = PATTERN .. WORDS_MILLION[locale]
 local WORD_BILLION = PATTERN .. WORDS_BILLION[locale]
 local MULT_MILLION = MULTS_MILLION[locale] or 1e6
@@ -87,7 +86,7 @@ function GetItemArtifactPower(item)
 				return tonumber(value:gsub(SPACE, EMPTY):gsub(COMMA, PUNCT), nil) * MULT_MILLION
 			end
 
-			value = text:match(WORD_ARTIFACT)
+			value = text:match(PATTERN)
 			if(value) then
 				return tonumber(value:gsub(COMBI, EMPTY), nil)
 			end
