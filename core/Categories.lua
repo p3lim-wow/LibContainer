@@ -100,3 +100,20 @@ P.Expose('AddCategory', function(_, index, name, frameName, filterFunc, sortFunc
 
 	return P.AddCategory(index, name, frameName, filterFunc, sortFunc)
 end)
+
+-- @name Backpack:GetCategory
+-- @usage info = Backpack:GetCategory(bagID, slotID, itemID)
+-- @param bagID  - Bag ID
+-- @param slotID - Slot ID
+-- @param itemID - Item ID
+-- @return info  - Table containing information about the category
+P.Expose('GetCategory', function(_, bagID, slotID, itemID)
+	assert(bagID, 'Missing required parameter "bagID"')
+	assert(type(bagID) == 'number', 'Parameter "bagID" must be a number.')
+	assert(slotID, 'Missing required parameter "slotID"')
+	assert(type(slotID) == 'number', 'Parameter "slotID" must be a number.')
+	assert(itemID, 'Missing required parameter "itemID"')
+	assert(type(itemID) == 'number', 'Parameter "itemID" must be a number.')
+
+	return P.GetCategory(bagID, slotID, itemID)
+end)
