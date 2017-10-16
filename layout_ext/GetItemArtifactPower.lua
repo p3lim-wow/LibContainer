@@ -60,17 +60,7 @@ local scanTip = CreateFrame('GameTooltip', scanTipName, nil, 'GameTooltipTemplat
 scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
 
 local text, value
-function GetItemArtifactPower(item)
-	if(not item or not IsArtifactPowerItem(item)) then
-		return
-	end
-
-	if(type(item) == 'string') then
-		scanTip:SetHyperlink(item)
-	else
-		scanTip:SetItemByID(item)
-	end
-
+local function ParseTip()
 	scanTip:Show()
 
 	for index = 3, scanTip:NumLines() do
@@ -94,6 +84,29 @@ function GetItemArtifactPower(item)
 	end
 end
 
+function GetItemArtifactPower(item)
+	if(not item or not IsArtifactPowerItem(item)) then
+		return
+	end
+
+	if(type(item) == 'string') then
+		-- BUG: 7.3.2, client fails to redraw tooltips set by SetHyperlink
+		scanTip:ClearLines()
+		scanTip:SetHyperlink(item)
+	else
+		scanTip:SetItemByID(item)
+	end
+
+	return ParseTip()
+end
+
 function GetContainerItemArtifactPower(bagID, slotID)
-	return GetItemArtifactPower(GetContainerItemID(bagID, slotID))
+	local itemID = GetContainerItemID(bagID, slotID)
+	if(not itemID or not IsArtifactPowerItem(itemID)) then
+		return
+	end
+
+	scanTip:SetBagItem(bagID, slotID)
+
+	return ParseTip()
 end
