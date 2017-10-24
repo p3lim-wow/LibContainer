@@ -42,7 +42,7 @@ function P.GetCategory(bagID, slotID, itemID)
 	end
 end
 
-function P.AddCategory(index, name, frameName, filterFunc, sortFunc)
+function P.AddCategory(index, name, frameName, filterFunc, sortFunc, isAddOn)
 	P.categories[index] = {
 		index = index,
 		name = name,
@@ -50,6 +50,17 @@ function P.AddCategory(index, name, frameName, filterFunc, sortFunc)
 		filterFunc = filterFunc or defaultFilter,
 		sortFunc = sortFunc or defaultSort,
 	}
+
+	if(isAddOn) then
+		if(not BackpackCategoriesDB.categories[index]) then
+			BackpackCategoriesDB.categories[index] = {enabled = true}
+		end
+
+		if(BackpackCategoriesDB.categories[index].enabled) then
+			P.CreateContainer(P.categories[index], Backpack)
+			P.CreateContainer(P.categories[index], BackpackBank)
+		end
+	end
 
 	return P.categories[index]
 end
@@ -98,7 +109,7 @@ P.Expose('AddCategory', function(_, index, name, frameName, filterFunc, sortFunc
 		assert(type(sortFunc) == 'function', string.format('Parameter "sortFunc" for category "%s" must be a function.', frameName or name))
 	end
 
-	return P.AddCategory(index, name, frameName, filterFunc, sortFunc)
+	return P.AddCategory(index, name, frameName, filterFunc, sortFunc, true)
 end)
 
 -- @name Backpack:GetCategory
