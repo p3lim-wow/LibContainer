@@ -269,6 +269,8 @@ function P.UpdateAllSlots(event)
 	if(P.HasParent(REAGENTBANK_CONTAINER) and IsReagentBankUnlocked()) then
 		P.UpdateContainerSlots(REAGENTBANK_CONTAINER, event)
 	end
+
+	P.Fire('PostUpdateAllSlots', event)
 end
 
 function P.InitializeAllSlots(bagID)
