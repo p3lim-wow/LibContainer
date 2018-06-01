@@ -6,21 +6,21 @@ L['Collections'] = COLLECTIONS
 L['Consumables'] = BAG_FILTER_CONSUMABLES
 L['Equipment'] = BAG_FILTER_EQUIPMENT
 L['Equipment Sets'] = 'Ausrüstungssets'
-L['World Event'] = BATTLE_PET_SOURCE_7
 L['Erroneous'] = 'Ungültig'
 L['Inventory'] = INVENTORY_TOOLTIP
 L['Junk'] = BAG_FILTER_JUNK
-L['New Items'] = 'Neue Gegenstände'
 L['Professions'] = TRADE_SKILLS
 L['Quests Items'] = AUCTION_CATEGORY_QUEST_ITEMS
 L['Reagent Bank'] = REAGENT_BANK
 L['Teleporters'] = 'Teleporter'
 L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
+L['Unknown Items'] = 'Unknown Items' -- needs translation
+L['World Event'] = BATTLE_PET_SOURCE_7
 
 -- Container button tooltips
 L['Mark items as known'] = 'Gegenstände als bekannt markieren'
-L['Mark as new'] = 'Mark as new' -- needs translation
 L['Mark as known'] = 'Mark as known' -- needs translation
+L['Mark as unknown'] = 'Mark as unknown' -- needs translation
 L['Reset category'] = 'Reset category' -- needs translation
 L['Toggle auto-deposit'] = 'Automatische Einlagerung ein-/ausschalten'
 L['Toggle bag slots'] = 'Taschenplätze umschalten'

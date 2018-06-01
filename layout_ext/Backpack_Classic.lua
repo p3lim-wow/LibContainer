@@ -310,7 +310,7 @@ Backpack:On('PostCreateSellJunk', function(Button)
 	OnClickSellJunk(Button)
 end)
 
-Backpack:On('PostCreateResetNew', function(Button)
+Backpack:On('PostCreateResetUnknown', function(Button)
 	Button.Texture:SetTexCoord(0.75, 1, 0, 0.25)
 end)
 

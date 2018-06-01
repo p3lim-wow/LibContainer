@@ -13,7 +13,7 @@ local function onSlotClick(self, button)
 		if(not Backpack.Dropdown.initialized) then
 			local info = {func = onMenuClick}
 
-			info.text = L['Mark as new']
+			info.text = L['Mark as unknown']
 			info.args = {false}
 			Backpack.Dropdown:AddLine(info)
 
@@ -25,7 +25,7 @@ local function onSlotClick(self, button)
 
 			for index, data in next, P.categories do
 				if(index ~= 2 and index ~= 1001 and index ~= 1002) then
-					-- ignoring "New Items", "Erronous" and "Reagent Bank" categories
+					-- ignoring "Unknown Items", "Erronous" and "Reagent Bank" categories
 					info.text = data.name or data.frameName
 					info.args = {index}
 
