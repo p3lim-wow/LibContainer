@@ -274,7 +274,7 @@ function P.UpdateAllSlots(event)
 end
 
 function P.InitializeAllSlots(bagID)
-	local numSlots = 16
+	local numSlots = GetContainerNumSlots(BACKPACK_CONTAINER)
 	if(bagID == -1) then
 		numSlots = 28
 	elseif(bagID == -3) then
