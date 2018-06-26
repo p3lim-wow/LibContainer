@@ -1,42 +1,38 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'New'
+local name = 'New Items'
+local index = 997 -- as high as possible
 
-local categoryName = L['New Items']
-local categoryIndex = 1001
+local locale = GetLocale()
+if(locale == 'deDE') then
+	name = 'Neue Gegenstände'
+elseif(locale == 'esES') then
+	-- MISSING TRANSLATION
+elseif(locale == 'esMX') then
+	-- MISSING TRANSLATION
+elseif(locale == 'frFR') then
+	-- MISSING TRANSLATION
+elseif(locale == 'itIT') then
+	-- MISSING TRANSLATION
+elseif(locale == 'koKR') then
+	name = '새로운 아이템'
+elseif(locale == 'ptBR') then
+	name = 'Novos Itens'
+elseif(locale == 'ruRU') then
+	name = 'Новые предметы'
+elseif(locale == 'zhCN') then
+	name = '新物品'
+elseif(locale == 'zhTW') then
+	name = '新物品'
+end
 
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	if(custom and type(custom) == 'string') then
+		return custom == key
 	else
-		local _, _, _, itemQuality = Backpack:GetContainerItemInfo(bagID, slotID)
-		if(itemQuality > LE_ITEM_QUALITY_POOR) then
-			-- don't mark junk as new items
-			return not BackpackKnownItems[itemID]
-		end
+		-- don't mark junk as new
+		return Slot:GetItemQuality() > LE_ITEM_QUALITY_POOR
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'NewItems', categoryFilter)
-
-local function OnClick(self)
-	local Container = P.GetCategoryContainer(self.parentContainer, 1001)
-	for _, Slot in next, Container.slots do
-		local itemID = Slot.itemID
-		BackpackKnownItems[itemID] = true
-	end
-
-	P.UpdateAllSlots('ResetNew')
-	P.PositionSlots()
-end
-
-local function Init(self, isBank)
-	local Button = P.CreateContainerButton('ResetNew', categoryIndex, isBank)
-	Button:SetScript('OnClick', OnClick)
-	Button.tooltipText = L['Mark items as known']
-	Button.parentContainer = self
-	self.ResetNew = Button
-
-	P.Fire('PostCreateResetNew', Button)
-end
-
-Backpack:AddModule('ResetNew', Init, nil, true)
+LibContainer:AddCategory(index, key, name, filter)

@@ -1,25 +1,24 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'Professions'
+local name = TRADE_SKILLS -- "Professions"
+local index = 50
 
-local categoryName = L['Professions']
-local categoryIndex = 50
-
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	if(custom and type(custom) == 'string') then
+		return custom == key
 	else
-		local _, _, _, _, _, itemClass, itemSubClass = GetItemInfoInstant(itemID)
+		local itemClass = Slot:GetItemClass()
+		local itemSubClass = Slot:GetItemSubClass()
 		if(itemClass == LE_ITEM_CLASS_CONSUMABLE and itemSubClass == 0) then
 			-- engineering explosives and devices
 			return true
 		elseif(itemClass == LE_ITEM_CLASS_RECIPE) then
-			-- recipes
 			return true
 		elseif(itemClass == LE_ITEM_CLASS_CONTAINER and itemSubClass ~= 1) then
-			-- profession bags except for warlock soulshards (not that they exist any more)
+			-- profession bags
 			return true
 		end
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'Professions', categoryFilter)
+LibContainer:AddCategory(index, key, name, filter)

@@ -1,7 +1,44 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'Teleport'
+local name = 'Teleporters'
+local index = 60
 
--- custom list of any items that provide teleporting, because they deserve their own category
-local teleporters = {
+local locale = GetLocale()
+if(locale == 'deDE') then
+	name = 'Teleporter'
+elseif(locale == 'esES') then
+	-- MISSING TRANSLATION
+elseif(locale == 'esMX') then
+	-- MISSING TRANSLATION
+elseif(locale == 'frFR') then
+	-- MISSING TRANSLATION
+elseif(locale == 'itIT') then
+	-- MISSING TRANSLATION
+elseif(locale == 'koKR') then
+	name = '순간이동기'
+elseif(locale == 'ptBR') then
+	name = 'Teleportes'
+elseif(locale == 'ruRU') then
+	name = 'Телепортаторы'
+elseif(locale == 'zhCN') then
+	name = '传送'
+elseif(locale == 'zhTW') then
+	name = '傳送'
+end
+
+local teleporters
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	if(custom and type(custom) == 'string') then
+		return custom == key
+	else
+		return teleporters[Slot.itemID]
+	end
+end
+
+LibContainer:AddCategory(index, key, name, filter)
+
+-- custom list of any items that provide teleportation, because they deserve their own category
+teleporters = {
 	-- Quest/achievement rewards
 	[21711] = true, -- Lunar Festival Invitation
 	[35230] = true, -- Darnarian's Scroll of Teleportation
@@ -84,18 +121,3 @@ local teleporters = {
 	[141016] = true, -- Scroll of Town Portal: Faronaar
 	[141017] = true, -- Scroll of Town Portal: Lian'tril
 }
-
-local categoryName = L['Teleporters']
-local categoryIndex = 60
-
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
-	else
-		local itemID = Backpack:GetContainerItemID(bagID, slotID)
-		return teleporters[itemID]
-	end
-end
-
-P.AddCategory(categoryIndex, categoryName, 'Teleporters', categoryFilter)

@@ -1,32 +1,33 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'Collections'
+local name = COLLECTIONS -- "Collections"
+local index = 80
 
-local categoryName = L['Collections']
-local categoryIndex = 80
-
-local scanTip = CreateFrame('GameTooltip', P.name .. 'ScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
+local scanTip = CreateFrame('GameTooltip', 'LibContainerScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
 scanTip:SetOwner(WorldFrame, 'ANCHOR_NONE')
-scanTip.name = scanTip:GetName()
+local scanTipName = scanTip:GetName()
 
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
+	if(custom and type(custom) == 'string') then
+		return custom == key
 	else
-		local _, _, _, _, _, itemClass, itemSubClass = GetItemInfoInstant(itemID)
+		local itemClass = Slot:GetItemClass()
 		if(itemClass == LE_ITEM_CLASS_BATTLEPET) then
 			-- caged battlepets
 			return true
 		elseif(itemClass == LE_ITEM_CLASS_MISCELLANEOUS) then
+			local itemSubClass = Slot:GetItemSubClass()
 			if(itemSubClass == 2 or itemSubClass == 5) then
 				-- uncaged battlepets and mounts
 				return true
 			elseif(itemSubClass == 4) then
 				-- toys
-				scanTip:SetBagItem(bagID, slotID)
+				-- return not not (C_ToyBox.GetToyInfo(Slot:GetItemID())) -- returns data for non-toys, confirmed will be fixed soon™
+				scanTip:SetBagItem(Slot:GetBagAndSlot())
 				scanTip:Show()
 
 				for index = 1, scanTip:NumLines() do
-					local line = _G[scanTip.name .. 'TextLeft' .. index]
+					local line = _G[scanTipName .. 'TextLeft' .. index]
 					if(line and line:GetText() == TOY) then -- "Toy"
 						return true
 					end
@@ -36,4 +37,4 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'Collections', categoryFilter)
+LibContainer:AddCategory(index, key, name, filter)

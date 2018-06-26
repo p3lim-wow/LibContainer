@@ -1,17 +1,15 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'Quests'
+local name = AUCTION_CATEGORY_QUEST_ITEMS -- "Quest Items"
+local index = 20
 
-local categoryName = L['Quests Items']
-local categoryIndex = 20
-
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	if(custom and type(custom) == 'string') then
+		return custom == key
 	else
 		-- any item that is part of, or starts, a quest
-		local isQuest, questID = Backpack:GetContainerItemQuestInfo(bagID, slotID)
-		return questID or isQuest
+		return Slot:GetItemQuestID() or Slot:IsItemQuestItem()
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'QuestItems', categoryFilter)
+LibContainer:AddCategory(index, key, name, filter)

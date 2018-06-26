@@ -1,18 +1,14 @@
--- flavor of the expansion, gets their own category
-local P, E, L = unpack(select(2, ...))
+local key = 'ArtifactPower'
+local name = ARTIFACT_POWER -- "Artifact Power"
+local index = 100
 
-local categoryName = L['Artifact Power']
-local categoryIndex = 10
-
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
+	if(custom and type(custom) == 'string') then
+		return custom == key
 	else
-		if(IsArtifactPowerItem(itemID)) then
-			return true
-		end
+		return IsArtifactPowerItem(Slot:GetItemID())
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'ArtifactPower', categoryFilter)
+LibContainer:AddCategory(index, key, name, filter)

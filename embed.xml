@@ -1,56 +1,42 @@
-<Ui xmlns='http://www.blizzard.com/wow/ui'>
-	<Script file='libs\LibStub\LibStub.lua'/>
-	<Include file='libs\LibDropDown\embed.xml'/>
-	<Include file='libs\Wasabi\embed.xml'/>
+<Ui>
+	<Script file='core/Init.lua'/>
+	<Script file='core/Constants.lua'/>
 
-	<Script file='core\Private.lua'/>
+	<Script file='mixins/Events.lua'/>
+	<Script file='mixins/Callback.lua'/>
+	<Script file='mixins/Parent.lua'/>
+	<Script file='mixins/Bag.lua'/>
+	<Script file='mixins/Slot.lua'/>
+	<Script file='mixins/Containers.lua'/>
 
-	<Script file='locale\initialize.lua'/>
-	<Script file='locale\deDE.lua'/>
-	<Script file='locale\esES.lua'/>
-	<Script file='locale\esMX.lua'/>
-	<Script file='locale\frFR.lua'/>
-	<Script file='locale\itIT.lua'/>
-	<Script file='locale\koKR.lua'/>
-	<Script file='locale\ptBR.lua'/>
-	<Script file='locale\ruRU.lua'/>
-	<Script file='locale\zhCN.lua'/>
-	<Script file='locale\zhTW.lua'/>
+	<Script file='core/Private.lua'/>
 
-	<Script file='core\EventHandler.lua'/>
-	<Script file='core\ContainerAPI.lua'/>
-	<Script file='core\Core.lua'/>
-	<Script file='core\Categories.lua'/>
-	<Script file='core\Containers.lua'/>
-	<Script file='core\ContainerButtons.lua'/>
-	<Script file='core\Modules.lua'/>
-	<Script file='core\Slots.lua'/>
-	<Script file='core\Position.lua'/>
-	<Script file='core\Blizzard.lua'/>
+	<Script file='core/Categories.lua'/>
+	<Script file='categories/Artifact.lua'/>
+	<Script file='categories/Azerite.lua'/>
+	<Script file='categories/Collections.lua'/>
+	<Script file='categories/Consumables.lua'/>
+	<Script file='categories/Equipment.lua'/>
+	<Script file='categories/EquipmentSets.lua'/>
+	<Script file='categories/Events.lua'/>
+	<Script file='categories/Invalid.lua'/>
+	<Script file='categories/Inventory.lua'/>
+	<Script file='categories/Junk.lua'/>
+	<Script file='categories/New.lua'/>
+	<Script file='categories/Professions.lua'/>
+	<Script file='categories/Quests.lua'/>
+	<Script file='categories/ReagentBank.lua'/>
+	<Script file='categories/Teleport.lua'/>
+	<Script file='categories/TradeGoods.lua'/>
 
-	<Script file='modules\Restack.lua'/>
-	<Script file='modules\BagSlots.lua'/>
-	<Script file='modules\Currencies.lua'/>
-	<Script file='modules\FreeSlots.lua'/>
-	<Script file='modules\Money.lua'/>
-	<Script file='modules\Search.lua'/>
-
-	<Script file='categories\Artifact.lua'/>
-	<Script file='categories\Collections.lua'/>
-	<Script file='categories\Consumables.lua'/>
-	<Script file='categories\Equipment.lua'/>
-	<Script file='categories\EquipmentSets.lua'/>
-	<Script file='categories\Events.lua'/>
-	<Script file='categories\Invalid.lua'/>
-	<Script file='categories\Inventory.lua'/>
-	<Script file='categories\Junk.lua'/>
-	<Script file='categories\New.lua'/>
-	<Script file='categories\Professions.lua'/>
-	<Script file='categories\Quests.lua'/>
-	<Script file='categories\ReagentBank.lua'/>
-	<Script file='categories\Teleport.lua'/>
-	<Script file='categories\TradeGoods.lua'/>
-
-	<!-- Maybe make this an external and LoD -->
-	<Script file='core\Config.lua'/>
+<!--
+	<Script file='core/Widgets.lua'/>
+	<Script file='widgets/Bags.lua'/>
+	<Script file='widgets/Currencies.lua'/>
+	<Script file='widgets/FreeSlots.lua'/>
+	<Script file='widgets/Money.lua'/>
+	<Script file='widgets/Restack.lua'/>
+	<Script file='widgets/Search.lua'/>
+-->
 </Ui>
+

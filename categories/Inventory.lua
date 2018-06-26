@@ -1,9 +1,10 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'Inventory'
+local name = INVENTORY_TOOLTIP -- "Inventory"
+local index = 1 -- as low as possible
 
-local categoryName = L['Inventory']
-
-local categoryFilter = function(bagID, slotID)
-	return true -- default path
+local filter = function(Slot)
+	-- default path
+	return true
 end
 
-P.AddCategory(1, categoryName, 'Inventory', categoryFilter)
+LibContainer:AddCategory(index, key, name, filter)

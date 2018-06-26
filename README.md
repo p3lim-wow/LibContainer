@@ -1,40 +1,33 @@
-# Backpack
+# LibContainer
 
-This is an addon for the popular MMORPG "World of Warcraft".  
-It can be downloaded at [Curse](//mods.curse.com/addons/wow/backpack) or at [WoWInterface](//wowinterface.com/downloads/info16997).
+This is a library addon for the popular MMORPG "World of Warcraft".
+It is not designed to be run as an addon by itself, it _must be embedded_.
 
 ## Description
 
-Backpack is a (work in progress) category-based bag addon.
+This is a container framework for creating bag addons. It takes away all the logic needed to process the information regardings bags and slots, and leaves the developer with a framework that is easy to work with to implement the design.
 
-It has the following features:
+Features:
+- Containers (bags)
+- Slots
+- Categories
 
-- Category based, container separated system:
-	- Comes with 15 categories
-	- Can be extended with plugins
-	- Items can be assigned manually (ctrl+right click)
-- Modular features
-	- Such as _money, search, auto-vendor junk, restack_ and more
-	- Can be extended with plugins
-- Skinnable
-	- Comes with a clean, pixel-perfect skin
-	- Can be replaced through plugins
-- Movable
-- Bank (can be viewed from afar)
-- Reagent Bank (as a category for the bank)
+Future:
+- Currencies
+- Bank
+- Searching
+- Widgets
+- Positioning
 
-### Planned features
+As this is intended to be an embedded framework, please see the [embedding guide](//github.com/p3lim-wow/LibContainer/wiki/Embedding) on how to get started.
 
-- Configuration
-	- Add/remove custom categories/containers
-	- Enable/disable categories and modules
-- Individual container movement
+The [wiki](//github.com/p3lim-wow/LibContainer/wiki) has information on how to use this framework.  
+Also, see the [tests](//github.com/p3lim-wow/LibContainer/tree/master/tests) directory for examples.
 
 ## Feedback
 
-If you have a question, please use the comments section on Curse/WoWInterface.  
-If you would like to report a bug or contribute to the project, please follow [this link](//github.com/p3lim-wow/Backpack/issues?q=) to get started.
+If you would like to report a bug or contribute to the project, please follow [this link](//github.com/p3lim-wow/LibContainer/issues?q=) to get started.
 
 ## Legal
 
-Please see the [LICENSE](//github.com/p3lim-wow/Backpack/blob/master/LICENSE.txt) file.
+Please see the [LICENSE](//github.com/p3lim-wow/LibContainer/blob/master/LICENSE.txt) file.

@@ -1,14 +1,14 @@
-local P, E, L = unpack(select(2, ...))
+local key = 'Consumables'
+local name = BAG_FILTER_CONSUMABLES -- "Consumables"
+local index = 41
 
-local categoryName = L['Consumables']
-local categoryIndex = 41
-
-local categoryFilter = function(bagID, slotID, itemID)
-	local custom = BackpackKnownItems[itemID]
-	if(custom and type(custom) == 'number') then
-		return custom == categoryIndex
+local filter = function(Slot)
+	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
+	if(custom and type(custom) == 'string') then
+		return custom == key
 	else
-		local _, _, _, _, _, itemClass, itemSubClass = GetItemInfoInstant(itemID)
+		local itemClass = Slot:GetItemClass()
+		local itemSubClass = Slot:GetItemSubClass()
 		if(itemClass == LE_ITEM_CLASS_CONSUMABLE and itemSubClass >= 1) then
 			-- consumables other than engineering explosives and devices, they're considered profession related
 			if(itemSubClass ~= 8) then
@@ -22,4 +22,4 @@ local categoryFilter = function(bagID, slotID, itemID)
 	end
 end
 
-P.AddCategory(categoryIndex, categoryName, 'Consumables', categoryFilter)
+LibContainer:AddCategory(index, key, name, filter)
