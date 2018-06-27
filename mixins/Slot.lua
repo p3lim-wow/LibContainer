@@ -7,6 +7,7 @@ function slotMixin:UpdateVisibility()
 
 	if(self:IsItemEmpty()) then
 		self:Hide()
+		self:RemoveCategory()
 	else
 		self:ContinueOnItemLoad(function()
 			-- cache variables typically used for sorting
@@ -15,10 +16,9 @@ function slotMixin:UpdateVisibility()
 			self.itemID = self:GetItemID()
 			self.itemCount = self:GetItemCount()
 
+			self:Show()
 			self:Update()
 			self:UpdateCategory()
-			self:UpdateContainer()
-			self:Show()
 		end)
 	end
 
@@ -76,18 +76,12 @@ function slotMixin:Update()
 end
 
 function slotMixin:SetCategory(category)
-	if(category.index ~= self:GetCategory()) then
-		self.prevCategory = self:GetCategory()
-		self.currentCategory = category.index
-	end
-end
-
-function slotMixin:GetPrevCategory()
-	return self.prevCategory
+	self.parent:GetContainer(category):AddSlot(self)
+	self.category = category
 end
 
 function slotMixin:GetCategory()
-	return self.currentCategory
+	return self.category
 end
 
 local disabled = {} -- TEMP
@@ -107,21 +101,19 @@ function slotMixin:UpdateCategory()
 	for index = #reverse, 1, -1 do
 		local category = categories[reverse[index]]
 		if(category.filterFunc(self)) then
-			self:SetCategory(category)
+			self:RemoveCategory()
+			self:SetCategory(category.index)
 			break
 		end
 	end
 end
 
-function slotMixin:UpdateContainer()
-	local Parent = self.parent
-
-	local old = self:GetPrevCategory()
-	if(old) then
-		Parent:GetContainer(old):RemoveSlot()
+function slotMixin:RemoveCategory()
+	local category = self:GetCategory()
+	if(category) then
+		self.parent:GetContainer(category):RemoveSlot(self)
+		self.category = nil
 	end
-
-	Parent:GetContainer(self:GetCategory()):AddSlot(self)
 end
 
 function slotMixin:UpdateCooldown()

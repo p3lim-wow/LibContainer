@@ -4,14 +4,12 @@ local parentMixin = LibContainer.mixins.parent
 local containerMixin = {}
 function containerMixin:AddSlot(Slot)
 	table.insert(self.slots, Slot)
-	self:UpdateSize()
 end
 
 function containerMixin:RemoveSlot(Slot)
 	for index, containerSlot in next, self.slots do
 		if(Slot == containerSlot) then
 			table.remove(self.slots, index)
-			self:UpdateSize()
 			break
 		end
 	end
@@ -36,6 +34,7 @@ function containerMixin:UpdateSize()
 		self:SetSize(width, height)
 		self:UpdateSlotPositions()
 		self:Show()
+		self:GetParent():UpdateContainerPositions()
 	else
 		self:Hide()
 	end
@@ -65,20 +64,29 @@ function containerMixin:UpdateSlotPositions()
 	end
 end
 
-function containerMixin:OnShow()
-	self:Fire('OnShow', self)
-end
-
-function containerMixin:OnHide()
-	self:Fire('OnHide', self)
-end
-
 function containerMixin:SetMaxColumns(num)
 	self.maxColumns = num
 end
 
 function containerMixin:GetMaxColumns()
 	return self.maxColumns or 8
+end
+
+function containerMixin:SetRelPoint(relPoint)
+	self.relPoint = relPoint
+end
+
+function containerMixin:GetRelPoint()
+	return self.relPoint or 'BOTTOMRIGHT'
+end
+
+function containerMixin:SetGrowDirection(x, y)
+	self.growX = x == 'LEFT' and -1 or x == 'RIGHT' and 1 or tonumber(x)
+	self.growY = y == 'UP' and 1 or y == 'DOWN' and -1 or tonumber(y)
+end
+
+function containerMixin:GetGrowDirection()
+	return self.growX or -1, self.growY or 1
 end
 
 function containerMixin:SetSpacing(x, y)
@@ -97,6 +105,10 @@ end
 
 function containerMixin:GetPadding()
 	return self.paddingX or 5, self.paddingY or 5
+end
+
+function containerMixin:GetName()
+	return LibContainer:GetCategory(self:GetID()):GetName()
 end
 
 function containerMixin:GetLocalizedName()
@@ -152,8 +164,74 @@ function containerMixin:GetSlotGrowDirection()
 	return self.slotGrowX or 1, self.slotGrowY or -1
 end
 
+function parentMixin:UpdateContainerPositions()
+	local visibleContainers = {}
+	for categoryIndex, Container in next, self.containers do
+		if(Container:IsShown()) then
+			table.insert(visibleContainers, categoryIndex)
+		end
+	end
+
+	table.sort(visibleContainers, self.SortContainers)
+
+	local parentContainer = self:GetContainer(1) -- Inventory container is always parent
+	local spacingX, spacingY = parentContainer:GetSpacing()
+	local growX, growY = parentContainer:GetGrowDirection()
+	local relPoint = parentContainer:GetRelPoint()
+
+	-- set the position of the parent container first
+	parentContainer:ClearAllPoints()
+	parentContainer:SetPoint(relPoint)
+
+	local parentTop = parentContainer:GetTop()
+	local parentBottom = parentContainer:GetBottom()
+	local cols = 1
+
+	local _, maxHeight = GetPhysicalScreenSize()
+
+	for index = 1, #visibleContainers do
+		local Container = self:GetContainer(visibleContainers[index])
+		if(Container ~= parentContainer) then
+			local prevContainer = self:GetContainer(visibleContainers[index - 1]) or parentContainer
+			local prevTop = prevContainer:GetTop()
+			local prevBottom = prevContainer:GetBottom()
+
+			if(growY > 0) then
+				if((prevTop + Container:GetHeight() + spacingY) > maxHeight) then
+					cols = cols + 1
+					y = 0
+				else
+					y = prevTop - parentBottom + spacingY
+				end
+			else
+				if((prevBottom - (Container:GetHeight() + spacingY)) < 0) then
+					cols = cols + 1
+					y = 0
+				else
+					y = prevTop - prevBottom + spacingY
+				end
+			end
+
+			x = (Container:GetWidth() + spacingX) * (cols - 1)
+
+			Container:ClearAllPoints()
+			Container:SetPoint(relPoint, x * growX, y * growY)
+		end
+	end
+end
+
+function parentMixin:UpdateContainers()
+	for _, Container in next, self:GetContainers() do
+		Container:UpdateSize()
+	end
+end
+
 function parentMixin:GetContainer(categoryIndex)
 	return self.containers[categoryIndex]
+end
+
+function parentMixin:GetContainers()
+	return self.containers
 end
 
 function parentMixin:CreateContainers()
@@ -162,8 +240,6 @@ function parentMixin:CreateContainers()
 	for categoryIndex, info in next, self:GetCategories() do
 		local Container = Mixin(CreateFrame('Frame', '$parentContainer' .. info.name, self), callbackMixin, containerMixin)
 		Container:SetID(categoryIndex)
-		Container:HookScript('OnShow', Container.OnShow)
-		Container:HookScript('OnHide', Container.OnHide)
 		Container:Hide()
 		Container.slots = {}
 

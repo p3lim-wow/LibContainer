@@ -45,6 +45,8 @@ local function BAG_UPDATE(self, bagID)
 	for slotIndex, Slot in next, Bag:GetSlots() do
 		Slot:UpdateVisibility()
 	end
+
+	self:UpdateContainers()
 end
 
 local function ITEM_LOCK_CHANGED(self, bagID, slotIndex)
@@ -106,6 +108,7 @@ function LibContainer:New(containerType, name, parent)
 	end
 
 	local Parent = Mixin(CreateFrame('Frame', name, parent), parentMixin, callbackMixin, eventsMixin)
+	Parent:SetSize(1, 1) -- needs a size for child frames to even show up
 	Parent:RegisterEvent('ADDON_LOADED', ADDON_LOADED)
 	Parent:RegisterEvent('BAG_UPDATE', BAG_UPDATE)
 	Parent:RegisterEvent('ITEM_LOCK_CHANGED', ITEM_LOCK_CHANGED)
