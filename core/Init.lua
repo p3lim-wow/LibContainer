@@ -6,7 +6,9 @@ LibContainer = {}
 LibContainer.mixins = {}
 LibContainer.constants = {}
 
-local defaults = {}
+local defaults = {
+	KnownItems = {}, -- key = itemID, value = categoryKey
+}
 
 local database_name = 'LibContainerDB'
 function LibContainer:SetDatabase(db)
