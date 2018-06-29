@@ -13,7 +13,6 @@
 
 	<Script file='core/Categories.lua'/>
 	<Script file='categories/Artifact.lua'/>
-	<Script file='categories/Azerite.lua'/>
 	<Script file='categories/Collections.lua'/>
 	<Script file='categories/Consumables.lua'/>
 	<Script file='categories/Equipment.lua'/>
