@@ -7,7 +7,12 @@ local filter = function(Slot)
 	if(custom and type(custom) == 'string') then
 		return custom == key
 	else
-		return Slot:GetItemQuality() == LE_ITEM_QUALITY_POOR
+		if(IsArtifactPowerItem(Slot:GetItemID())) then
+			-- Crucible's Promise makes AP items useless
+			return (select(13, GetAchievementInfo(12071)))
+		else
+			return Slot:GetItemQuality() == LE_ITEM_QUALITY_POOR
+		end
 	end
 end
 
