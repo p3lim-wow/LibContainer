@@ -27,11 +27,12 @@ end
 
 local teleporters
 local filter = function(Slot)
-	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	local itemID = Slot:GetItemID()
+	local custom = LibContainer.db.KnownItems[itemID]
 	if(custom and type(custom) == 'string') then
 		return custom == key
 	else
-		return teleporters[Slot.itemID]
+		return teleporters[itemID]
 	end
 end
 

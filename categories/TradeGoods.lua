@@ -3,7 +3,7 @@ local name = AUCTION_CATEGORY_TRADE_GOODS -- "Trade Goods"
 local index = 40
 
 local filter = function(Slot)
-	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
 	if(custom and type(custom) == 'string') then
 		return custom == key
 	else

@@ -3,7 +3,7 @@ local name = TRADE_SKILLS -- "Professions"
 local index = 50
 
 local filter = function(Slot)
-	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
 	if(custom and type(custom) == 'string') then
 		return custom == key
 	else

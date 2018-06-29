@@ -26,7 +26,7 @@ elseif(locale == 'zhTW') then
 end
 
 local filter = function(Slot)
-	local custom = LibContainer.db.KnownItems[Slot.itemID]
+	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
 	if(custom and type(custom) == 'string') then
 		return custom == key
 	else
