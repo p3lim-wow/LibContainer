@@ -42,21 +42,15 @@ local function BAG_UPDATE(self, bagID)
 		self:TriggerEvent('BAG_UPDATE', BACKPACK_CONTAINER)
 	end
 
-	for slotIndex, Slot in next, Bag:GetSlots() do
-		Slot:UpdateVisibility()
-	end
-
+	Bag:UpdateSlots()
 	self:UpdateContainers()
 end
 
 local function ITEM_LOCK_CHANGED(self, bagID, slotIndex)
-	-- TODO: decide if we want dedicated methods to handle lock updates or not (like Blizzard)
 	local Bag = self:GetBag(bagID)
 	if(Bag) then
 		if(slotIndex) then
-			Bag:UpdateSlot(slotIndex)
-		else
-			Bag:UpdateAllSlots()
+			Bag:GetSlot(slotIndex):UpdateLock()
 		end
 	end
 end
@@ -64,22 +58,20 @@ end
 local function BAG_UPDATE_COOLDOWN(self)
 	if(self:IsVisible()) then -- try to avoid useless updates
 		for bagID, Bag in next, self:GetBags() do
-			for slotIndex, Slot in next, Bag:GetSlots() do
-				Slot:UpdateCooldown()
-			end
+			Bag:UpdateCooldowns()
 		end
 	end
 end
 
 local function QUEST_ACCEPTED(self)
 	for bagID, Bag in next, self:GetBags() do
-		Bag:UpdateAllSlots()
+		Bag:UpdateSlots()
 	end
 end
 
 local function UNIT_QUEST_LOG_CHANGED(self, unit)
 	if(unit == 'player') then
-		QUEST_ACCEPTED(self)
+		self:TriggerEvent('QUEST_ACCEPTED')
 	end
 end
 

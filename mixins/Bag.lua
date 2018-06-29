@@ -6,31 +6,26 @@ function bagMixin:GetSlot(slotIndex)
 	return self.slots[slotIndex]
 end
 
-function bagMixin:GetSlots()
-	return self.slots
-end
-
-function bagMixin:UpdateSlotVisibility(slotIndex)
-	self:GetSlot(slotIndex):UpdateVisibility()
-end
-
-function bagMixin:UpdateSlot(slotIndex)
-	self:GetSlot(slotIndex):Update()
-end
-
-function bagMixin:UpdateSlotCooldown(slotIndex)
-	self:GetSlot(slotIndex):UpdateCooldown()
-end
-
-function bagMixin:UpdateAllSlots()
-	for slotIndex in next, self:GetSlots() do
-		self:UpdateSlot(slotIndex)
+function bagMixin:UpdateSlots()
+	for slotIndex = 1, self.size do
+		self:GetSlot(slotIndex):UpdateVisibility()
 	end
+end
+
+function bagMixin:UpdateCooldowns()
+	for slotIndex = 1, self.size do
+		self:GetSlot(slotIndex):UpdateCooldown()
+	end
+end
+
+function bagMixin:UpdateSize()
+	self.size = GetContainerNumSlots(self:GetID())
 end
 
 function parentMixin:CreateBag(bagID)
 	local Bag = Mixin(CreateFrame('Frame', '$parentBag' .. bagID, self), bagMixin)
 	Bag:SetID(bagID)
+	Bag:UpdateSize()
 	Bag:SetSize(1, 1) -- needs a size for child frames to even show up
 	Bag.slots = {}
 

@@ -6,6 +6,7 @@
 	<Script file='mixins/Callback.lua'/>
 	<Script file='mixins/Parent.lua'/>
 	<Script file='mixins/Bag.lua'/>
+	<Script file='mixins/Item.lua'/>
 	<Script file='mixins/Slot.lua'/>
 	<Script file='mixins/Containers.lua'/>
 

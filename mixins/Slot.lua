@@ -1,4 +1,5 @@
 local callbackMixin = LibContainer.mixins.callback
+local itemMixin = LibContainer.mixins.item
 local bagMixin = LibContainer.mixins.bag
 
 local slotMixin = {}
@@ -7,33 +8,27 @@ function slotMixin:UpdateVisibility()
 
 	if(self:IsItemEmpty()) then
 		self:Hide()
+		self:Clear()
 		self:RemoveCategory()
 	else
-		self:ContinueOnItemLoad(function()
-			-- cache variables typically used for sorting
-			self.itemQuality = self:GetItemQuality()
-			self.itemLevel = self:GetCurrentItemLevel()
-			self.itemID = self:GetItemID()
-			self.itemCount = self:GetItemCount()
+		if(self:GetItemID() ~= GetContainerItemID(self:GetBagAndSlot())) then
+			-- temp solution
+			self:Clear()
+		end
 
-			self:Show()
-			self:Update()
-			self:UpdateCategory()
-		end)
+		self:Show()
+		self:Update()
+		self:UpdateCategory()
 	end
 
 	self:Fire('PostUpdateVisibility', self)
 end
 
 function slotMixin:Update()
-	if(self:IsItemEmpty()) then
-		return
-	end
-
 	self:Fire('PreUpdate', self)
 
 	local itemQuality = self:GetItemQuality()
-	SetItemButtonTexture(self, self:GetItemIcon())
+	SetItemButtonTexture(self, self:GetItemTexture())
 	SetItemButtonQuality(self, itemQuality, self:GetItemID())
 	SetItemButtonCount(self, self:GetItemCount())
 	SetItemButtonDesaturated(self, self:IsItemLocked())
@@ -73,6 +68,10 @@ function slotMixin:Update()
 	end
 
 	self:Fire('PostUpdate', self)
+end
+
+function slotMixin:UpdateLock()
+	SetItemButtonDesaturated(self, self:IsItemLocked())
 end
 
 function slotMixin:SetCategory(category)
@@ -127,68 +126,6 @@ function slotMixin:UpdateCooldown()
 	self:Fire('PostUpdateCooldown', self)
 end
 
--- additions to ItemMixin
-function slotMixin:GetBagAndSlot()
-	return self:GetItemLocation():GetBagAndSlot()
-end
-
-function slotMixin:GetItemCount()
-	if(not self:IsItemEmpty()) then
-		local _, count = GetContainerItemInfo(self:GetBagAndSlot())
-		return count and count > 0 and count or 0
-	end
-end
-
-function slotMixin:IsItemQuestItem()
-	if(not self:IsItemEmpty()) then
-		return (GetContainerItemQuestInfo(self:GetBagAndSlot()))
-	end
-end
-
-function slotMixin:IsItemQuestActive()
-	if(not self:IsItemEmpty()) then
-		local _, _, isActive = GetContainerItemQuestInfo(self:GetBagAndSlot())
-		return isActive
-	end
-end
-
-function slotMixin:GetItemQuestID()
-	if(not self:IsItemEmpty()) then
-		local _, questID = GetContainerItemQuestInfo(self:GetBagAndSlot())
-		return questID
-	end
-end
-
-function slotMixin:IsBattlePayItem()
-	if(not self:IsItemEmpty()) then
-		return IsBattlePayItem(self:GetBagAndSlot())
-	end
-end
-
-function slotMixin:IsNewItem()
-	if(not self:IsItemEmpty()) then
-		return C_NewItems.IsNewItem(self:GetBagAndSlot())
-	end
-end
-
-function slotMixin:GetItemCooldown()
-	if(not self:IsItemEmpty()) then
-		return GetContainerItemCooldown(self:GetBagAndSlot())
-	end
-end
-
-function slotMixin:GetItemClass()
-	if(not self:IsItemEmpty()) then
-		return select(6, GetItemInfoInstant(self:GetItemID()))
-	end
-end
-
-function slotMixin:GetItemSubClass()
-	if(not self:IsItemEmpty()) then
-		return select(7, GetItemInfoInstant(self:GetItemID()))
-	end
-end
-
 function bagMixin:CreateSlot(slotIndex)
 	local template
 	if(self:GetID() == BANK_CONTAINER) then
@@ -199,7 +136,7 @@ function bagMixin:CreateSlot(slotIndex)
 		template = 'ContainerFrameItemButtonTemplate'
 	end
 
-	local Slot = Mixin(CreateFrame('Button', '$parentSlot' .. slotIndex, self, template), slotMixin, ItemMixin, callbackMixin)
+	local Slot = Mixin(CreateFrame('Button', '$parentSlot' .. slotIndex, self, template), slotMixin, itemMixin, callbackMixin)
 	Slot:Hide()
 	Slot.parent = self:GetParent()
 	Slot:Show()

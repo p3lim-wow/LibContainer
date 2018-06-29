@@ -4,15 +4,25 @@ local parentMixin = LibContainer.mixins.parent
 local containerMixin = {}
 function containerMixin:AddSlot(Slot)
 	table.insert(self.slots, Slot)
+	self:SetDirty(true)
 end
 
 function containerMixin:RemoveSlot(Slot)
 	for index, containerSlot in next, self.slots do
 		if(Slot == containerSlot) then
 			table.remove(self.slots, index)
+			self:SetDirty(true)
 			break
 		end
 	end
+end
+
+function containerMixin:SetDirty(flag)
+	self.dirty = flag
+end
+
+function containerMixin:IsDirty()
+	return self.dirty
 end
 
 function containerMixin:UpdateSize()
@@ -222,7 +232,10 @@ end
 
 function parentMixin:UpdateContainers()
 	for _, Container in next, self:GetContainers() do
-		Container:UpdateSize()
+		if(Container:IsDirty()) then
+			Container:UpdateSize()
+			Container:SetDirty(false)
+		end
 	end
 end
 
