@@ -26,15 +26,14 @@ local function ADDON_LOADED(self, name)
 end
 
 local function BAG_UPDATE(self, bagID)
-	local Bag = self:GetBag(bagID)
-	if(not Bag) then
+	if(not self:GetBag(bagID)) then
 		if(not bagSlots[self.containerType][bagID]) then
 			-- bag doesn't belong to this container type
 			return
 		end
 
 		-- create the bag if it doesn't exist
-		Bag = self:CreateBag(bagID)
+		self:CreateBag(bagID)
 	end
 
 	if(not self:GetBag(BACKPACK_CONTAINER)) then
@@ -42,8 +41,26 @@ local function BAG_UPDATE(self, bagID)
 		self:TriggerEvent('BAG_UPDATE', BACKPACK_CONTAINER)
 	end
 
-	Bag:UpdateSlots()
+	-- running updates on every BAG_UPDATE has severe performance issues, especially
+	-- when this event occurs multiple times in quick succession.
+	-- we cache the bags that were updated (dirty) and let them update once the
+	-- barrage of events are over
+	self.dirtyBags[bagID] = true
+end
+
+local function BAG_UPDATE_DELAYED(self)
+	-- this event always fires after BAG_UPDATE(s) are done, a perfect time to
+	-- perform updates on "dirty" bags
+	for bagID in next, self.dirtyBags do
+		self:GetBag(bagID):UpdateSlots()
+	end
+
+	-- we'll only update containers once all the slots are done updating.
+	-- this is because we mark slots as "dirty" in the same fashion as with bags to
+	-- avoid unneccessary updates to containers
 	self:UpdateContainers()
+
+	table.wipe(self.dirtyBags)
 end
 
 local function ITEM_LOCK_CHANGED(self, bagID, slotIndex)
@@ -103,6 +120,7 @@ function LibContainer:New(containerType, name, parent)
 	Parent:SetSize(1, 1) -- needs a size for child frames to even show up
 	Parent:RegisterEvent('ADDON_LOADED', ADDON_LOADED)
 	Parent:RegisterEvent('BAG_UPDATE', BAG_UPDATE)
+	Parent:RegisterEvent('BAG_UPDATE_DELAYED', BAG_UPDATE_DELAYED)
 	Parent:RegisterEvent('ITEM_LOCK_CHANGED', ITEM_LOCK_CHANGED)
 	Parent:RegisterEvent('BAG_UPDATE_COOLDOWN', BAG_UPDATE_COOLDOWN)
 	Parent:RegisterEvent('QUEST_ACCEPTED', QUEST_ACCEPTED)
@@ -119,6 +137,7 @@ function LibContainer:New(containerType, name, parent)
 
 	Parent.containerType = containerType
 	Parent.categoriesIgnored = {}
+	Parent.dirtyBags = {}
 
 	parents[containerType] = Parent
 	return Parent
