@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Professions'
-local name = TRADE_SKILLS -- "Professions"
+local name = L['Professions']
 local index = 50
 
 local filter = function(Slot)

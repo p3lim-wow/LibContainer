@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Events'
-local name = BATTLE_PET_SOURCE_7 -- "World Events"
+local name = L['World Events']
 local index = 70
 
 local filter = function(Slot)

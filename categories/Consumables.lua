@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Consumables'
-local name = BAG_FILTER_CONSUMABLES -- "Consumables"
+local name = L['Consumables']
 local index = 41
 
 local filter = function(Slot)

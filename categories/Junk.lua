@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Junk'
-local name = BAG_FILTER_JUNK -- "Junk"
+local name = L['Junk']
 local index = 998 -- as high as possible
 
 local filter = function(Slot)

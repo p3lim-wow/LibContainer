@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'ArtifactPower'
-local name = ARTIFACT_POWER -- "Artifact Power"
+local name = L['Artifact Power']
 local index = 100
 
 local filter = function(Slot)

@@ -1,29 +1,8 @@
-local key = 'New'
-local name = 'New Items'
-local index = 997 -- as high as possible
+local L = LibContainer.locale
 
-local locale = GetLocale()
-if(locale == 'deDE') then
-	name = 'Neue Gegenstände'
-elseif(locale == 'esES') then
-	-- MISSING TRANSLATION
-elseif(locale == 'esMX') then
-	-- MISSING TRANSLATION
-elseif(locale == 'frFR') then
-	-- MISSING TRANSLATION
-elseif(locale == 'itIT') then
-	-- MISSING TRANSLATION
-elseif(locale == 'koKR') then
-	name = '새로운 아이템'
-elseif(locale == 'ptBR') then
-	name = 'Novos Itens'
-elseif(locale == 'ruRU') then
-	name = 'Новые предметы'
-elseif(locale == 'zhCN') then
-	name = '新物品'
-elseif(locale == 'zhTW') then
-	name = '新物品'
-end
+local key = 'New'
+local name = L['New Items']
+local index = 997 -- as high as possible
 
 local filter = function(Slot)
 	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]

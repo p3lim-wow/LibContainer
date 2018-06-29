@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'TradeGoods'
-local name = AUCTION_CATEGORY_TRADE_GOODS -- "Trade Goods"
+local name = L['Trade Goods']
 local index = 40
 
 local filter = function(Slot)

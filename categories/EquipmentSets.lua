@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'EquipmentSets'
-local name = EQUIPMENT_SETS:gsub(':.*', '') -- "Equipment Sets: |cFFFFFFFF%s|r"
+local name = L['Equipment Sets']
 local index = 31
 
 local filter = function(Slot)

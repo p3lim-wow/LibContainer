@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'ReagentBank'
-local name = REAGENT_BANK -- "Reagent Bank"
+local name = L['Reagent Bank']
 local index = 999 -- as high as possible
 
 local filter = function(Slot)

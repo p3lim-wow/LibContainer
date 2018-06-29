@@ -1,29 +1,8 @@
-local key = 'Teleport'
-local name = 'Teleporters'
-local index = 60
+local L = LibContainer.locale
 
-local locale = GetLocale()
-if(locale == 'deDE') then
-	name = 'Teleporter'
-elseif(locale == 'esES') then
-	-- MISSING TRANSLATION
-elseif(locale == 'esMX') then
-	-- MISSING TRANSLATION
-elseif(locale == 'frFR') then
-	-- MISSING TRANSLATION
-elseif(locale == 'itIT') then
-	-- MISSING TRANSLATION
-elseif(locale == 'koKR') then
-	name = '순간이동기'
-elseif(locale == 'ptBR') then
-	name = 'Teleportes'
-elseif(locale == 'ruRU') then
-	name = 'Телепортаторы'
-elseif(locale == 'zhCN') then
-	name = '传送'
-elseif(locale == 'zhTW') then
-	name = '傳送'
-end
+local key = 'Teleport'
+local name = L['Teleporters']
+local index = 60
 
 local teleporters
 local filter = function(Slot)

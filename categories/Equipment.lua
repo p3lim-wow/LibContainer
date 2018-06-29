@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Equipment'
-local name = BAG_FILTER_EQUIPMENT -- "Equipment"
+local name = L['Equipment']
 local index = 30
 
 local filter = function(Slot)

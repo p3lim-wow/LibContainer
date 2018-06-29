@@ -5,6 +5,7 @@ local parentAddOnName = ...
 LibContainer = {}
 LibContainer.mixins = {}
 LibContainer.constants = {}
+LibContainer.locale = {}
 
 local defaults = {
 	KnownItems = {}, -- key = itemID, value = categoryKey
@@ -35,3 +36,16 @@ Handler:SetScript('OnEvent', function(_, event, name)
 	LibContainer.db = db
 	_G[database_name] = db
 end)
+
+local localizations = {}
+local locale = GetLocale()
+setmetatable(LibContainer.locale, {
+	__call = function(_, newLocale)
+		localizations[newLocale] = {}
+		return localizations[newLocale]
+	end,
+	__index = function(_, key)
+		local localeTable = localizations[locale]
+		return localeTable and localeTable[key] or tostring(key)
+	end
+})

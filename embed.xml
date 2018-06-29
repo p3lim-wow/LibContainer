@@ -2,6 +2,17 @@
 	<Script file='core/Init.lua'/>
 	<Script file='core/Constants.lua'/>
 
+	<Script file='locale/deDE.lua'/>
+	<Script file='locale/esES.lua'/>
+	<Script file='locale/esMX.lua'/>
+	<Script file='locale/frFR.lua'/>
+	<Script file='locale/itIT.lua'/>
+	<Script file='locale/koKR.lua'/>
+	<Script file='locale/ptBR.lua'/>
+	<Script file='locale/ruRU.lua'/>
+	<Script file='locale/zhCN.lua'/>
+	<Script file='locale/zhTW.lua'/>
+
 	<Script file='mixins/Events.lua'/>
 	<Script file='mixins/Callback.lua'/>
 	<Script file='mixins/Parent.lua'/>
@@ -9,8 +20,6 @@
 	<Script file='mixins/Item.lua'/>
 	<Script file='mixins/Slot.lua'/>
 	<Script file='mixins/Container.lua'/>
-
-	<Script file='core/Private.lua'/>
 
 	<Script file='core/Categories.lua'/>
 	<Script file='categories/Artifact.lua'/>
@@ -38,5 +47,7 @@
 	<Script file='widgets/Restack.lua'/>
 	<Script file='widgets/Search.lua'/>
 -->
+
+	<Script file='core/Private.lua'/>
 </Ui>
 

@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Quests'
-local name = AUCTION_CATEGORY_QUEST_ITEMS -- "Quest Items"
+local name = L['Quest Items']
 local index = 20
 
 local filter = function(Slot)

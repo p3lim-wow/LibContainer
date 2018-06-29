@@ -1,5 +1,7 @@
+local L = LibContainer.locale
+
 local key = 'Collections'
-local name = COLLECTIONS -- "Collections"
+local name = L['Collections']
 local index = 80
 
 local scanTip = CreateFrame('GameTooltip', 'LibContainerScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
