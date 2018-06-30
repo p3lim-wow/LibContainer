@@ -2,11 +2,21 @@ local callbackMixin = LibContainer.mixins.callback
 local parentMixin = LibContainer.mixins.parent
 
 local containerMixin = {}
+--[[ Container:AddSlot(Slot)
+Adds a Slot to the container and marks the container as "dirty".
+
+* Slot - Slot object to add to the container (Slot)
+--]]
 function containerMixin:AddSlot(Slot)
 	table.insert(self.slots, Slot)
 	self:SetDirty(true)
 end
 
+--[[ Container:RemoveSlot(Slot)
+Removes a Slot from the container and marks the container as "dirty".
+
+* Slot - Slot object to add to the container (Slot)
+--]]
 function containerMixin:RemoveSlot(Slot)
 	for index, containerSlot in next, self.slots do
 		if(Slot == containerSlot) then
@@ -17,14 +27,25 @@ function containerMixin:RemoveSlot(Slot)
 	end
 end
 
+--[[ Container:SetDirty(flag)
+Sets the container as "dirty", which means it will be updated in the next update cycle.
+
+* flag - true/false if the container should be marked as "dirty" (boolean)
+--]]
 function containerMixin:SetDirty(flag)
 	self.dirty = flag
 end
 
+--[[ Container:IsDirty()
+Returns true/false if the Container is "dirty" or not.
+--]]
 function containerMixin:IsDirty()
 	return self.dirty
 end
 
+--[[ Container:UpdateSize()
+Updates the size of the Container based on the number of Slots it has attached to itself.
+--]]
 function containerMixin:UpdateSize()
 	local numSlots = #self.slots
 	local categoryIndex = self:GetID()
@@ -50,6 +71,9 @@ function containerMixin:UpdateSize()
 	end
 end
 
+--[[ Container:UpdateSlotPositions()
+Updates the positions of the Slots the Container has attached to itself.
+--]]
 function containerMixin:UpdateSlotPositions()
 	local category = LibContainer:GetCategory(self:GetID())
 	table.sort(self.slots, category.sortFunc)
@@ -74,106 +98,202 @@ function containerMixin:UpdateSlotPositions()
 	end
 end
 
-function containerMixin:SetMaxColumns(num)
-	self.maxColumns = num
+--[[ Container:SetMaxColumns(numColumns)
+Sets the maximum amount of columns the Container should display before wrapping to a new row.
+
+* numColumns - number of columns (integer, default = 8)
+--]]
+function containerMixin:SetMaxColumns(numColumns)
+	self.maxColumns = numColumns
 end
 
+--[[ Container:GetMaxColumns()
+Returns the number of columns the Container should display before wrapping to a new row.
+--]]
 function containerMixin:GetMaxColumns()
 	return self.maxColumns or 8
 end
 
+--[[ Container:SetRelPoint(relPoint)
+Sets relative point where the Container should anchor to the Parent.
+
+* relPoint - relative point (string, default = 'BOTTOMRIGHT')
+--]]
 function containerMixin:SetRelPoint(relPoint)
 	self.relPoint = relPoint
 end
 
+--[[ Container:GetRelPoint()
+Returns the relative point where the Container should anchor to the Parent.
+--]]
 function containerMixin:GetRelPoint()
 	return self.relPoint or 'BOTTOMRIGHT'
 end
 
+--[[ Container:SetGrowDirection(x, y)
+Sets the horizontal and vertical directions the containers should grow.
+
+* x - horizontal grow direction (string|integer, default = -1|'LEFT')
+* y - vertical grow direction (string|integer, default = 1|'UP')
+--]]
 function containerMixin:SetGrowDirection(x, y)
 	self.growX = x == 'LEFT' and -1 or x == 'RIGHT' and 1 or tonumber(x)
 	self.growY = y == 'UP' and 1 or y == 'DOWN' and -1 or tonumber(y)
 end
 
+--[[ Container:GetGrowDirection()
+Returns the horizontal and vertical integers for the directions the container should grow.
+--]]
 function containerMixin:GetGrowDirection()
 	return self.growX or -1, self.growY or 1
 end
 
+--[[ Container:SetSpacing(x[, y])
+Sets the horizontal and vertical spacing between containers.
+
+* x - horizontal spacing (integer, default = 2)
+* y - vertical spacing (integer, default = x|2)
+--]]
 function containerMixin:SetSpacing(x, y)
 	self.spacingX = x
 	self.spacingY = y or x
 end
 
+--[[ Container:GetSpacing()
+Returns the horizontal and vertical integers for the spacing between containers.
+--]]
 function containerMixin:GetSpacing()
 	return self.spacingX or 2, self.spacingY or 2
 end
 
+--[[ Container:SetPadding(x[, y])
+Sets the horizontal and vertical padding within containers.
+
+* x - horizontal padding (integer, default = 5)
+* y - vertical padding (integer, default = x|5)
+--]]
 function containerMixin:SetPadding(x, y)
 	self.paddingX = x
 	self.paddingY = y or x
 end
 
+--[[ Container:GetPadding()
+Returns the horizontal and vertical integers for the padding within containers.
+--]]
 function containerMixin:GetPadding()
 	return self.paddingX or 5, self.paddingY or 5
 end
 
+--[[ Container:GetName()
+Returns the name for the Category the container represents.
+--]]
 function containerMixin:GetName()
 	return LibContainer:GetCategory(self:GetID()):GetName()
 end
 
+--[[ Container:GetLocalizedName()
+Returns the localized name for the Category the container represents.
+--]]
 function containerMixin:GetLocalizedName()
 	return LibContainer:GetCategory(self:GetID()):GetLocalizedName()
 end
 
+--[[ Container:SetSlotSize(width[, height])
+Sets the width and height of the Slots in the container.
+
+* width - width of the slot (integer, default = 37)
+* height - height of the slot (integer, default = width|37)
+--]]
+function containerMixin:SetSlotSize(width, height)
+	self.slotSizeX = width
+	self.slotSizeY = height or width
+end
+
+--[[ Container:GetSlotSize()
+Returns the width and height of the Slots in the container.
+--]]
 function containerMixin:GetSlotSize()
-	local x, y = self.slotSizeX, self.slotSizeY
-	if(not x and not y) then
-		x, y = self.slots[1]:GetSize()
+	local width, height = self.slotSizeX, self.slotSizeY
+	if(not width and not height) then
+		width, height = self.slots[1]:GetSize()
 	end
 
-	return x, y
+	return width, height
 end
 
-function containerMixin:SetSlotSize(x, y)
-	self.slotSizeX = x
-	self.slotSizeY = y or x
-end
+--[[ Container:SetSlotRelPoint(relPoint)
+Sets relative point where the Slot should anchor to the container.
 
+* relPoint - relative point (string, default = 'TOPLEFT')
+--]]
 function containerMixin:SetSlotRelPoint(relPoint)
 	self.slotRelPoint = relPoint
 end
 
+--[[ Container:GetSlotRelPoint()
+Returns the relative point where the Slot should anchor to the container.
+--]]
 function containerMixin:GetSlotRelPoint()
 	return self.slotRelPoint or 'TOPLEFT'
 end
 
+--[[ Container:SetSlotSpacing(x[, y])
+Sets the horizontal and vertical spacing between Slots.
+
+* x - horizontal spacing (integer, default = 4)
+* y - vertical spacing (integer, default = x|4)
+--]]
 function containerMixin:SetSlotSpacing(x, y)
 	self.slotSpacingX = x
 	self.slotSpacingY = y or x
 end
 
+--[[ Container:GetSlotSpacing()
+Returns the horizontal and vertical integers for the spacing between Slots.
+--]]
 function containerMixin:GetSlotSpacing()
 	return self.slotSpacingX or 4, self.slotSpacingY or 4
 end
 
+--[[ Container:SetSlotPadding(x[, y])
+Sets the horizontal and vertical padding for Slots within the container.
+
+* x - horizontal padding (integer, default = 10)
+* y - vertical padding (integer, default = x|10)
+--]]
 function containerMixin:SetSlotPadding(x, y)
 	self.slotPaddingX = x
 	self.slotPaddingY = y or x
 end
 
+--[[ Container:GetSlotPadding()
+Returns the horizontal and vertical padding for Slots within the container.
+--]]
 function containerMixin:GetSlotPadding()
 	return self.slotPaddingX or 10, self.slotPaddingY or 10
 end
 
+--[[ Container:SetSlotGrowDirection(x, y)
+Sets the horizontal and vertical directions the Slots should grow.
+
+* x - horizontal grow direction (string|integer, default = 1|'RIGHT')
+* y - vertical grow direction (string|integer, default = -1|'DOWN')
+--]]
 function containerMixin:SetSlotGrowDirection(x, y)
 	self.slotGrowX = x == 'LEFT' and -1 or x == 'RIGHT' and 1 or tonumber(x)
 	self.slotGrowY = y == 'UP' and 1 or y == 'DOWN' and -1 or tonumber(y)
 end
 
+--[[ Container:GetSlotGrowDirection()
+Returns the horizontal and vertical integers for the directions the Slots should grow.
+--]]
 function containerMixin:GetSlotGrowDirection()
 	return self.slotGrowX or 1, self.slotGrowY or -1
 end
 
+--[[ Parent:UpdateContainerPositions()
+Updates all (visible) container positions for the Parent.
+--]]
 function parentMixin:UpdateContainerPositions()
 	local visibleContainers = {}
 	for categoryIndex, Container in next, self.containers do
@@ -230,6 +350,9 @@ function parentMixin:UpdateContainerPositions()
 	end
 end
 
+--[[ Parent:UpdateContainers()
+Initializes a update chain for all "dirty" Containers.
+--]]
 function parentMixin:UpdateContainers()
 	for _, Container in next, self:GetContainers() do
 		if(Container:IsDirty()) then
@@ -239,14 +362,26 @@ function parentMixin:UpdateContainers()
 	end
 end
 
+--[[ Parent:GetContainer(categoryIndex)
+Returns the Container object for the given category.
+
+* categoryIndex - index of the category the container represents (integer)
+--]]
 function parentMixin:GetContainer(categoryIndex)
 	return self.containers[categoryIndex]
 end
 
+--[[ Parent:GetContainers()
+Returns a table of all Containers.  
+The table is indexed by the category index and valued with the Container object.
+--]]
 function parentMixin:GetContainers()
 	return self.containers
 end
 
+--[[ Parent:CreateContainers()
+Creates containers for all registered categories for the Parent.
+--]]
 function parentMixin:CreateContainers()
 	self.containers = {}
 

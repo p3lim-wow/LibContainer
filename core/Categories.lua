@@ -18,19 +18,39 @@ local function defaultSort(slotA, slotB)
 end
 
 local categoryMixin = {}
+--[[ Category:GetName()
+Returns the name of the category.
+--]]
 function categoryMixin:GetName()
 	return self.name
 end
 
+--[[ Category:GetLocalizedName()
+Returns the localized name of the category.
+--]]
 function categoryMixin:GetLocalizedName()
 	return self.localizedName
 end
 
-function categoryMixin:Rename(name)
+--[[ Category:Rename(localizedName)
+Sets the localized name for a category.
+
+* localizedName - localized name of the category (string)
+--]]
+function categoryMixin:Rename(localizedName)
 	-- TODO
 end
 
 local categories = {}
+--[[ LibContainer:AddCategory(index, name[, localizedName], filterFunc[, sortFunc])
+Adds a category for the slots to be sorted and displayed within.
+
+* index         - default priority for the category (integer)
+* name          - name of the category (string)
+* localizedName - localized name of the category (string, optional, default = name)
+* filterFunc    - function that will determine how an item should be flagged as part of this category (function)
+* sortFunc      - function that will determine how the items in the category should be sorted (function, optional)
+--]]
 function LibContainer:AddCategory(index, name, localizedName, filterFunc, sortFunc)
 	assert(type(name) == 'string', 'AddCategory: name must be a string.')
 	assert(not categories[index], 'AddCategory: category \'' .. name .. '\' already exists.')
@@ -61,15 +81,29 @@ function LibContainer:AddCategory(index, name, localizedName, filterFunc, sortFu
 	}
 end
 
+--[[ LibContainer:GetCategories()
+Returns a table of all categories.  
+The table is indexed by the category index and valued with the Category data table.
+--]]
 function LibContainer:GetCategories()
 	return categories
 end
 
+--[[ LibContainer:GetCategory(index)
+Returns a table of the category, mixed in with the Category mixin.
+
+* index - default priority for the category (index)
+--]]
 function LibContainer:GetCategory(index)
 	assert(categories[index], 'GetCategory: category \'' .. index .. '\' doesn\'t exist.')
 	return Mixin(categories[index], categoryMixin)
 end
 
+--[[ LibContainer:GetCategoryByName(name)
+Returns a table of the category, mixed in with the Category mixin.
+
+* name - name of the category (string)
+--]]
 function LibContainer:GetCategoryByName(name)
 	for _, category in next, self:GetCategories() do
 		if(category.name == name) then

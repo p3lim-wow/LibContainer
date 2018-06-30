@@ -3,6 +3,10 @@ local itemMixin = LibContainer.mixins.item
 local bagMixin = LibContainer.mixins.bag
 
 local slotMixin = {}
+--[[ Slot:UpdateVisibility()
+Updates the visibility and hides/shows and updates the Slot.  
+If the Slot is updated, its Category will be updated as well.
+--]]
 function slotMixin:UpdateVisibility()
 	self:Fire('PreUpdateVisibility', self)
 
@@ -24,6 +28,10 @@ function slotMixin:UpdateVisibility()
 	self:Fire('PostUpdateVisibility', self)
 end
 
+--[[ Slot:Update()
+Updates a Slot.  
+This is intended for updating its children's parameters.
+--]]
 function slotMixin:Update()
 	self:Fire('PreUpdate', self)
 
@@ -70,21 +78,37 @@ function slotMixin:Update()
 	self:Fire('PostUpdate', self)
 end
 
+--[[ Slot:UpdateLock()
+Updates the locked status of the Slot.
+--]]
 function slotMixin:UpdateLock()
 	SetItemButtonDesaturated(self, self:IsItemLocked())
 end
 
-function slotMixin:SetCategory(category)
-	self.parent:GetContainer(category):AddSlot(self)
-	self.category = category
+--[[ Slot:SetCategory(categoryIndex)
+Adds the Slot to the given Container.
+
+* categoryIndex - category index the Slot should be attached to a Container for (integer)
+--]]
+function slotMixin:SetCategory(categoryIndex)
+	self.parent:GetContainer(categoryIndex):AddSlot(self)
+	self.categoryIndex = categoryIndex
 end
 
+--[[ Slot:GetCategory()
+Returns the category index the Slot is attached to a Container for.
+--]]
 function slotMixin:GetCategory()
-	return self.category
+	return self.categoryIndex
 end
 
 local disabled = {} -- TEMP
 local reverse = {}
+--[[ Slot:UpdateCategory()
+Iterates through the available Categories, removes the Slot from the previous Container and adds it
+to the new one.  
+Any categories disabled on the Parent will not be traversed.
+--]]
 function slotMixin:UpdateCategory()
 	local categories = self.parent:GetCategories()
 
@@ -107,14 +131,20 @@ function slotMixin:UpdateCategory()
 	end
 end
 
+--[[ Slot:RemoveCategory()
+Removes the Slot from the current Container it is attached to.
+--]]
 function slotMixin:RemoveCategory()
-	local category = self:GetCategory()
-	if(category) then
-		self.parent:GetContainer(category):RemoveSlot(self)
-		self.category = nil
+	local categoryIndex = self:GetCategory()
+	if(categoryIndex) then
+		self.parent:GetContainer(categoryIndex):RemoveSlot(self)
+		self.categoryIndex = nil
 	end
 end
 
+--[[ Slot:UpdateCooldown()
+Updates the cooldown for the Slot.
+--]]
 function slotMixin:UpdateCooldown()
 	self:Fire('PreUpdateCooldown', self)
 
@@ -126,6 +156,14 @@ function slotMixin:UpdateCooldown()
 	self:Fire('PostUpdateCooldown', self)
 end
 
+--[[ Bag:CreateSlot(slotIndex)
+Creates and returns a Slot with the given index.  
+The Slot object is templated based on the Bag identifier, and is assigned a location from the
+ItemLocation ObjectAPI, and mixed in with the Item mixin. It is also assigned with predictable keys
+that represents its child frames, textures and fontstrings.
+
+* slotIndex - slot index (integer)
+--]]
 function bagMixin:CreateSlot(slotIndex)
 	local template
 	if(self:GetID() == BANK_CONTAINER) then

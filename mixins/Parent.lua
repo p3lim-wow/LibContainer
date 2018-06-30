@@ -5,7 +5,12 @@ local eventsMixin = LibContainer.mixins.events
 local bagSlots = LibContainer.constants.bagSlots
 
 local parentMixin = {}
+--[[ Parent:GetCategories()
+Returns a (filtered) table of all categories.  
+The table is indexed by the category index and valued with the Category data table.
 
+Any categories that has been ignored on the Parent will not be included.
+--]]
 function parentMixin:GetCategories()
 	local categories = CopyTable(LibContainer:GetCategories())
 	for key in next, self.categoriesIgnored do
@@ -93,6 +98,13 @@ local function UNIT_QUEST_LOG_CHANGED(self, unit)
 end
 
 local parents = {}
+--[[ LibContainer:New(containerType[, name][, parent])
+Creates and returns a new Parent.
+
+* containerType - type of Parent to represent (string, 'bags'|'bank')
+* name          - name of the Parent (string, optional, default = parent AddOn name + containerType)
+* parent        - parent for the Parent frame (frame|string, optional, default = UIParent)
+--]]
 function LibContainer:New(containerType, name, parent)
 	assert(type(containerType) == 'string', 'New: containerType must be a string.')
 	containerType = containerType:lower()

@@ -12,11 +12,19 @@ local defaults = {
 }
 
 local database_name = 'LibContainerDB'
+--[[ LibContainer:SetDatabase(globalName)
+Set the global name for the database.
+
+* globalName - global savedvariable name (string)
+--]]
 function LibContainer:SetDatabase(db)
 	-- TODO: consider using TOC metadata instead?
 	database_name = db
 end
 
+--[[ LibContainer:ResetDatabase()
+Resets the database back to the defaults.
+--]]
 function LibContainer:ResetDatabase()
 	LibContainer.db = defaults
 end
