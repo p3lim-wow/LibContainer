@@ -20,8 +20,8 @@
 	<Script file='mixins/Item.lua'/>
 	<Script file='mixins/Slot.lua'/>
 	<Script file='mixins/Container.lua'/>
+	<Script file='mixins/Category.lua'/>
 
-	<Script file='core/Categories.lua'/>
 	<Script file='categories/Artifact.lua'/>
 	<Script file='categories/Collections.lua'/>
 	<Script file='categories/Consumables.lua'/>
