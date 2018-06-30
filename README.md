@@ -5,24 +5,12 @@ It is not designed to be run as an addon by itself, it _must be embedded_.
 
 ## Description
 
-This is a container framework for creating bag addons. It takes away all the logic needed to process the information regardings bags and slots, and leaves the developer with a framework that is easy to work with to implement the design.
+LibContainer is a category-based container framework for creating bag and bank AddOns.  
+It takes away all the logic needed to update and create bags and slots, leaving the developer with the task of creating a layout with the design of their desires.
 
-Features:
-- Containers (bags)
-- Slots
-- Categories
+The framework is very extensible and is easily manipulated, has widgets for additional capabilities you'd expect to find in a container AddOn.
 
-Future:
-- Currencies
-- Bank
-- Searching
-- Widgets
-- Positioning
-
-As this is intended to be an embedded framework, please see the [embedding guide](//github.com/p3lim-wow/LibContainer/wiki/Embedding) on how to get started.
-
-The [wiki](//github.com/p3lim-wow/LibContainer/wiki) has information on how to use this framework.  
-Also, see the [tests](//github.com/p3lim-wow/LibContainer/tree/master/tests) directory for examples.
+For more information on how to get started, see the [wiki](//github.com/p3lim-wow/LibContainer/wiki).
 
 ## Feedback
 
