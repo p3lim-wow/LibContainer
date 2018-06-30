@@ -1,6 +1,6 @@
 # LibContainer
 
-This is a library addon for the popular MMORPG "World of Warcraft".
+This is a library addon for the popular MMORPG "World of Warcraft".  
 It is not designed to be run as an addon by itself, it _must be embedded_.
 
 ## Description
