@@ -1,9 +1,0 @@
-## Interface: 80000
-## Author: p3lim
-## Version: @project-version@
-## Title: Lib: Container
-## Notes: Container framework. Does nothing by itself.
-## DefaultState: disabled
-## SavedVariables: LibContainerDB
-
-embed.xml
