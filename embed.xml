@@ -13,7 +13,7 @@
 	<Script file='locale/zhCN.lua'/>
 	<Script file='locale/zhTW.lua'/>
 
-	<Script file='mixins/Events.lua'/>
+	<Script file='mixins/Event.lua'/>
 	<Script file='mixins/Callback.lua'/>
 	<Script file='mixins/Parent.lua'/>
 	<Script file='mixins/Bag.lua'/>

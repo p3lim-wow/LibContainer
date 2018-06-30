@@ -1,7 +1,7 @@
 local parentAddOnName = ...
 
 local callbackMixin = LibContainer.mixins.callback
-local eventsMixin = LibContainer.mixins.events
+local eventMixin = LibContainer.mixins.event
 local bagSlots = LibContainer.constants.bagSlots
 
 local parentMixin = {}
@@ -128,7 +128,7 @@ function LibContainer:New(containerType, name, parent)
 		parent = UIParent
 	end
 
-	local Parent = Mixin(CreateFrame('Frame', name, parent), parentMixin, callbackMixin, eventsMixin)
+	local Parent = Mixin(CreateFrame('Frame', name, parent), parentMixin, callbackMixin, eventMixin)
 	Parent:SetSize(1, 1) -- needs a size for child frames to even show up
 	Parent:RegisterEvent('ADDON_LOADED', ADDON_LOADED)
 	Parent:RegisterEvent('BAG_UPDATE', BAG_UPDATE)
