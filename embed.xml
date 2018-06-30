@@ -1,6 +1,8 @@
 <Ui>
 	<Script file='core/Init.lua'/>
+	<Script file='core/Database.lua'/>
 	<Script file='core/Constants.lua'/>
+	<Script file='core/Localization.lua'/>
 
 	<Script file='locale/deDE.lua'/>
 	<Script file='locale/esES.lua'/>
