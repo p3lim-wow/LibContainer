@@ -4,13 +4,13 @@ local MIN_INDEX = 1
 local function defaultSort(slotA, slotB)
 	if(not slotA or not slotB) then
 		return slotA or slotB
-	elseif(slotA.itemQuality ~= slotB.itemQuality) then
+	elseif(slotA:GetItemQuality() ~= slotB:GetItemQuality()) then
 		return slotA.itemQuality > slotB.itemQuality
-	elseif(slotA.itemLevel ~= slotB.itemLevel) then
+	elseif(slotA:GetItemLevel() ~= slotB:GetItemLevel()) then
 		return slotA.itemLevel > slotB.itemLevel
-	elseif(slotA.itemID ~= slotB.itemID) then
+	elseif(slotA:GetItemID() ~= slotB:GetItemID()) then
 		return slotA.itemID > slotB.itemID
-	elseif(slotA.itemCount ~= slotB.itemCount) then
+	elseif(slotA:GetItemCount() ~= slotB:GetItemCount()) then
 		return slotA.itemCount > slotB.itemCount
 	else
 		return slotA:GetID() > slotB:GetID()

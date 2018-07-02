@@ -46,8 +46,8 @@ Returns the non-empty Item's identifier.
 --]]
 function itemMixin:GetItemID()
 	if(not self:IsItemEmpty()) then
-		if(self.itemID == nil) then
-			self:CacheItemInfo()
+		if(not self.itemID) then
+			self.itemID = C_Item.GetItemID(self:GetItemLocation())
 		end
 
 		return self.itemID
