@@ -21,6 +21,18 @@ function LibContainer:ResetDatabase()
 	LibContainer.db = defaults
 end
 
+--[[ LibContainer:SetVariable(key, value)
+--]]
+function LibContainer:SetVariable(key, value)
+	LibContainer.db[key] = value
+end
+
+--[[ LibContainer:GetVariable(key)
+--]]
+function LibContainer:GetVariable(key)
+	return LibContainer.db[key]
+end
+
 local function Initialize()
 	local db = _G[database_name]
 	if(not db) then
