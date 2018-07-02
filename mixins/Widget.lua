@@ -6,15 +6,15 @@ Registers a new widget with the given name.
 
 * name        - name of the new widget (string)
 * enableFunc  - function which is run when the widget is created (function)
-* disableFunc - function which is run when the widget is disabled (function)
-* updateFunc  - function which is run on event updates (function)
+* disableFunc - function which is run when the widget is disabled (function, optional)
+* updateFunc  - function which is run on event updates (function, optional)
 --]]
 function LibContainer:RegisterWidget(name, enable, disable, update)
 	assert(not widgets[name], 'Widget \'' .. name .. '\' already exists.')
 	widgets[name] = {
 		enable = enable,
-		disable = disable,
-		update = update
+		disable = disable or nop,
+		update = updat or nope
 	}
 end
 
