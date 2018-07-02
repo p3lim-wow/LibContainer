@@ -141,6 +141,23 @@ function itemMixin:IsItemLocked()
 	end
 end
 
+--[[ Item:GetItemValue()
+Returns the merchant sell value of the non-empty Item.
+--]]
+function itemMixin:GetItemValue()
+	if(not self:IsItemEmpty()) then
+		local _, _, _, _, _, _, _, _, _, _, value = GetItemInfo(self:GetItemID())
+		return value or 0
+	end
+end
+
+--[[ Item:IsItemValuable()
+Returns true/false if the non-empty Item is valuable or not.
+--]]
+function itemMixin:IsItemValuable()
+	return self:GetItemValue() > 0
+end
+
 --[[ Item:GetItemQuestID()
 Returns the non-empty Item's quest identifier, if any.
 --]]

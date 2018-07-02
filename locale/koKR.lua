@@ -16,3 +16,6 @@ L['Quest Items'] = AUCTION_CATEGORY_QUEST_ITEMS
 L['Reagent Bank'] = REAGENT_BANK
 L['Teleporters'] = '순간이동기'
 L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
+
+-- Widget related
+-- L['Toggle auto-vendoring'] = '' -- MISSING TRANSLATION
