@@ -390,9 +390,12 @@ function parentMixin:CreateContainers()
 		Container:SetID(categoryIndex)
 		Container:Hide()
 		Container.slots = {}
+		Container.widgets = {}
 
 		self:Fire('PostCreateContainer', Container)
 
 		self.containers[categoryIndex] = Container
 	end
 end
+
+LibContainer.mixins.container = containerMixin
