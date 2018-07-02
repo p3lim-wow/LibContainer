@@ -29,8 +29,7 @@ for file in glob.glob('**/*.lua', recursive=True):
 					# "--[[ PageName:foo..."
 					if header.group(3).lower() == 'header':
 						# our "foo" was "header", which signifies this should be text on top of
-						# the page, so we use h1 heading size
-						textBlock = '# {}\n\n'.format(header.group(2))
+						# the page, but there's already a dedicated heading for the page
 						isHeader = True
 					else:
 						# everything else gets h3
