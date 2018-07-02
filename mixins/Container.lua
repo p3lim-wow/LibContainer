@@ -61,13 +61,13 @@ function containerMixin:UpdateSize()
 		local slotSizeX, slotSizeY = self:GetSlotSize()
 		local slotSpacingX, slotSpacingY = self:GetSlotSpacing()
 		local slotPaddingX, slotPaddingY = self:GetSlotPadding()
-		local paddingX, paddingY = self:GetPadding()
+		local paddingL, paddingR, paddingU, paddingD = self:GetPadding()
 
 		local cols = self:GetMaxColumns()
 		local rows = math.ceil(numSlots / cols)
 
-		local width = (((slotSizeX + slotSpacingX) * cols) - slotSpacingX) + (slotPaddingX) + paddingX
-		local height = (((slotSizeY + slotSpacingY) * rows) - slotSpacingY) + (slotPaddingY) + paddingY
+		local width = (((slotSizeX + slotSpacingX) * cols) - slotSpacingX) + (slotPaddingX) + paddingL + paddingR
+		local height = (((slotSizeY + slotSpacingY) * rows) - slotSpacingY) + (slotPaddingY) + paddingU + paddingD
 
 		self:SetSize(width, height)
 		self:UpdateSlotPositions()
@@ -91,7 +91,20 @@ function containerMixin:UpdateSlotPositions()
 	local slotRelPoint = self:GetSlotRelPoint()
 
 	local cols = self:GetMaxColumns()
-	local paddingX, paddingY = self:GetPadding()
+	local paddingL, paddingR, paddingU, paddingD = self:GetPadding()
+
+	local paddingX, paddingY
+	if(slotRelPoint:match('TOP')) then
+		paddingY = paddingU
+	elseif(slotRelPoint:match('BOTTOM')) then
+		paddingY = paddingD
+	end
+
+	if(slotRelPoint:match('LEFT')) then
+		paddingX = paddingL
+	elseif(slotRelPoint:match('RIGHT')) then
+		paddingX = paddingR
+	end
 
 	for index, Slot in next, self.slots do
 		local col = (index - 1) % cols
@@ -173,22 +186,42 @@ function containerMixin:GetSpacing()
 	return self.spacingX or 2, self.spacingY or 2
 end
 
---[[ Container:SetPadding(x[, y])
+--[[ Container:SetPadding(left[, right][, top][, bottom])
 Sets the horizontal and vertical padding within containers.
 
-* x - horizontal padding (integer, default = 5)
-* y - vertical padding (integer, default = x|5)
+* left   - horizontal padding (integer, default = 5)
+* right  - horizontal padding (integer, default = left)
+* top    - vertical padding (integer, default = left)
+* bottom - vertical padding (integer, default = top)
 --]]
-function containerMixin:SetPadding(x, y)
-	self.paddingX = x
-	self.paddingY = y or x
+function containerMixin:SetPadding(left, right, top, bottom)
+	if(not right) then
+		right = left
+	end
+
+	if(not top) then
+		top = right
+	end
+
+	if(not bottom) then
+		bottom = top
+	end
+
+	self.paddingL = left
+	self.paddingR = right
+	self.paddingU = top
+	self.paddingD = bottom
 end
 
 --[[ Container:GetPadding()
-Returns the horizontal and vertical integers for the padding within containers.
+Returns the horizontal and vertical integers for the four padding sides within containers.  
+Order: Left, Right, Up, Down
 --]]
 function containerMixin:GetPadding()
-	return self.paddingX or 5, self.paddingY or 5
+	return self.paddingL or 5,
+		self.paddingR or self.paddingL or 5,
+		self.paddingU or self.paddingL or 5,
+		self.paddingD or self.paddingD or 5
 end
 
 --[[ Container:GetName()
