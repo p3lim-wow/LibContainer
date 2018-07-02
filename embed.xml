@@ -45,6 +45,7 @@
 	<Script file='widgets/Currencies.lua'/>
 	<Script file='widgets/FreeSlots.lua'/>
 	<Script file='widgets/Money.lua'/>
+	<Script file='widgets/Restack.lua'/>
 
 	<Script file='core/Private.lua'/>
 </Ui>
