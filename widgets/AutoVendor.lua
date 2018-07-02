@@ -5,7 +5,7 @@ local function OnClick()
 end
 
 local function OnEnter(self)
-	GameTooltip:SetOwner(self, 'TOPRIGHT')
+	GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	GameTooltip:AddLine(L['Toggle auto-vendoring'])
 	GameTooltip:Show()
 end
