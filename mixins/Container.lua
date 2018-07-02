@@ -27,6 +27,13 @@ function containerMixin:RemoveSlot(Slot)
 	end
 end
 
+--[[ Container:GetSlots()
+Returns a table of all slots associated witht he container's category.
+--]]
+function containerMixin:GetSlots()
+	return self.slots
+end
+
 --[[ Container:SetDirty(flag)
 Sets the container as "dirty", which means it will be updated in the next update cycle.
 
