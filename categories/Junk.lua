@@ -18,4 +18,8 @@ local filter = function(Slot)
 	end
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+local sort = function(slotA, slotB)
+	return (slotA:GetItemValue() * slotA:GetItemCount()) > (slotB:GetItemValue() * slotB:GetItemCount())
+end
+
+LibContainer:AddCategory(index, key, name, filter, sort)
