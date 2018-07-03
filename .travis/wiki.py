@@ -85,9 +85,10 @@ for name, blocks in pages.items():
 		if name in headers:
 			# add the header if it exists
 			output += headers[name]
+			output += '\n***\n'
 
 		# add the remaining blocks of text
-		output += '\n\n'.join(blocks)
+		output += '\n***\n'.join(blocks)
 
 		# write to file
 		f.write(output)
