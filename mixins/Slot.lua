@@ -188,6 +188,7 @@ function bagMixin:CreateSlot(slotIndex)
 	Slot:Show()
 	Slot:SetID(slotIndex)
 	Slot:SetItemLocation(ItemLocation:CreateFromBagAndSlot(self:GetID(), slotIndex))
+	Slot.hasItem = true -- for ContainerFrameItemButton_OnEnter
 
 	-- assign predictable keys for children
 	local slotName = Slot:GetName()
