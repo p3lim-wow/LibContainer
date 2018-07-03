@@ -34,7 +34,7 @@ function LibContainer:RegisterWidget(name, enable, disable, update)
 	widgets[name] = {
 		enable = enable,
 		disable = disable or nop,
-		update = updat or nope
+		update = update or nop
 	}
 end
 
