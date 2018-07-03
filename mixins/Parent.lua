@@ -20,6 +20,13 @@ function parentMixin:GetCategories()
 	return categories
 end
 
+--[[ Parent:GetType()
+Returns 'bags' or 'bank' depending on which type of parent it is.
+--]]
+function parentMixin:GetType()
+	return self.containerType
+end
+
 local function ADDON_LOADED(self, name)
 	if(name ~= parentAddOnName) then
 		return
