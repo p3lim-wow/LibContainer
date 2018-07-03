@@ -1,41 +1,41 @@
 local callbackMixin = LibContainer.mixins.callback
 
--- based on ItemMixin, optimized for containers
+-- based on ItemMixin, optimized for containers and caching
 local itemMixin = {}
 --[[ Item:SetItemLocation(itemLocation)
 Sets the ItemLocation for the Item (see FrameXML/ObjectAPI/ItemLocation.lua)
 
 * itemLocation - ItemLocation object (object)
 --]]
-function itemMixin:SetItemLocation(itemLocation)
+function itemMixin:SetItemLocation(itemLocation) -- static
 	self.itemLocation = itemLocation
 end
 
 --[[ Item:GetItemLocation()
 Returns the ItemLocation object (see FrameXML/ObjectAPI/ItemLocation.lua)
 --]]
-function itemMixin:GetItemLocation()
+function itemMixin:GetItemLocation() -- static
 	return self.itemLocation
 end
 
 --[[ Item:GetBagAndSlot()
 Returns the Bag identifier and the Slot index for the Item.
 --]]
-function itemMixin:GetBagAndSlot()
+function itemMixin:GetBagAndSlot() -- static
 	return self:GetItemLocation():GetBagAndSlot()
 end
 
 --[[ Item:IsItemEmpty()
 Returns true/false if the Item is empty or not.
 --]]
-function itemMixin:IsItemEmpty()
-	return not GetContainerItemID(self:GetBagAndSlot())
+function itemMixin:IsItemEmpty() -- static
+	return not C_Item.DoesItemExist(self:GetItemLocation())
 end
 
 --[[ Item:GetItemCooldown()
 Returns the start, duration and enabled flag for the non-empty Item's cooldown status, if any.
 --]]
-function itemMixin:GetItemCooldown()
+function itemMixin:GetItemCooldown() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		return GetContainerItemCooldown(self:GetBagAndSlot())
 	end
@@ -44,7 +44,7 @@ end
 --[[ Item:GetItemID()
 Returns the non-empty Item's identifier.
 --]]
-function itemMixin:GetItemID()
+function itemMixin:GetItemID() -- static
 	if(not self:IsItemEmpty()) then
 		if(not self.itemID) then
 			self.itemID = C_Item.GetItemID(self:GetItemLocation())
@@ -57,10 +57,10 @@ end
 --[[ Item:GetItemLink()
 Returns the non-empty Item's hyperlink.
 --]]
-function itemMixin:GetItemLink()
+function itemMixin:GetItemLink() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(not self.itemLink) then
-			self:CacheItemInfo()
+			self.itemLink = C_Item.GetItemLink(self:GetItemLocation())
 		end
 
 		return self.itemLink
@@ -70,10 +70,10 @@ end
 --[[ Item:GetItemQuality()
 Returns the non-empty Item's quality integer.
 --]]
-function itemMixin:GetItemQuality()
+function itemMixin:GetItemQuality() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemQuality == nil) then
-			self:CacheItemInfo()
+			self.itemQuality = C_Item.GetItemQuality(self:GetItemLocation())
 		end
 
 		return self.itemQuality
@@ -83,11 +83,10 @@ end
 --[[ Item:GetItemQualityColor()
 Returns a Color object for the non-empty Item.
 --]]
-function itemMixin:GetItemQualityColor()
+function itemMixin:GetItemQualityColor() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemQualityColor == nil) then
-			local itemQuality = self:GetItemQuality()
-			local color = ITEM_QUALITY_COLORS[itemQuality]
+			local color = ITEM_QUALITY_COLORS[self:GetItemQuality()]
 			self.itemQualityColor = color and color.color
 		end
 
@@ -98,7 +97,7 @@ end
 --[[ Item:GetItemLevel()
 Returns the non-empty Item's level.
 --]]
-function itemMixin:GetItemLevel()
+function itemMixin:GetItemLevel() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemLevel == nil) then
 			self.itemLevel = C_Item.GetCurrentItemLevel(self:GetItemLocation())
@@ -111,10 +110,10 @@ end
 --[[ Item:GetItemTexture()
 Returns the non-empty Item's texture path.
 --]]
-function itemMixin:GetItemTexture()
+function itemMixin:GetItemTexture() -- static, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemTexture == nil) then
-			self:CacheItemInfo()
+			self.itemTexture = C_Item.GetItemIconByID(self:GetItemID())
 		end
 
 		return self.itemTexture
@@ -124,33 +123,30 @@ end
 --[[ Item:GetItemCount()
 Returns the number of items in the non-empty Item's location.
 --]]
-function itemMixin:GetItemCount()
+function itemMixin:GetItemCount() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemCount == nil) then
-			self:CacheItemInfo()
+			local _, itemCount = GetContainerItemInfo(self:GetBagAndSlot())
+			self.itemCount = itemCount or 1
 		end
 
-		return self.itemCount or 0
+		return self.itemCount
 	end
 end
 
 --[[ Item:IsItemLocked()
 Returns true/false if the the non-empty Item is locked or not.
 --]]
-function itemMixin:IsItemLocked()
+function itemMixin:IsItemLocked() -- variable
 	if(not self:IsItemEmpty()) then
-		if(self.itemLocked == nil) then
-			self:CacheItemInfo()
-		end
-
-		return self.itemLocked
+		return C_Item.IsLocked(self:GetItemLocation())
 	end
 end
 
 --[[ Item:GetItemValue()
 Returns the merchant sell value of the non-empty Item.
 --]]
-function itemMixin:GetItemValue()
+function itemMixin:GetItemValue() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemValue == nil) then
 			local _, _, _, _, _, _, _, _, _, _, itemValue = GetItemInfo(self:GetItemID())
@@ -164,14 +160,14 @@ end
 --[[ Item:IsItemValuable()
 Returns true/false if the non-empty Item is valuable or not.
 --]]
-function itemMixin:IsItemValuable()
+function itemMixin:IsItemValuable() -- variable, requires data load
 	return self:GetItemValue() > 0
 end
 
 --[[ Item:GetItemQuestID()
 Returns the non-empty Item's quest identifier, if any.
 --]]
-function itemMixin:GetItemQuestID()
+function itemMixin:GetItemQuestID() -- static, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemQuestID == nil) then
 			self:CacheItemQuestInfo()
@@ -184,7 +180,7 @@ end
 --[[ Item:IsItemQuestItem()
 Returns true/false if the non-empty Item is a quest item or not.
 --]]
-function itemMixin:IsItemQuestItem()
+function itemMixin:IsItemQuestItem() -- static, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemQuestItem == nil) then
 			self:CacheItemQuestInfo()
@@ -197,7 +193,7 @@ end
 --[[ Item:IsItemQuestActive()
 Returns true/false if the non-empty Item's quest is active or not.
 --]]
-function itemMixin:IsItemQuestActive()
+function itemMixin:IsItemQuestActive() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemQuestActive == nil) then
 			self:CacheItemQuestInfo()
@@ -210,7 +206,7 @@ end
 --[[ Item:IsBattlePayItem()
 Returns true/false if the non-empty Item is a "Battle Pay" item or not.
 --]]
-function itemMixin:IsBattlePayItem()
+function itemMixin:IsBattlePayItem() -- static, requires data load (?)
 	if(not self:IsItemEmpty()) then
 		if(self.itemBattlePayItem == nil) then
 			self.itemBattlePayItem = IsBattlePayItem(self:GetBagAndSlot())
@@ -223,7 +219,7 @@ end
 --[[ Item:IsNewItem()
 Returns true/false if the non-empty Item is a "new" item or not.
 --]]
-function itemMixin:IsNewItem()
+function itemMixin:IsNewItem() -- variable, requires data load
 	if(not self:IsItemEmpty()) then
 		return C_NewItems.IsNewItem(self:GetBagAndSlot())
 	end
@@ -232,7 +228,7 @@ end
 --[[ Item:GetItemClass()
 Returns the non-empty Item's class identifier.
 --]]
-function itemMixin:GetItemClass()
+function itemMixin:GetItemClass() -- static
 	if(not self:IsItemEmpty()) then
 		if(self.itemClass == nil) then
 			self:CacheItemInfoInstant()
@@ -245,7 +241,7 @@ end
 --[[ Item:GetItemSubClass()
 Returns the non-empty Item's sub-class identifier.
 --]]
-function itemMixin:GetItemSubClass()
+function itemMixin:GetItemSubClass() -- static
 	if(not self:IsItemEmpty()) then
 		if(self.itemSubClass == nil) then
 			self:CacheItemInfoInstant()
@@ -253,14 +249,6 @@ function itemMixin:GetItemSubClass()
 
 		return self.itemSubClass
 	end
-end
-
---[[ Item:CacheItemInfo()
-Caches generic item information.
---]]
-function itemMixin:CacheItemInfo()
-	local _
-	self.itemTexture, self.itemCount, self.itemLocked, self.itemQuality, _, _, self.itemLink, _, self.itemWorthless, self.itemID = GetContainerItemInfo(self:GetBagAndSlot())
 end
 
 --[[ Item:CacheItemQuestInfo()
@@ -284,6 +272,10 @@ Clears all cached item information.
 function itemMixin:Clear()
 	-- cached info that is persistent
 	self.itemID = nil
+	self.itemQuestItem = nil
+	self.itemQuestID = nil
+	self.itemClass = nil
+	self.itemSubClass = nil
 
 	self:ClearCache()
 end
@@ -296,17 +288,19 @@ function itemMixin:ClearCache()
 	self.itemLink = nil
 	self.itemTexture = nil
 	self.itemCount = nil
-	self.itemLocked = nil
 	self.itemQuality = nil
 	self.itemQualityColor = nil
 	self.itemValue = nil
-	self.itemQuestItem = nil
-	self.itemQuestID = nil
 	self.itemQuestActive = nil
 	self.itemBattlePayItem = nil
-	self.itemClass = nil
-	self.itemSubClass = nil
 	self.itemLevel = nil
 end
+
+--[[ Item:ContinueOnItemLoad(callback)
+Executes the callback once the item has been loaded on the client.
+
+* callback - callback function (function)
+--]]
+itemMixin.ContinueOnItemLoad = ItemMixin.ContinueOnItemLoad
 
 LibContainer.mixins.item = itemMixin

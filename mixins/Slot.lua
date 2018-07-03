@@ -16,9 +16,11 @@ function slotMixin:UpdateVisibility()
 		self:RemoveCategory()
 	else
 		self:ClearCache()
-		self:Show()
-		self:Update()
-		self:UpdateCategory()
+		self:ContinueOnItemLoad(function()
+			self:Show()
+			self:Update()
+			self:UpdateCategory()
+		end)
 	end
 
 	self:Fire('PostUpdateVisibility', self)
