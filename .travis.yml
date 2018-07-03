@@ -15,7 +15,7 @@ before_script:
   - git config --global user.name "$GIT_NAME"
 
 script:
-  - git clone git@github.com:p3lim-wow/LibContainer.wiki .wiki
+  - git clone "git@github.com:$TRAVIS_REPO_SLUG.wiki" .wiki
   - python3 .travis/wiki.py
   - cd .wiki
   - git add .
