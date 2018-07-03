@@ -1,5 +1,21 @@
 local L = LibContainer.locale
 
+--[[ AutoVendor:header
+Creates a button that allows toggling whether junk should be auto-sold to merchants.
+
+Example:
+```Lua
+local Bags = LibContainer:New('bags', 'MyBags')
+Bags:SetPoint('CENTER')
+Bags:On('PostCreateContainer', function(Container)
+	local AutoVendor = Container:AddWidget('AutoVendor')
+	AutoVendor:SetPoint('TOPRIGHT')
+	AutoVendor:SetSize(20, 20)
+	AutoVendor:SetTexture(...)
+end)
+```
+--]]
+
 local function OnClick()
 	LibContainer:SetVariable('autoSellJunk', not LibContainer:GetVariable('autoSellJunk'))
 end

@@ -1,5 +1,9 @@
 local EventHandler = CreateFrame('Frame')
 
+--[[ Event:header
+The Event mixin allows easy management of game events and the functions they call once triggered.
+--]]
+
 local eventMixin = {}
 local events = {}
 --[[ Event:RegisterEvent(event, handler)

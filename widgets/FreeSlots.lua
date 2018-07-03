@@ -5,7 +5,12 @@ This Slot serves two purposes:
 1. Displaying the number of free slots left in the player's inventory as the item count text
 2. Putting items into this slot will place them in the first free inventory slot available
 
-See [Parent:AddFreeSlot()](Parent#parentaddfreeslot).
+Example:
+```Lua
+local Bags = LibContainer:New('bags', 'MyBags')
+Bags:SetPoint('CENTER')
+Bags:AddFreeSlot()
+```
 --]]
 
 local function OnDrop(Slot)

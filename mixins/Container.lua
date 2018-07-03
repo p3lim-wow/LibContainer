@@ -1,6 +1,15 @@
 local callbackMixin = LibContainer.mixins.callback
 local parentMixin = LibContainer.mixins.parent
 
+--[[ Container:header
+The Container mixin is the user-facing part of [Categories](Category), and it mostly serves as a
+anchor point for all the [Slots](Slot) of a given [Category](Category).
+
+Performance and efficiency are top priorities for this mixin, as it needs to resize and position
+itself, as well as all the [Slots](Slot) that are anchored to it. As such, it's only updated when
+there's been a [Slot](Slot) change.
+--]]
+
 local containerMixin = {}
 --[[ Container:AddSlot(Slot)
 Adds a Slot to the container and marks the container as "dirty".

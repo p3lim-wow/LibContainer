@@ -1,6 +1,14 @@
 local parentMixin = LibContainer.mixins.parent
 local bagSizes = LibContainer.constants.bagSizes
 
+--[[ Bag:header
+The Bag mixin is a mostly transparent object. It serves as the parent for [Slots](Slot), and as
+a "proxy" between the [Parent](Parent) and the [Slot](Slot) for events and updates.
+
+The main reason for its existance is to allow 3rd-party addons to easily attach to the [Slots](Slot)
+in each container and get predictable information through Slot parent identifiers.
+--]]
+
 local bagMixin = {}
 --[[ Bag:GetSlot(slotIndex)
 Returns the Slot object by index.

@@ -1,5 +1,14 @@
 local callbackMixin = LibContainer.mixins.callback
 
+--[[ Item:header
+The Item mixin is based off Blizzard's ItemMixin (see FrameXML/ObjectAPI/Item.lua), and serves the
+purpose of easy access to item data.
+
+The data is cached as much as possible to increase performance and reduce load times.
+
+All of the methods of this mixin is inherited by the [Slot](Slot) objects.
+--]]
+
 -- based on ItemMixin, optimized for containers and caching
 local itemMixin = {}
 --[[ Item:SetItemLocation(itemLocation)
@@ -297,7 +306,7 @@ function itemMixin:ClearCache()
 end
 
 --[[ Item:ContinueOnItemLoad(callback)
-Executes the callback once the item has been loaded on the client.
+Executes the callback once the item has been loaded on the client (see FrameXML/ObjectAPI/Item.lua).
 
 * callback - callback function (function)
 --]]

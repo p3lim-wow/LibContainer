@@ -1,6 +1,13 @@
 local MAX_INDEX = 999
 local MIN_INDEX = 1
 
+--[[ Category:header
+The Category mixin is the main selling point of LibContainer. Unlike most bag addons that exists,
+LibContainer bases the entire layout upon separating [Slots](Slot) into categories, which are
+displayed in [Containers](Container), instead of either showing entire bags, or all-in-one solutions
+(both of which are technically possible to do in LibContainer as well).
+--]]
+
 local function defaultSort(slotA, slotB)
 	if(not slotA or not slotB) then
 		return slotA or slotB

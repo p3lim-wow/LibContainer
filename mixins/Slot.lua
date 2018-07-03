@@ -2,6 +2,16 @@ local callbackMixin = LibContainer.mixins.callback
 local itemMixin = LibContainer.mixins.item
 local bagMixin = LibContainer.mixins.bag
 
+--[[ Slot:header
+The Slot mixin is the bread and butter of LibContainer, it's the mixin that essentially becomes
+the Slot objects that the users see whenever they open their bags.
+
+Performance and efficiency is a high priority for this mixin, and as such, most of the data is
+cached in some form, and updates are only done in batches to prevent unnecessary updates.
+
+Slots are parented to a [Bag](Bag), and are anchored to [Containers](Container).
+--]]
+
 local slotMixin = {}
 --[[ Slot:UpdateVisibility()
 Updates the visibility and hides/shows and updates the Slot.  

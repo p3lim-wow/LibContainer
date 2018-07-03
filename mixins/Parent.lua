@@ -4,6 +4,13 @@ local callbackMixin = LibContainer.mixins.callback
 local eventMixin = LibContainer.mixins.event
 local bagSlots = LibContainer.constants.bagSlots
 
+--[[ Parent:header
+The Parent mixin is the lowest object the layout has to interact with.  
+The layout would typically want to create two separate parents - one for bags, one for bank.  
+Once created, the Parent serves as the ground layer for the entirety of LibContainer, and it's
+where the layout starts to adjust preferences and hook into the rest of the mixins with [Callbacks](Callback).
+--]]
+
 local parentMixin = {}
 --[[ Parent:GetCategories()
 Returns a (filtered) table of all categories.  

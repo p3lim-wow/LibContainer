@@ -1,6 +1,26 @@
 local widgets = {}
 local containerMixin = LibContainer.mixins.container
 
+--[[ Widget:header
+The Widget mixin serves the purpose of registering and initiating widgets; extra features one would
+typically see of want out of a bag addon.
+
+The available widgets are:
+- [Assign](Assign)
+- [AutoDeposit](AutoDeposit)
+- [AutoVendor](AutoVendor)
+- [Bags](Bags)
+- [Currencies](Currencies)
+- [Deposit](Deposit)
+- [FreeSlots](FreeSlots)
+- [Money](Money)
+- [Positioning](Positioning)
+- [Restack](Restack)
+- [Search](Search)
+
+See the individual pages for more information.
+--]]
+
 --[[ LibContainer:RegisterWidget(name, enableFunc, disableFunc, updateFunc)
 Registers a new widget with the given name.
 

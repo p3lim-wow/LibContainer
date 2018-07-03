@@ -1,3 +1,18 @@
+--[[ Currencies:header
+Creates a group of buttons that display the tracked currencies.
+
+Example:
+```Lua
+local Bags = LibContainer:New('bags', 'MyBags')
+Bags:SetPoint('CENTER')
+Bags:On('PostCreateContainer', function(Container)
+	local Currencies = Container:AddWidget('Currencies')
+	Currencies:SetPoint('BOTTOMLEFT')
+	Currencies:SetSize(1, 20)
+end)
+```
+--]]
+
 local function OnClick(self)
 	if(IsModifiedClick('CHATLINK')) then
 		HandleModifiedItemClick(GetCurrencyLink(self:GetID()))

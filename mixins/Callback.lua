@@ -1,3 +1,8 @@
+--[[ Callback:header
+The Callback mixin allows for simple callback triggers throughout the entirety of LibContainer,
+and is the primary method for layouts to hook into and modify many aspects of the framework.
+--]]
+
 local callbackMixin = {}
 local callbacks = {}
 --[[ Callback:Fire(event[, ...])

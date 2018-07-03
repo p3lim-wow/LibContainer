@@ -1,4 +1,16 @@
-local L = LibContainer.locale
+--[[ Money:header
+Creates a button that displays the amount of money the player has.
+
+Example:
+```Lua
+local Bags = LibContainer:New('bags', 'MyBags')
+Bags:SetPoint('CENTER')
+Bags:On('PostCreateContainer', function(Container)
+	local Money = Container:AddWidget('Money')
+	Money:SetPoint('TOPRIGHT')
+end)
+```
+--]]
 
 local function Update(self)
 	local money = GetMoney()
