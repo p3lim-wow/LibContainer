@@ -15,11 +15,7 @@ function slotMixin:UpdateVisibility()
 		self:Clear()
 		self:RemoveCategory()
 	else
-		if(self:GetItemID() ~= GetContainerItemID(self:GetBagAndSlot())) then
-			-- temp solution
-			self:Clear()
-		end
-
+		self:ClearCache()
 		self:Show()
 		self:Update()
 		self:UpdateCategory()

@@ -59,7 +59,7 @@ Returns the non-empty Item's hyperlink.
 --]]
 function itemMixin:GetItemLink()
 	if(not self:IsItemEmpty()) then
-		if(self.itemLink == nil) then
+		if(not self.itemLink) then
 			self:CacheItemInfo()
 		end
 
@@ -84,9 +84,15 @@ end
 Returns a Color object for the non-empty Item.
 --]]
 function itemMixin:GetItemQualityColor()
-	local itemQuality = self:GetItemQuality()
-	local color = ITEM_QUALITY_COLORS[itemQuality]
-	return color and color.color
+	if(not self:IsItemEmpty()) then
+		if(self.itemQualityColor == nil) then
+			local itemQuality = self:GetItemQuality()
+			local color = ITEM_QUALITY_COLORS[itemQuality]
+			self.itemQualityColor = color and color.color
+		end
+
+		return self.itemQualityColor
+	end
 end
 
 --[[ Item:GetItemLevel()
@@ -94,7 +100,7 @@ Returns the non-empty Item's level.
 --]]
 function itemMixin:GetItemLevel()
 	if(not self:IsItemEmpty()) then
-		if(not self.itemLevel) then
+		if(self.itemLevel == nil) then
 			self.itemLevel = C_Item.GetCurrentItemLevel(self:GetItemLocation())
 		end
 
@@ -146,8 +152,12 @@ Returns the merchant sell value of the non-empty Item.
 --]]
 function itemMixin:GetItemValue()
 	if(not self:IsItemEmpty()) then
-		local _, _, _, _, _, _, _, _, _, _, value = GetItemInfo(self:GetItemID())
-		return value or 0
+		if(self.itemValue == nil) then
+			local _, _, _, _, _, _, _, _, _, _, itemValue = GetItemInfo(self:GetItemID())
+			self.itemValue = itemValue or 0
+		end
+
+		return self.itemValue
 	end
 end
 
@@ -272,13 +282,24 @@ end
 Clears all cached item information.
 --]]
 function itemMixin:Clear()
+	-- cached info that is persistent
+	self.itemID = nil
+
+	self:ClearCache()
+end
+
+--[[ Item:ClearCache()
+Clears all variable item information.
+--]]
+function itemMixin:ClearCache()
+	-- cached info that's not persistent
+	self.itemLink = nil
 	self.itemTexture = nil
 	self.itemCount = nil
 	self.itemLocked = nil
 	self.itemQuality = nil
-	self.itemLink = nil
-	self.itemWorthless = nil
-	self.itemID = nil
+	self.itemQualityColor = nil
+	self.itemValue = nil
 	self.itemQuestItem = nil
 	self.itemQuestID = nil
 	self.itemQuestActive = nil
