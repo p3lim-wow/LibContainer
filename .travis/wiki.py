@@ -6,7 +6,6 @@ STOP = re.compile(r'^--\]\]$')
 
 # create a dictionary to store our pages
 pages = {}
-headers = {}
 
 print('Parsing documentation in \'{}\''.format(os.getcwd()))
 for file in glob.glob('**/*.lua', recursive=True):
@@ -44,18 +43,20 @@ for file in glob.glob('**/*.lua', recursive=True):
 					# line signified the end of a block, we'll need to store it
 					# the expected format is:
 					# "--]]"
+					if not pageName in pages:
+						# page does not have a list to store blocks in - create it
+						pages[pageName] = []
+
 					if isHeader:
 						# the block was a header, we need to put it at the top of the list of blocks
-						headers[pageName] = textBlock
+						pages[pageName].insert(0, textBlock)
 					else:
-						if not pageName in pages:
-							# page does not have a list to store blocks in - create it
-							pages[pageName] = []
 						# normal block, just append it
 						pages[pageName].append(textBlock)
 
 					# reset back to normal
 					isReading = False
+					isHeader = False
 					textBlock = ''
 					pageName = None
 					numBlocks += 1
@@ -79,18 +80,7 @@ for name, blocks in pages.items():
 	print('- {}'.format(path))
 
 	with open(path, 'w') as f:
-		# open the output file for writing
-		output = ''
-
-		if name in headers:
-			# add the header if it exists
-			output += headers[name]
-			output += '\n***\n'
-
-		# add the remaining blocks of text
-		output += '\n***\n'.join(blocks)
-
-		# write to file
-		f.write(output)
+		# open the output file for writing, join the blocks for the page, then write
+		f.write('\n***\n\n'.join(blocks))
 
 print('\nDone!')
