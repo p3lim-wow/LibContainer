@@ -15,7 +15,7 @@ end)
 
 local function OnClick(self)
 	if(IsModifiedClick('CHATLINK')) then
-		HandleModifiedItemClick(GetCurrencyLink(self:GetID()))
+		HandleModifiedItemClick(GetCurrencyLink(self:GetID(), 1))
 	end
 end
 
