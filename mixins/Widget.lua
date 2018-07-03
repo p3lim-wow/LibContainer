@@ -51,6 +51,7 @@ function containerMixin:AddWidget(name)
 
 	self.widgets[name] = obj
 	self:EnableWidget(name)
+	self:UpdateWidget(name)
 	return obj
 end
 
@@ -70,4 +71,13 @@ Disables the widget by name.
 --]]
 function containerMixin:DisableWidget(name)
 	widgets[name].disable(self.widgets[name])
+end
+
+--[[ Container:UpdateWidget(name)
+Updates the widget by name.
+
+* name - name of widget (string)
+--]]
+function containerMixin:UpdateWidget(name)
+	widgets[name].update(self.widgets[name])
 end
