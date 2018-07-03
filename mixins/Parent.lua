@@ -125,6 +125,16 @@ local function UNIT_QUEST_LOG_CHANGED(self, unit)
 	end
 end
 
+
+local function MODIFIER_STATE_CHANGED(self)
+	local obj = GameTooltip:GetOwner()
+	if(obj and obj:GetParent() and obj:GetParent():GetParent()) then
+		if(obj:GetParent():GetParent() == self) then
+			obj:UpdateTooltip()
+		end
+	end
+end
+
 local parents = {}
 --[[ LibContainer:New(containerType[, name][, parent])
 Creates and returns a new Parent.
@@ -165,6 +175,7 @@ function LibContainer:New(containerType, name, parent)
 	Parent:RegisterEvent('BAG_UPDATE_COOLDOWN', BAG_UPDATE_COOLDOWN)
 	Parent:RegisterEvent('QUEST_ACCEPTED', QUEST_ACCEPTED)
 	Parent:RegisterEvent('UNIT_QUEST_LOG_CHANGED', UNIT_QUEST_LOG_CHANGED)
+	Parent:RegisterEvent('MODIFIER_STATE_CHANGED', MODIFIER_STATE_CHANGED)
 
 	if(containerType == 'bank') then
 		Parent:RegisterEvent('PLAYERBANKSLOTS_CHANGED', PLAYERBANKSLOTS_CHANGED)
