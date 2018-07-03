@@ -122,7 +122,7 @@ Returns the non-empty Item's texture path.
 function itemMixin:GetItemTexture() -- static, requires data load
 	if(not self:IsItemEmpty()) then
 		if(self.itemTexture == nil) then
-			self.itemTexture = C_Item.GetItemIconByID(self:GetItemID())
+			self.itemTexture = C_Item.GetItemIcon(self:GetItemLocation())
 		end
 
 		return self.itemTexture
