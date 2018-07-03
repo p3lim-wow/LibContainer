@@ -13,11 +13,25 @@ Any categories that has been ignored on the Parent will not be included.
 --]]
 function parentMixin:GetCategories()
 	local categories = CopyTable(LibContainer:GetCategories())
-	for key in next, self.categoriesIgnored do
-		categories[key] = nil
+	for _, index in next, self.categoriesIgnored do
+		categories[index] = nil
 	end
 
 	return categories
+end
+
+--[[ Parent:DisableCategories(...)
+Disables one or more categories by name from the Parent containers.
+
+* ... - category name(s) (string)
+--]]
+function parentMixin:DisableCategories(...)
+	for index = 1, select('#', ...) do
+		local name = select(index, ...)
+		local category = LibContainer:GetCategoryByName(name)
+		assert(category, 'Category \'' .. name .. '\' doesn\'t exist.')
+		table.insert(self.categoriesIgnored, category.index)
+	end
 end
 
 --[[ Parent:GetType()
