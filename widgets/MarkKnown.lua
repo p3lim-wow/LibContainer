@@ -26,7 +26,7 @@ local function OnClick(self)
 	-- the table, but that seems wasteful.
 	for index = #slots, 1, -1 do
 		local Slot = slots[index]
-		local category = Slot:GuessCategory(true)
+		local category = Slot:GuessCategory(Container:GetName())
 		Slot:AssignCategory(category.index)
 	end
 

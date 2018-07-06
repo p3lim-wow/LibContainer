@@ -144,15 +144,24 @@ function slotMixin:AssignCategory(categoryIndex)
 end
 
 local reverse = {}
---[[ Slot:GuessCategory([ignoreCurrentCategory])
+--[[ Slot:GuessCategory([...])
 Iterates through the available [Categories](Category) and returns the best suited one for the Slot.  
 Any categories disabled on the Parent will not be traversed.
 
-* ignoreCurrentCategory - flag to not match current category for the Slot (boolean, optional)
+* ... - category name(s) to ignore (string(s), optional)
 --]]
-function slotMixin:GuessCategory(ignoreCurrentCategory)
+function slotMixin:GuessCategory(...)
 	local categories = self.parent:GetCategories()
 	local currentCategory = self:GetCategory()
+
+	local numSkip = select('#', ...)
+	local skipCategories
+	if(numSkip > 0) then
+		skipCategories = {}
+		for index = 1, numSkip do
+			skipCategories[select(index, ...)] = true
+		end
+	end
 
 	table.wipe(reverse)
 
@@ -164,10 +173,8 @@ function slotMixin:GuessCategory(ignoreCurrentCategory)
 
 	for index = #reverse, 1, -1 do
 		local category = categories[reverse[index]]
-		if(category.filterFunc(self)) then
-			if(not (ignoreCurrentCategory and category.index == currentCategory)) then
-				return category
-			end
+		if(category.filterFunc(self) and not (skipCategories and skipCategories[category.name])) then
+			return category
 		end
 	end
 end
