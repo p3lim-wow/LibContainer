@@ -102,7 +102,10 @@ local function ITEM_LOCK_CHANGED(self, bagID, slotIndex)
 	local Bag = self:GetBag(bagID)
 	if(Bag) then
 		if(slotIndex) then
-			Bag:GetSlot(slotIndex):UpdateLock()
+			local Slot = Bag:GetSlot(slotIndex)
+			if(Slot) then
+				Slot:UpdateLock()
+			end
 		end
 	end
 end
