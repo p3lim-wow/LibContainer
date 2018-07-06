@@ -45,4 +45,4 @@ local function Enable(self)
 	self:SetScript('OnLeave', GameTooltip_Hide)
 end
 
-LibContainer:RegisterWidget('MarkKnown', Enable, nop, Update)
+LibContainer:RegisterWidget('MarkKnown', Enable, nop, nop)
