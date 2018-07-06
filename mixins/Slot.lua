@@ -130,6 +130,19 @@ function slotMixin:RemoveCategory()
 	end
 end
 
+--[[ Slot:AssignCategory(categoryIndex)
+Assigns a persistent category to the Slot's item by index.
+
+* categoryIndex - the index of the category to assign the item in the slot to (integer)
+--]]
+function slotMixin:AssignCategory(categoryIndex)
+	assert(type(categoryIndex) == 'number', 'categoryIndex must be a number')
+	LibContainer.db.KnownItems[self:GetItemID()] = categoryIndex
+
+	self:RemoveCategory()
+	self:SetCategory(categoryIndex)
+end
+
 local reverse = {}
 --[[ Slot:GuessCategory([ignoreCurrentCategory])
 Iterates through the available [Categories](Category) and returns the best suited one for the Slot.  
