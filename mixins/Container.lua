@@ -81,10 +81,11 @@ function containerMixin:UpdateSize()
 		self:SetSize(width, height)
 		self:UpdateSlotPositions()
 		self:Show()
-		self:GetParent():UpdateContainerPositions()
 	else
 		self:Hide()
 	end
+
+	self:GetParent():UpdateContainerPositions()
 end
 
 --[[ Container:UpdateSlotPositions()
