@@ -66,7 +66,8 @@ function containerMixin:UpdateSize()
 	local numSlots = #self.slots
 	local categoryIndex = self:GetID()
 
-	if(numSlots > 0) then
+	if(numSlots > 0 or self:GetID() == 1) then
+		-- the Inventory container must always be shown, but with 0 slots it looks a bit wonky
 		local slotSizeX, slotSizeY = self:GetSlotSize()
 		local slotSpacingX, slotSpacingY = self:GetSlotSpacing()
 		local slotPaddingX, slotPaddingY = self:GetSlotPadding()
@@ -404,8 +405,8 @@ end
 Initializes a update chain for all "dirty" Containers.
 --]]
 function parentMixin:UpdateContainers()
-	for _, Container in next, self:GetContainers() do
-		if(Container:IsDirty()) then
+	for categoryIndex, Container in next, self:GetContainers() do
+		if(Container:IsDirty() or categoryIndex == 1) then
 			Container:UpdateSize()
 			Container:SetDirty(false)
 		end
