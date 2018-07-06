@@ -173,7 +173,7 @@ function slotMixin:GuessCategory(...)
 
 	for index = #reverse, 1, -1 do
 		local category = categories[reverse[index]]
-		if(category.filterFunc(self) and not (skipCategories and skipCategories[category.name])) then
+		if(not (skipCategories and skipCategories[category.name]) and category.filterFunc(self)) then
 			return category
 		end
 	end
