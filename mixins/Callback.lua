@@ -4,7 +4,6 @@ and is the primary method for layouts to hook into and modify many aspects of th
 --]]
 
 local callbackMixin = {}
-local callbacks = {}
 --[[ Callback:Fire(event[, ...])
 Triggers a callback with the given event and optional parameters.
 
@@ -12,8 +11,12 @@ Triggers a callback with the given event and optional parameters.
 * ...   - additional parameter(s) to pass to the callback(s) (optional)
 --]]
 function callbackMixin:Fire(event, ...)
-	if(callbacks[event]) then
-		for _, callback in next, callbacks[event] do
+	if(not self.callbacks) then
+		self.callbacks = {}
+	end
+
+	if(self.callbacks[event]) then
+		for _, callback in next, self.callbacks[event] do
 			securecall(callback, ...)
 		end
 	end
@@ -26,18 +29,22 @@ Registers a callback for the given event.
 * callback - function to trigger (function)
 --]]
 function callbackMixin:On(event, callback)
-	if(not callbacks[event]) then
-		callbacks[event] = {}
+	if(not self.callbacks) then
+		self.callbacks = {}
 	end
 
-	table.insert(callbacks[event], callback)
+	if(not self.callbacks[event]) then
+		self.callbacks[event] = {}
+	end
+
+	table.insert(self.callbacks[event], callback)
 end
 
 --[[ Callback:HasCallback(event)
 Returns true/false if the given event has any callbacks registered.
 --]]
 function callbackMixin:HasCallback(event)
-	return not not callbacks[event]
+	return not not (self.callbacks and self.callbacks[event])
 end
 
 LibContainer.mixins.callback = callbackMixin
