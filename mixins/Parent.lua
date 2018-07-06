@@ -58,20 +58,22 @@ local function ADDON_LOADED(self, name)
 	self:UnregisterEvent('ADDON_LOADED')
 end
 
-local function BAG_UPDATE(self, bagID)
-	if(not self:GetBag(bagID)) then
-		if(not bagSlots[self.containerType][bagID]) then
-			-- bag doesn't belong to this container type
-			return
-		end
-
-		-- create the bag if it doesn't exist
-		self:CreateBag(bagID)
-	end
-
+local function PLAYER_LOGIN(self)
 	if(not self:GetBag(BACKPACK_CONTAINER)) then
 		-- BAG_UPDATE doesn't ever fire for container 0 on load, trigger it manually
 		self:TriggerEvent('BAG_UPDATE', BACKPACK_CONTAINER)
+	end
+end
+
+local function BAG_UPDATE(self, bagID)
+	if(not bagSlots[self:GetType()][bagID]) then
+		-- bag doesn't belong to this container type
+		return
+	end
+
+	if(not self:GetBag(bagID)) then
+		-- create the bag if it doesn't exist
+		self:CreateBag(bagID)
 	end
 
 	-- running updates on every BAG_UPDATE has severe performance issues, especially
@@ -169,6 +171,7 @@ function LibContainer:New(containerType, name, parent)
 	local Parent = Mixin(CreateFrame('Frame', name, parent), parentMixin, callbackMixin, eventMixin)
 	Parent:SetSize(1, 1) -- needs a size for child frames to even show up
 	Parent:RegisterEvent('ADDON_LOADED', ADDON_LOADED)
+	Parent:RegisterEvent('PLAYER_LOGIN', PLAYER_LOGIN)
 	Parent:RegisterEvent('BAG_UPDATE', BAG_UPDATE)
 	Parent:RegisterEvent('BAG_UPDATE_DELAYED', BAG_UPDATE_DELAYED)
 	Parent:RegisterEvent('ITEM_LOCK_CHANGED', ITEM_LOCK_CHANGED)
