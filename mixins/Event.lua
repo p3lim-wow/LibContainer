@@ -1,11 +1,13 @@
-local EventHandler = CreateFrame('Frame')
-
 --[[ Event:header
 The Event mixin allows easy management of game events and the functions they call once triggered.
 --]]
 
 local eventMixin = {}
-local events = {}
+
+local function OnEvent(self, ...)
+	self:GetParent():TriggerEvent(...)
+end
+
 --[[ Event:RegisterEvent(event, handler)
 Registers an event which the handler will be triggered for.  
 If the handler returns true, Event:UnregisterEvent() will be executed.
@@ -14,12 +16,22 @@ If the handler returns true, Event:UnregisterEvent() will be executed.
 * handler - handler the event should trigger (function)
 --]]
 function eventMixin:RegisterEvent(event, handler)
-	if(not events[event]) then
-		events[event] = {}
-		EventHandler:RegisterEvent(event)
+	if(not self.events) then
+		self.events = {}
 	end
 
-	events[event][handler] = self
+	if(not self.events[event]) then
+		self.events[event] = {}
+
+		if(not self.eventHandler) then
+			self.eventHandler = CreateFrame('Frame', '$parentEventHandler', self)
+			self.eventHandler:SetScript('OnEvent', OnEvent)
+		end
+
+		self.eventHandler:RegisterEvent(event)
+	end
+
+	self.events[event][handler] = self
 end
 
 --[[ Event:UnregisterEvent(event, handler)
@@ -29,13 +41,13 @@ Unregisters an event for the given handler.
 * handler - handler the triggering event (function)
 --]]
 function eventMixin:UnregisterEvent(event, handler)
-	local handlers = events[event]
+	local handlers = self.events[event]
 	if(handlers and handlers[handler]) then
 		handlers[handler] = nil
 
 		if(not next(handlers)) then
-			events[event] = nil
-			EventHandler:UnregisterEvent(event)
+			self.events[event] = nil
+			self.eventHandler:UnregisterEvent(event)
 		end
 	end
 end
@@ -46,8 +58,8 @@ Trigger registered handler(s) with the given event and optional parameters.
 * event - name of the event to trigger (string)
 * ...   - additional parameter(s) to pass to the handler(s) (optional)
 --]]
-function eventMixin.TriggerEvent(_, event, ...)
-	local handlers = events[event]
+function eventMixin:TriggerEvent(event, ...)
+	local handlers = self.events[event]
 	if(handlers) then
 		for handler, parent in next, handlers do
 			if(securecall(handler, parent, ...)) then
@@ -56,7 +68,5 @@ function eventMixin.TriggerEvent(_, event, ...)
 		end
 	end
 end
-
-EventHandler:SetScript('OnEvent', eventMixin.TriggerEvent)
 
 LibContainer.mixins.event = eventMixin
