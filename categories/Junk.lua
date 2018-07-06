@@ -1,13 +1,13 @@
 local L = LibContainer.locale
 
-local key = 'Junk'
-local name = L['Junk']
+local name = 'Junk'
+local localizedName = L['Junk']
 local index = 998 -- as high as possible
 
 local filter = function(Slot)
 	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
-	if(custom and type(custom) == 'string') then
-		return custom == key
+	if(custom and type(custom) == 'number') then
+		return custom == index
 	else
 		if(IsArtifactPowerItem(Slot:GetItemID())) then
 			-- Crucible's Promise makes AP items useless
@@ -22,4 +22,4 @@ local sort = function(slotA, slotB)
 	return (slotA:GetItemValue() * slotA:GetItemCount()) > (slotB:GetItemValue() * slotB:GetItemCount())
 end
 
-LibContainer:AddCategory(index, key, name, filter, sort)
+LibContainer:AddCategory(index, name, localizedName, filter, sort)

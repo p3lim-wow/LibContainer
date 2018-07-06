@@ -1,21 +1,21 @@
 local L = LibContainer.locale
 
-local key = 'Teleport'
-local name = L['Teleporters']
+local name = 'Teleport'
+local localizedName = L['Teleporters']
 local index = 60
 
 local teleporters
 local filter = function(Slot)
 	local itemID = Slot:GetItemID()
 	local custom = LibContainer.db.KnownItems[itemID]
-	if(custom and type(custom) == 'string') then
-		return custom == key
+	if(custom and type(custom) == 'number') then
+		return custom == index
 	else
 		return teleporters[itemID]
 	end
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+LibContainer:AddCategory(index, name, localizedName, filter)
 
 -- custom list of any items that provide teleportation, because they deserve their own category
 teleporters = {

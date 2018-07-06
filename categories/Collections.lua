@@ -1,7 +1,7 @@
 local L = LibContainer.locale
 
-local key = 'Collections'
-local name = L['Collections']
+local name = 'Collections'
+local localizedName = L['Collections']
 local index = 80
 
 local scanTip = CreateFrame('GameTooltip', 'LibContainerScanTip' .. math.floor(GetTime()), nil, 'GameTooltipTemplate')
@@ -10,8 +10,8 @@ local scanTipName = scanTip:GetName()
 
 local filter = function(Slot)
 	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
-	if(custom and type(custom) == 'string') then
-		return custom == key
+	if(custom and type(custom) == 'number') then
+		return custom == index
 	else
 		local itemClass = Slot:GetItemClass()
 		if(itemClass == LE_ITEM_CLASS_BATTLEPET) then
@@ -39,4 +39,4 @@ local filter = function(Slot)
 	end
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+LibContainer:AddCategory(index, name, localizedName, filter)

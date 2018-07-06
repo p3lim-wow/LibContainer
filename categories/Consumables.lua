@@ -1,13 +1,13 @@
 local L = LibContainer.locale
 
-local key = 'Consumables'
-local name = L['Consumables']
+local name = 'Consumables'
+local localizedName = L['Consumables']
 local index = 41
 
 local filter = function(Slot)
 	local custom = LibContainer.db.KnownItems[Slot:GetItemID()]
-	if(custom and type(custom) == 'string') then
-		return custom == key
+	if(custom and type(custom) == 'number') then
+		return custom == index
 	else
 		local itemClass = Slot:GetItemClass()
 		local itemSubClass = Slot:GetItemSubClass()
@@ -24,4 +24,4 @@ local filter = function(Slot)
 	end
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+LibContainer:AddCategory(index, name, localizedName, filter)

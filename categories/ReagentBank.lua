@@ -1,7 +1,7 @@
 local L = LibContainer.locale
 
-local key = 'ReagentBank'
-local name = L['Reagent Bank']
+local name = 'ReagentBank'
+local localizedName = L['Reagent Bank']
 local index = 999 -- as high as possible
 
 local filter = function(Slot)
@@ -10,4 +10,4 @@ local filter = function(Slot)
 	return IsReagentBankUnlocked() and bagID == REAGENTBANK_CONTAINER
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+LibContainer:AddCategory(index, name, localizedName, filter)

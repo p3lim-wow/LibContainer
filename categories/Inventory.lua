@@ -1,7 +1,7 @@
 local L = LibContainer.locale
 
-local key = 'Inventory'
-local name = L['Inventory']
+local name = 'Inventory'
+local localizedName = L['Inventory']
 local index = 1 -- as low as possible
 
 local filter = function(Slot)
@@ -9,4 +9,4 @@ local filter = function(Slot)
 	return true
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+LibContainer:AddCategory(index, name, localizedName, filter)

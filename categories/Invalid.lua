@@ -1,7 +1,7 @@
 local L = LibContainer.locale
 
-local key = 'Invalid'
-local name = L['Erroneous']
+local name = 'Invalid'
+local localizedName = L['Erroneous']
 local index = 2
 
 local filter = function(Slot)
@@ -9,4 +9,4 @@ local filter = function(Slot)
 	return not GetContainerItemLink(Slot:GetBagAndSlot())
 end
 
-LibContainer:AddCategory(index, key, name, filter)
+LibContainer:AddCategory(index, name, localizedName, filter)
