@@ -20,3 +20,4 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 -- Widget related
 -- L['Toggle auto-vendoring'] = '' -- MISSING TRANSLATION
 L['Restack'] = 'Stapeln'
+L['Mark items as known'] = 'Gegenstände als bekannt markieren'

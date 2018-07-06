@@ -44,6 +44,7 @@
 	<Script file='widgets/AutoVendor.lua'/>
 	<Script file='widgets/Currencies.lua'/>
 	<Script file='widgets/FreeSlots.lua'/>
+	<Script file='widgets/MarkKnown.lua'/>
 	<Script file='widgets/Money.lua'/>
 	<Script file='widgets/Restack.lua'/>
 

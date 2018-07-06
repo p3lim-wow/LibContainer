@@ -6,13 +6,13 @@ The Widget mixin serves the purpose of registering and initiating widgets; extra
 typically see of want out of a bag addon.
 
 The available widgets are:
-- [Assign](Assign)
 - [AutoDeposit](AutoDeposit)
 - [AutoVendor](AutoVendor)
 - [Bags](Bags)
 - [Currencies](Currencies)
 - [Deposit](Deposit)
 - [FreeSlots](FreeSlots)
+- [MarkKnown](MarkKnown)
 - [Money](Money)
 - [Positioning](Positioning)
 - [Restack](Restack)
