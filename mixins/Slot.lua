@@ -110,33 +110,13 @@ function slotMixin:GetCategory()
 	return self.categoryIndex
 end
 
-local disabled = {} -- TEMP
-local reverse = {}
 --[[ Slot:UpdateCategory()
-Iterates through the available Categories, removes the Slot from the previous Container and adds it
-to the new one.  
-Any categories disabled on the Parent will not be traversed.
+Updates the Slot category with the best suited one (see [Slot:GuessCategory()][Slot#slotguesscategory]).
 --]]
 function slotMixin:UpdateCategory()
-	local categories = self.parent:GetCategories()
-
-	table.wipe(reverse)
-	for categoryIndex, info in next, categories do
-		if(not disabled[info.name]) then
-			table.insert(reverse, categoryIndex)
-		end
-	end
-
-	table.sort(reverse)
-
-	for index = #reverse, 1, -1 do
-		local category = categories[reverse[index]]
-		if(category.filterFunc(self)) then
-			self:RemoveCategory()
-			self:SetCategory(category.index)
-			break
-		end
-	end
+	local category = self:GuessCategory()
+	self:RemoveCategory()
+	self:SetCategory(category.index)
 end
 
 --[[ Slot:RemoveCategory()
@@ -147,6 +127,35 @@ function slotMixin:RemoveCategory()
 	if(categoryIndex) then
 		self.parent:GetContainer(categoryIndex):RemoveSlot(self)
 		self.categoryIndex = nil
+	end
+end
+
+local reverse = {}
+--[[ Slot:GuessCategory([ignoreCurrentCategory])
+Iterates through the available [Categories](Category) and returns the best suited one for the Slot.  
+Any categories disabled on the Parent will not be traversed.
+
+* ignoreCurrentCategory - flag to not match current category for the Slot (boolean, optional)
+--]]
+function slotMixin:GuessCategory(ignoreCurrentCategory)
+	local categories = self.parent:GetCategories()
+	local currentCategory = self:GetCategory()
+
+	table.wipe(reverse)
+
+	for categoryIndex, info in next, categories do
+		table.insert(reverse, categoryIndex)
+	end
+
+	table.sort(reverse)
+
+	for index = #reverse, 1, -1 do
+		local category = categories[reverse[index]]
+		if(category.filterFunc(self)) then
+			if(not (ignoreCurrentCategory and category.index == currentCategory)) then
+				return category
+			end
+		end
 	end
 end
 
