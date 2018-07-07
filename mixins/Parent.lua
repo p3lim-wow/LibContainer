@@ -11,6 +11,7 @@ Once created, the Parent serves as the ground layer for the entirety of LibConta
 where the layout starts to adjust preferences and hook into the rest of the mixins with [Callbacks](Callback).
 --]]
 
+local parents = {}
 local parentMixin = {}
 --[[ Parent:GetCategories()
 Returns a (filtered) table of all categories.  
@@ -47,6 +48,20 @@ See [LibContainer:New()](LibContainer#libcontainernew).
 --]]
 function parentMixin:GetType()
 	return self.parentType
+end
+
+--[[ Parent:Toggle([force])
+Toggles the visibility of the Parent and its containers.  
+Can be forced to show or hide, or just toggle between the states.
+
+* force - flag to force show/hide (boolean, optional)
+--]]
+function parentMixin:Toggle(force)
+	if(force == nil) then
+		force = not self:IsShown()
+	end
+
+	self:SetShown(force)
 end
 
 local function ADDON_LOADED(self, name)
@@ -199,9 +214,16 @@ local function BANKFRAME_OPENED(self)
 
 	-- since the bank bags are now marked as "dirty" we need to update them
 	self:TriggerEvent('BAG_UPDATE_DELAYED')
+
+	self:Toggle(true)
+	parents.bags:Toggle(true)
 end
 
-local parents = {}
+local function BANKFRAME_CLOSED(self, ...)
+	self:Toggle(false)
+	parents.bags:Toggle(false)
+end
+
 --[[ LibContainer:New(parentType[, name][, parent])
 Creates and returns a new Parent.
 
@@ -234,6 +256,7 @@ function LibContainer:New(parentType, name, parent)
 
 	local Parent = Mixin(CreateFrame('Frame', name, parent), parentMixin, callbackMixin, eventMixin)
 	Parent:SetSize(1, 1) -- needs a size for child frames to even show up
+	Parent:Hide()
 	Parent:RegisterEvent('ADDON_LOADED', ADDON_LOADED)
 	Parent:RegisterEvent('PLAYER_LOGIN', PLAYER_LOGIN)
 	Parent:RegisterEvent('BAG_UPDATE', BAG_UPDATE)
@@ -249,11 +272,14 @@ function LibContainer:New(parentType, name, parent)
 		Parent:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED', PLAYERREAGENTBANKSLOTS_CHANGED)
 		Parent:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
 		Parent:RegisterEvent('BANKFRAME_OPENED', BANKFRAME_OPENED)
+		Parent:RegisterEvent('BANKFRAME_CLOSED', BANKFRAME_CLOSED)
 	end
 
 	Parent.parentType = parentType
 	Parent.categoriesIgnored = {}
 	Parent.dirtyBags = {}
+
+	LibContainer:DisableBlizzard(parentType)
 
 	parents[parentType] = Parent
 	return Parent

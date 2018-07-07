@@ -50,6 +50,7 @@
 	<Script file='widgets/Money.lua'/>
 	<Script file='widgets/Restack.lua'/>
 
+	<Script file='core/Blizzard.lua'/>
 	<Script file='core/Private.lua'/>
 </Ui>
 
