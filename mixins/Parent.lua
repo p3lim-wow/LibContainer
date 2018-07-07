@@ -130,8 +130,8 @@ local function UNIT_QUEST_LOG_CHANGED(self, unit)
 	end
 end
 
-
 local function MODIFIER_STATE_CHANGED(self)
+	-- update the Slot tooltip on modifier change instead of waiting for OnUpdate
 	local obj = GameTooltip:GetOwner()
 	if(obj and obj:GetParent() and obj:GetParent():GetParent()) then
 		if(obj:GetParent():GetParent() == self) then
