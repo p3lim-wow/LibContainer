@@ -72,7 +72,7 @@ local function ADDON_LOADED(self, name)
 
 	self:CreateContainers()
 
-	self:UnregisterEvent('ADDON_LOADED')
+	return true
 end
 
 local function PLAYER_LOGIN(self)
