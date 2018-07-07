@@ -52,7 +52,7 @@ Creates and returns a new bag for the Parent.
 * bagID - identifier for the bag to create (integer)
 --]]
 function parentMixin:CreateBag(bagID)
-	local Bag = Mixin(CreateFrame('Frame', '$parentBag' .. bagID, self), bagMixin)
+	local Bag = Mixin(CreateFrame('Frame', '$parentBag' .. (tostring(bagID):gsub('-', 'N')), self), bagMixin)
 	Bag:SetID(bagID)
 	Bag:SetSize(1, 1) -- needs a size for child frames to even show up
 	Bag.slots = {}
