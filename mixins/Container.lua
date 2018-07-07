@@ -250,7 +250,8 @@ function containerMixin:GetLocalizedName()
 end
 
 --[[ Container:SetSlotSize(width[, height])
-Sets the width and height of the Slots in the container.
+Sets the width and height of the Slots in the container.  
+It's adviced to set both the size for the Slot on the Slot and with this method.
 
 * width - width of the slot (integer, default = 37)
 * height - height of the slot (integer, default = width|37)
@@ -266,7 +267,7 @@ Returns the width and height of the Slots in the container.
 function containerMixin:GetSlotSize()
 	local width, height = self.slotSizeX, self.slotSizeY
 	if(not width and not height) then
-		width, height = self.slots[1]:GetSize()
+		width, height = 37, 37
 	end
 
 	return width, height
