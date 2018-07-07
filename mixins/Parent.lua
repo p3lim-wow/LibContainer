@@ -157,10 +157,34 @@ local function PLAYERBANKSLOTS_CHANGED(self, slotIndex)
 	end
 end
 
+local function PLAYERREAGENTBANKSLOTS_CHANGED(self, slotIndex)
+	local Bag = self:GetBag(REAGENTBANK_CONTAINER)
+	if(Bag) then
+		Bag:GetSlot(slotIndex):UpdateVisibility()
+		self:UpdateContainers()
+	end
+end
+
+local function REAGENTBANK_PURCHASED(self)
+	local Bag = self:GetBag(REAGENTBANK_CONTAINER)
+	if(not Bag) then
+		Bag = self:CreateBag(REAGENTBANK_CONTAINER)
+	end
+
+	Bag:UpdateSlots()
+	self:UpdateContainers()
+end
+
 local function BANKFRAME_OPENED(self)
 	local Bag = self:GetBag(BANK_CONTAINER)
 	if(not Bag) then
 		Bag = self:CreateBag(BANK_CONTAINER)
+
+		if(IsReagentBankUnlocked()) then
+			REAGENTBANK_PURCHASED(self)
+		else
+			self:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
+		end
 	end
 
 	Bag:UpdateSlots()
@@ -221,6 +245,8 @@ function LibContainer:New(containerType, name, parent)
 
 	if(containerType == 'bank') then
 		Parent:RegisterEvent('PLAYERBANKSLOTS_CHANGED', PLAYERBANKSLOTS_CHANGED)
+		Parent:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED', PLAYERREAGENTBANKSLOTS_CHANGED)
+		Parent:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
 		Parent:RegisterEvent('BANKFRAME_OPENED', BANKFRAME_OPENED)
 	end
 
