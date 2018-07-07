@@ -344,6 +344,27 @@ function containerMixin:GetSlotGrowDirection()
 	return self.slotGrowX or 1, self.slotGrowY or -1
 end
 
+--[[ Container:SetMaxHeight(amount)
+Sets the maximum height the rows of containers can grow.
+
+If the amount is between 0 and 1, it'll be a percentage of the screen height.  
+E.g:  
+If the amount is 0.3 the containers can grow up to 30% of the screen height.  
+If the amount is 500 the contaiers can grow up to 500 pixels.
+
+* amount - amount of pixels or percentage decimal (number, default = 1)
+--]]
+function containerMixin:SetMaxHeight(amount)
+	self.maxHeight = amount
+end
+
+--[[ Container:GetMaxHeight()
+Gets the maximum height the rows of containers can grow.
+--]]
+function containerMixin:GetMaxHeight()
+	return self.maxHeight or 1
+end
+
 --[[ Parent:UpdateContainerPositions()
 Updates all (visible) container positions for the Parent.
 --]]
@@ -370,7 +391,10 @@ function parentMixin:UpdateContainerPositions()
 	local parentBottom = parentContainer:GetBottom()
 	local cols = 1
 
-	local _, maxHeight = GetPhysicalScreenSize()
+	local maxHeight = parentContainer:GetMaxHeight()
+	if(maxHeight <= 1) then
+		maxHeight = maxHeight * (select(2, GetPhysicalScreenSize()))
+	end
 
 	for index = 1, #visibleContainers do
 		local Container = self:GetContainer(visibleContainers[index])
