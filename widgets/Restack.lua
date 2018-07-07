@@ -1,5 +1,5 @@
 --[[ Restack:header
-Creates a button that allows the user to sort the bags or bank.  
+Creates a button that allows the user to sort the bags, bank or reagent bank.  
 Since LibContainer is a category-based bag framework, sorting functionality doesn't make much sense,
 but it's useful for re-stacking items to save space, hence the name.
 
@@ -20,10 +20,14 @@ local L = LibContainer.locale
 
 local function OnClick(self)
 	local Container = self:GetParent()
-	if(Container:GetParent():GetType() == 'bank') then
-		SortBankBags()
+	if(Container:GetName() == 'ReagentBank') then
+		SortReagentBankBags()
 	else
-		SortBags()
+		if(Container:GetParent():GetType() == 'bank') then
+			SortBankBags()
+		else
+			SortBags()
+		end
 	end
 end
 
