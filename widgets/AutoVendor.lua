@@ -28,7 +28,7 @@ end
 
 local lastNumItems = 0
 local function Update(self, event, ...)
-	if(LibContainer:GetVariable('autoSellJunk')) then
+	if(LibContainer:GetVariable('autoSellJunk') and not IsShiftKeyDown()) then
 		if(event == 'MERCHANT_SHOW' or lastNumItems > 0) then
 			lastNumItems = 0
 
