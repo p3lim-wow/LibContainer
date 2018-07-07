@@ -42,10 +42,11 @@ function parentMixin:DisableCategories(...)
 end
 
 --[[ Parent:GetType()
-Returns 'bags' or 'bank' depending on which type of parent it is.
+Returns 'bags' or 'bank' depending on which type of parent it is.  
+See [LibContainer:New()](LibContainer#libcontainernew).
 --]]
 function parentMixin:GetType()
-	return self.containerType
+	return self.parentType
 end
 
 local function ADDON_LOADED(self, name)
@@ -201,24 +202,24 @@ local function BANKFRAME_OPENED(self)
 end
 
 local parents = {}
---[[ LibContainer:New(containerType[, name][, parent])
+--[[ LibContainer:New(parentType[, name][, parent])
 Creates and returns a new Parent.
 
-* containerType - type of Parent to represent (string, 'bags'|'bank')
-* name          - name of the Parent (string, optional, default = parent AddOn name + containerType)
+* parentType - type of Parent to represent (string, 'bags'|'bank')
+* name          - name of the Parent (string, optional, default = parent AddOn name + parentType)
 * parent        - parent for the Parent frame (frame|string, optional, default = UIParent)
 --]]
-function LibContainer:New(containerType, name, parent)
-	assert(type(containerType) == 'string', 'New: containerType must be a string.')
-	containerType = containerType:lower()
-	assert(containerType == 'bags' or containerType == 'bank', 'New: containerType must be either \'bags\' or \'bank\'.')
-	assert(not parents[containerType], 'New: only one container of the same type may exist.')
+function LibContainer:New(parentType, name, parent)
+	assert(type(parentType) == 'string', 'New: parentType must be a string.')
+	parentType = parentType:lower()
+	assert(parentType == 'bags' or parentType == 'bank', 'New: parentType must be either \'bags\' or \'bank\'.')
+	assert(not parents[parentType], 'New: only one container of the same type may exist.')
 
 	if(name) then
 		assert(type(name) == 'string', 'New: name must be a string if used.')
 		assert(not _G[name], 'New: object with name already exists.')
 	else
-		name = string.format('%s_%s', parentAddOnName, containerType:gsub('^%l', string.upper))
+		name = string.format('%s_%s', parentAddOnName, parentType:gsub('^%l', string.upper))
 	end
 
 	if(parent) then
@@ -243,18 +244,18 @@ function LibContainer:New(containerType, name, parent)
 	Parent:RegisterEvent('UNIT_QUEST_LOG_CHANGED', UNIT_QUEST_LOG_CHANGED)
 	Parent:RegisterEvent('MODIFIER_STATE_CHANGED', MODIFIER_STATE_CHANGED)
 
-	if(containerType == 'bank') then
+	if(parentType == 'bank') then
 		Parent:RegisterEvent('PLAYERBANKSLOTS_CHANGED', PLAYERBANKSLOTS_CHANGED)
 		Parent:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED', PLAYERREAGENTBANKSLOTS_CHANGED)
 		Parent:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
 		Parent:RegisterEvent('BANKFRAME_OPENED', BANKFRAME_OPENED)
 	end
 
-	Parent.containerType = containerType
+	Parent.parentType = parentType
 	Parent.categoriesIgnored = {}
 	Parent.dirtyBags = {}
 
-	parents[containerType] = Parent
+	parents[parentType] = Parent
 	return Parent
 end
 

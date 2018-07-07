@@ -81,8 +81,8 @@ local function UpdateCount(self, bagID)
 end
 
 local function Update(self)
-	local containerType = self:GetType()
-	if(containerType == 'bags') then
+	local parentType = self:GetType()
+	if(parentType == 'bags') then
 		UpdateCount(self, BACKPACK_CONTAINER)
 	else
 		UpdateCount(self, BANK_CONTAINER)
