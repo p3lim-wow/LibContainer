@@ -386,18 +386,18 @@ function parentMixin:UpdateContainerPositions()
 					y = prevTop - parentBottom + spacingY
 				end
 			else
-				if((prevBottom - (Container:GetHeight() + spacingY)) < 0) then
+				if((prevBottom - Container:GetHeight() - spacingY) < 0) then
 					cols = cols + 1
 					y = 0
 				else
-					y = prevTop - prevBottom + spacingY
+					y = prevBottom - parentTop - spacingY
 				end
 			end
 
-			x = (Container:GetWidth() + spacingX) * (cols - 1)
+			x = (Container:GetWidth() + spacingX) * (cols - 1) * growX
 
 			Container:ClearAllPoints()
-			Container:SetPoint(relPoint, x * growX, y * growY)
+			Container:SetPoint(relPoint, x, y)
 		end
 	end
 end
