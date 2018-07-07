@@ -17,6 +17,9 @@ Adds a Slot to the container and marks the container as "dirty".
 * Slot - Slot object to add to the container (Slot)
 --]]
 function containerMixin:AddSlot(Slot)
+	assert(type(Slot) == 'table', 'Slot argument must be a Slot.')
+	assert(Slot:GetObjectType() == 'Button', 'Slot argument must be a Slot.')
+
 	table.insert(self.slots, Slot)
 	self:SetDirty(true)
 end
@@ -27,6 +30,9 @@ Removes a Slot from the container and marks the container as "dirty".
 * Slot - Slot object to add to the container (Slot)
 --]]
 function containerMixin:RemoveSlot(Slot)
+	assert(type(Slot) == 'table', 'Slot argument must be a Slot.')
+	assert(Slot:GetObjectType() == 'Button', 'Slot argument must be a Slot.')
+
 	for index, containerSlot in next, self.slots do
 		if(Slot == containerSlot) then
 			table.remove(self.slots, index)
@@ -49,6 +55,7 @@ Sets the container as "dirty", which means it will be updated in the next update
 * flag - true/false if the container should be marked as "dirty" (boolean)
 --]]
 function containerMixin:SetDirty(flag)
+	assert(type(flag) == 'boolean', 'flag argument must be a boolean.')
 	self.dirty = flag
 end
 
@@ -136,6 +143,9 @@ Sets the maximum amount of columns the Container should display before wrapping 
 * numColumns - number of columns (integer, default = 8)
 --]]
 function containerMixin:SetMaxColumns(numColumns)
+	assert(type(numColumns) == 'number', 'numColumns argument must be a number.')
+	assert(numColumns > 0 and numColumns < 1e2, 'numColumns must be a valid number.')
+
 	self.maxColumns = numColumns
 end
 
@@ -146,12 +156,26 @@ function containerMixin:GetMaxColumns()
 	return self.maxColumns or 8
 end
 
+local relPoints = {
+	CENTER = true,
+	BOTTOM = true,
+	TOP = true,
+	BOTTOMRIGHT = true,
+	TOPRIGHT = true,
+	BOTTOMLEFT = true,
+	TOPLEFT = true,
+	RIGHT = true,
+	LEFT = true,
+}
 --[[ Container:SetRelPoint(relPoint)
 Sets relative point where the Container should anchor to the Parent.
 
 * relPoint - relative point (string, default = 'BOTTOMRIGHT')
 --]]
 function containerMixin:SetRelPoint(relPoint)
+	assert(type(relPoint) == 'string', 'relPoint argument must be a string.')
+	assert(relPoints[relPoint], 'relPoint argument must be a valid point.')
+
 	self.relPoint = relPoint
 end
 
@@ -169,8 +193,18 @@ Sets the horizontal and vertical directions the containers should grow.
 * y - vertical grow direction (string|integer, default = 1|'UP')
 --]]
 function containerMixin:SetGrowDirection(x, y)
-	self.growX = x == 'LEFT' and -1 or x == 'RIGHT' and 1 or tonumber(x)
-	self.growY = y == 'UP' and 1 or y == 'DOWN' and -1 or tonumber(y)
+	if(type(x) == 'number' and type(y) == 'number') then
+		assert(math.abs(x) == 1, 'x argument must be -1 or 1.')
+		assert(math.abs(y) == 1, 'y argument must be -1 or 1.')
+	elseif(type(x) == 'string' and type(y) == 'string') then
+		assert(x == 'LEFT' or x == 'RIGHT', 'x argument must be \'LEFT\' or \'RIGHT\'.')
+		assert(y == 'UP' or y == 'DOWN', 'y argument must be \'UP\' or \'DOWN\'.')
+	else
+		error('x or y argument is invalid.')
+	end
+
+	self.growX = x == 'LEFT' and -1 or x == 'RIGHT' and 1
+	self.growY = y == 'UP' and 1 or y == 'DOWN' and -1
 end
 
 --[[ Container:GetGrowDirection()
@@ -187,6 +221,9 @@ Sets the horizontal and vertical spacing between containers.
 * y - vertical spacing (integer, default = x|2)
 --]]
 function containerMixin:SetSpacing(x, y)
+	assert(type(x) == 'number', 'x argument must be a number.')
+	assert(y == nil or type(y) == 'number', 'y argument must be a number or nil.')
+
 	self.spacingX = x
 	self.spacingY = y or x
 end
@@ -207,16 +244,23 @@ Sets the horizontal and vertical padding within containers.
 * bottom - vertical padding (integer, default = top)
 --]]
 function containerMixin:SetPadding(left, right, top, bottom)
+	assert(type(left) == 'number', 'left argument must be a number.')
 	if(not right) then
 		right = left
+	else
+		assert(type(right) == 'number', 'right argument must be a number.')
 	end
 
 	if(not top) then
 		top = right
+	else
+		assert(type(top) == 'number', 'top argument must be a number.')
 	end
 
 	if(not bottom) then
 		bottom = top
+	else
+		assert(type(bottom) == 'number', 'bottom argument must be a number.')
 	end
 
 	self.paddingL = left
@@ -258,6 +302,9 @@ It's adviced to set both the size for the Slot on the Slot and with this method.
 * height - height of the slot (integer, default = width|37)
 --]]
 function containerMixin:SetSlotSize(width, height)
+	assert(type(width) == 'number', 'width argument must be a number.')
+	assert(height == nil or type(height) == 'number', 'height argument must be a number or nil.')
+
 	self.slotSizeX = width
 	self.slotSizeY = height or width
 end
@@ -280,6 +327,9 @@ Sets relative point where the Slot should anchor to the container.
 * relPoint - relative point (string, default = 'TOPLEFT')
 --]]
 function containerMixin:SetSlotRelPoint(relPoint)
+	assert(type(relPoint) == 'string', 'relPoint argument must be a string.')
+	assert(relPoints[relPoint], 'relPoint argument must be a valid point.')
+
 	self.slotRelPoint = relPoint
 end
 
@@ -297,6 +347,9 @@ Sets the horizontal and vertical spacing between Slots.
 * y - vertical spacing (integer, default = x|4)
 --]]
 function containerMixin:SetSlotSpacing(x, y)
+	assert(type(x) == 'number', 'x argument must be a number.')
+	assert(y == nil or type(y) == 'number', 'y argument must be a number or nil.')
+
 	self.slotSpacingX = x
 	self.slotSpacingY = y or x
 end
@@ -315,6 +368,9 @@ Sets the horizontal and vertical padding for Slots within the container.
 * y - vertical padding (integer, default = x|10)
 --]]
 function containerMixin:SetSlotPadding(x, y)
+	assert(type(x) == 'number', 'x argument must be a number.')
+	assert(y == nil or type(y) == 'number', 'y argument must be a number or nil.')
+
 	self.slotPaddingX = x
 	self.slotPaddingY = y or x
 end
@@ -333,8 +389,18 @@ Sets the horizontal and vertical directions the Slots should grow.
 * y - vertical grow direction (string|integer, default = -1|'DOWN')
 --]]
 function containerMixin:SetSlotGrowDirection(x, y)
-	self.slotGrowX = x == 'LEFT' and -1 or x == 'RIGHT' and 1 or tonumber(x)
-	self.slotGrowY = y == 'UP' and 1 or y == 'DOWN' and -1 or tonumber(y)
+	if(type(x) == 'number' and type(y) == 'number') then
+		assert(math.abs(x) == 1, 'x argument must be -1 or 1.')
+		assert(math.abs(y) == 1, 'y argument must be -1 or 1.')
+	elseif(type(x) == 'string' and type(y) == 'string') then
+		assert(x == 'LEFT' or x == 'RIGHT', 'x argument must be \'LEFT\' or \'RIGHT\'.')
+		assert(y == 'UP' or y == 'DOWN', 'y argument must be \'UP\' or \'DOWN\'.')
+	else
+		error('x or y argument is invalid.')
+	end
+
+	self.slotGrowX = x == 'LEFT' and -1 or x == 'RIGHT' and 1
+	self.slotGrowY = y == 'UP' and 1 or y == 'DOWN' and -1
 end
 
 --[[ Container:GetSlotGrowDirection()
@@ -355,6 +421,9 @@ If the amount is 500 the contaiers can grow up to 500 pixels.
 * amount - amount of pixels or percentage decimal (number, default = 1)
 --]]
 function containerMixin:SetMaxHeight(amount)
+	assert(type(amount) == 'number', 'amount argument must be a number.')
+	assert(amount > 0.1 and amount < 1e4, 'amount argument must be a valid number.')
+
 	self.maxHeight = amount
 end
 

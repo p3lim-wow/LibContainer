@@ -16,6 +16,9 @@ If the handler returns true, Event:UnregisterEvent() will be executed.
 * handler - handler the event should trigger (function)
 --]]
 function eventMixin:RegisterEvent(event, handler)
+	assert(type(event) == 'string', 'event argument must be a string.')
+	assert(type(handler) == 'function', 'handler argument must be a function.')
+
 	if(not self.events) then
 		self.events = {}
 	end
@@ -41,6 +44,9 @@ Unregisters an event for the given handler.
 * handler - handler the triggering event (function)
 --]]
 function eventMixin:UnregisterEvent(event, handler)
+	assert(type(event) == 'string', 'event argument must be a string.')
+	assert(type(handler) == 'function', 'handler argument must be a function.')
+
 	local handlers = self.events[event]
 	if(handlers and handlers[handler]) then
 		handlers[handler] = nil
@@ -59,6 +65,8 @@ Trigger registered handler(s) with the given event and optional parameters.
 * ...   - additional parameter(s) to pass to the handler(s) (optional)
 --]]
 function eventMixin:TriggerEvent(event, ...)
+	assert(type(event) == 'string', 'event argument must be a string.')
+
 	local handlers = self.events[event]
 	if(handlers) then
 		for handler, parent in next, handlers do

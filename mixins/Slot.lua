@@ -102,7 +102,10 @@ Adds the Slot to the given Container.
 * categoryIndex - category index the Slot should be attached to a Container for (integer)
 --]]
 function slotMixin:SetCategory(categoryIndex)
-	self.parent:GetContainer(categoryIndex):AddSlot(self)
+	assert(type(categoryIndex) == 'number', 'categoryIndex argument must be a number.')
+	local category = self.parent:GetContainer(categoryIndex)
+	assert(category, 'categoryIndex argument must be a valid category index.')
+	category:AddSlot(self)
 	self.categoryIndex = categoryIndex
 end
 
@@ -205,6 +208,10 @@ that represents its child frames, textures and fontstrings.
 * slotIndex - slot index (integer)
 --]]
 function bagMixin:CreateSlot(slotIndex)
+	assert(type(slotIndex) == 'number', 'slotIndex argument must be a number.')
+	assert(slotIndex > 0 and slotIndex < 2e2, 'slotIndex argument must be a valid slot index.')
+	-- being lenient here because we go way outside the typical slot index range for faux slots
+
 	local template
 	if(self:GetID() == BANK_CONTAINER) then
 		template = 'BankItemButtonGenericTemplate'

@@ -11,6 +11,8 @@ Triggers a callback with the given event and optional parameters.
 * ...   - additional parameter(s) to pass to the callback(s) (optional)
 --]]
 function callbackMixin:Fire(event, ...)
+	assert(type(event) == 'string', 'event argument must be a string.')
+
 	if(not self.callbacks) then
 		self.callbacks = {}
 	end
@@ -29,6 +31,9 @@ Registers a callback for the given event.
 * callback - function to trigger (function)
 --]]
 function callbackMixin:On(event, callback)
+	assert(type(event) == 'string', 'event argument must be a string.')
+	assert(type(callback) == 'function', 'callback argument must be a function.')
+
 	if(not self.callbacks) then
 		self.callbacks = {}
 	end
@@ -44,6 +49,7 @@ end
 Returns true/false if the given event has any callbacks registered.
 --]]
 function callbackMixin:HasCallback(event)
+	assert(type(event) == 'string', 'event argument must be a string.')
 	return not not (self.callbacks and self.callbacks[event])
 end
 

@@ -17,6 +17,10 @@ Sets the ItemLocation for the Item (see FrameXML/ObjectAPI/ItemLocation.lua)
 * itemLocation - ItemLocation object (object)
 --]]
 function itemMixin:SetItemLocation(itemLocation) -- static
+	assert(type(itemLocation) == 'table', 'itemLocation argument must be a itemLocation object.')
+	assert(type(itemLocation.HasAnyLocation) == 'function', 'itemLocation argument must be a itemLocation object.')
+	assert(itemLocation:HasAnyLocation(), 'itemLocation argument must be a valid itemLocation object.')
+
 	self.itemLocation = itemLocation
 end
 

@@ -23,6 +23,8 @@ function LibContainer:DisableBlizzard(parentType)
 			-- for some reason the indices are skewed
 			_G['ContainerFrame' .. containerIndex]:UnregisterAllEvents()
 		end
+	else
+		error('parentType is invalid.')
 	end
 end
 

@@ -10,6 +10,9 @@ Set the global name for the database.
 * globalName - global savedvariable name (string)
 --]]
 function LibContainer:SetDatabase(db)
+	assert(type(db) == 'string', 'db argument is invalid.')
+	assert(not _G[db], 'db argument is invalid.')
+
 	-- TODO: consider using TOC metadata instead?
 	database_name = db
 end
@@ -24,6 +27,9 @@ end
 --[[ LibContainer:SetVariable(key, value)
 --]]
 function LibContainer:SetVariable(key, value)
+	assert(key ~= nil, 'key argument is invalid.')
+	assert(value ~= nil, 'value argument is invalid.')
+
 	LibContainer.db[key] = value
 end
 

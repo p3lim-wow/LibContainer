@@ -45,6 +45,7 @@ Sets the localized name for a category.
 * localizedName - localized name of the category (string)
 --]]
 function categoryMixin:Rename(localizedName)
+	assert(type(localizedName) == 'string', 'localizedName argument must be a string.')
 	self.localizedName = localizedName
 end
 

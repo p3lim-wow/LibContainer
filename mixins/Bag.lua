@@ -52,6 +52,9 @@ Creates and returns a new bag for the Parent.
 * bagID - identifier for the bag to create (integer)
 --]]
 function parentMixin:CreateBag(bagID)
+	assert(type(bagID) == 'number', 'bagID argument must be a number.')
+	assert(bagID >= -3 and bagID <= 11, 'bagID argument must be a valid bag ID.')
+
 	local Bag = Mixin(CreateFrame('Frame', '$parentBag' .. (tostring(bagID):gsub('-', 'N')), self), bagMixin)
 	Bag:SetID(bagID)
 	Bag:SetSize(1, 1) -- needs a size for child frames to even show up

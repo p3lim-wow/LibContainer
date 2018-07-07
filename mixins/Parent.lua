@@ -36,6 +36,7 @@ Disables one or more categories by name from the Parent containers.
 function parentMixin:DisableCategories(...)
 	for index = 1, select('#', ...) do
 		local name = select(index, ...)
+		assert(type(category) == 'string', 'argument must be a category name.')
 		local category = LibContainer:GetCategoryByName(name)
 		assert(category, 'Category \'' .. name .. '\' doesn\'t exist.')
 		table.insert(self.categoriesIgnored, category.index)

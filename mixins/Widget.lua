@@ -31,6 +31,10 @@ Registers a new widget with the given name.
 --]]
 function LibContainer:RegisterWidget(name, enable, disable, update)
 	assert(not widgets[name], 'Widget \'' .. name .. '\' already exists.')
+	assert(type(enable) == 'function', 'enable argument must be a function.')
+	assert(disable == nil or type(disable) == 'function', 'disable argument must be a function or nil.')
+	assert(update == nil or type(update) == 'function', 'update argument must be a function or nil.')
+
 	widgets[name] = {
 		enable = enable,
 		disable = disable or nop,
@@ -44,7 +48,7 @@ Creates and returns a new object for the widget with the given name.
 * name - name of the widget (string)
 --]]
 function containerMixin:AddWidget(name)
-	assert(widgets[name], 'No widget named \'' .. name .. '\' exists.')
+	assert(widgets[name], 'name argument must be a valid widget name.')
 
 	local obj = CreateFrame('Button', nil, self)
 	obj:SetScript('OnEvent', widgets[name].update)
@@ -61,6 +65,7 @@ Enables the widget by name.
 * name - name of widget (string)
 --]]
 function containerMixin:EnableWidget(name)
+	assert(widgets[name], 'name argument must be a valid widget name.')
 	widgets[name].enable(self.widgets[name])
 end
 
@@ -70,6 +75,7 @@ Disables the widget by name.
 * name - name of widget (string)
 --]]
 function containerMixin:DisableWidget(name)
+	assert(widgets[name], 'name argument must be a valid widget name.')
 	widgets[name].disable(self.widgets[name])
 end
 
@@ -79,5 +85,6 @@ Updates the widget by name.
 * name - name of widget (string)
 --]]
 function containerMixin:UpdateWidget(name)
+	assert(widgets[name], 'name argument must be a valid widget name.')
 	widgets[name].update(self.widgets[name])
 end
