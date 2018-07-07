@@ -22,3 +22,4 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Restack'] = 'Stapeln'
 L['Mark items as known'] = 'Gegenstände als bekannt markieren'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
+L['Toggle auto-deposit'] = 'Automatische Einlagerung ein-/ausschalten'

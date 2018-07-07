@@ -22,3 +22,4 @@ L['Toggle auto-vendoring'] = 'Ativar venda automática'
 L['Restack'] = 'Reorganizar'
 L['Mark items as known'] = 'Marcar itens como conhecidos'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
+L['Toggle auto-deposit'] = 'Ativar auto-deposito'

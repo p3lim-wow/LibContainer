@@ -22,3 +22,4 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Restack'] = '整理'
 L['Mark items as known'] = '标记物品为已知'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
+L['Toggle auto-deposit'] = '启用材料自动存入'

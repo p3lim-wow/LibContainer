@@ -41,6 +41,7 @@
 	<Script file='categories/TradeGoods.lua'/>
 
 	<Script file='mixins/Widget.lua'/>
+	<Script file='widgets/AutoDeposit.lua'/>
 	<Script file='widgets/AutoVendor.lua'/>
 	<Script file='widgets/Currencies.lua'/>
 	<Script file='widgets/Deposit.lua'/>
