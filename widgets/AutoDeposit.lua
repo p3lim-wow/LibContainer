@@ -26,9 +26,14 @@ local function OnEnter(self)
 	GameTooltip:Show()
 end
 
-local function Update()
-	if(IsReagentBankUnlocked() and LibContainer:GetVariable('autoDeposit') and not IsShiftKeyDown()) then
-		DepositReagentBank()
+local function Update(self, event)
+	if(event == 'REAGENTBANK_PURCHASED') then
+		self:Show()
+		self:UnregisterEvent(event)
+	elseif(event == 'BANKFRAME_OPENED') then
+		if(IsReagentBankUnlocked() and LibContainer:GetVariable('autoDeposit') and not IsShiftKeyDown()) then
+			DepositReagentBank()
+		end
 	end
 end
 
@@ -38,10 +43,19 @@ local function Enable(self)
 	self:SetScript('OnLeave', GameTooltip_Hide)
 
 	self:RegisterEvent('BANKFRAME_OPENED')
+
+	if(self:GetParent():GetID() == 999 and not IsReagentBankUnlocked()) then
+		self:RegisterEvent('REAGENTBANK_PURCHASED')
+		self:Hide()
+	end
 end
 
 local function Disable(self)
 	self:UnregisterEvent('BANKFRAME_OPENED')
+
+	if(self:IsEventRegistered('REAGENTBANK_PURCHASED')) then
+		self:UnregisterEvent('REAGENTBANK_PURCHASED')
+	end
 end
 
 LibContainer:RegisterWidget('AutoDeposit', Enable, Disable, Update)

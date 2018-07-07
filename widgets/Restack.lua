@@ -37,10 +37,28 @@ local function OnEnter(self)
 	GameTooltip:Show()
 end
 
+local function Update(self, event)
+	if(event == 'REAGENTBANK_PURCHASED') then
+		self:Show()
+		self:UnregisterEvent(event)
+	end
+end
+
 local function Enable(self)
 	self:SetScript('OnClick', OnClick)
 	self:SetScript('OnEnter', OnEnter)
 	self:SetScript('OnLeave', GameTooltip_Hide)
+
+	if(self:GetParent():GetID() == 999 and not IsReagentBankUnlocked()) then
+		self:RegisterEvent('REAGENTBANK_PURCHASED')
+		self:Hide()
+	end
 end
 
-LibContainer:RegisterWidget('Restack', Enable)
+local function Disable(self)
+	if(self:IsEventRegistered('REAGENTBANK_PURCHASED')) then
+		self:UnregisterEvent('REAGENTBANK_PURCHASED')
+	end
+end
+
+LibContainer:RegisterWidget('Restack', Enable, Disable, Update)
