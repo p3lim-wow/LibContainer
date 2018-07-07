@@ -29,7 +29,7 @@ function bagMixin:UpdateSlots()
 	end
 
 	if(self.size > numSlots) then
-		for slotIndex = math.max(numSlots, 1), bagSizes[self:GetID()] do
+		for slotIndex = numSlots + 1, bagSizes[self:GetID()] do
 			self:GetSlot(slotIndex):Hide()
 		end
 	end
