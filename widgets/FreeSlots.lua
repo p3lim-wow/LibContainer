@@ -1,9 +1,9 @@
 local parentMixin = LibContainer.mixins.parent
 --[[ FreeSlots:header
-This widget adds a "fake" [Slot](Slot) to the bags' or bank's Inventory [Category](Category).
+This widget adds a "fake" [Slot](Slot) to the bags' or bank's Inventory and ReagentBank [Categories](Category).
 This Slot serves two purposes:
-1. Displaying the number of free slots left in the player's inventory as the item count text
-2. Putting items into this slot will place them in the first free inventory slot available
+1. Displaying the number of free slots left in the player's inventory/reagentbank as the item count text
+2. Putting items into this slot will place them in the first free slot available
 
 Example:
 ```Lua
@@ -41,6 +41,11 @@ local function GetEmptySlot(bagID)
 				return bagID, slotIndex
 			end
 		end
+	elseif(bagID == REAGENTBANK_CONTAINER) then
+		local slotIndex = GetContainerEmptySlot(bagID)
+		if(slotIndex) then
+			return bagID, slotIndex
+		end
 	end
 end
 
@@ -60,6 +65,8 @@ local function GetNumFreeSlots(bagID)
 			numFreeSlots = numFreeSlots + GetContainerNumFreeSlots(bagID)
 		end
 		return numFreeSlots
+	elseif(bagID == REAGENTBANK_CONTAINER) then
+		return GetContainerNumFreeSlots(bagID)
 	end
 end
 
@@ -79,14 +86,26 @@ local function Update(self)
 		UpdateCount(self, BACKPACK_CONTAINER)
 	else
 		UpdateCount(self, BANK_CONTAINER)
+		UpdateCount(self, REAGENTBANK_CONTAINER)
 	end
 end
 
 local function AddFauxSlot(Bag)
-	local containerType = Bag:GetParent():GetType()
-	local bagID = Bag:GetID()
-	if((containerType == 'bags' and bagID == BACKPACK_CONTAINER) or
-		(containerType == 'bank' and bagID == BANK_CONTAINER)) then
+	local categoryIndex
+	if(Bag:GetParent():GetType() == 'bags') then
+		if(Bag:GetID() == BACKPACK_CONTAINER) then
+			categoryIndex = 1
+		end
+	else
+		local bagID = Bag:GetID()
+		if(bagID == BANK_CONTAINER) then
+			categoryIndex = 1
+		elseif(bagID == REAGENTBANK_CONTAINER) then
+			categoryIndex = 999
+		end
+	end
+
+	if(categoryIndex) then
 		-- create a faux slot way outside the bounds of the backpack container
 		local Slot = Bag:CreateSlot(99)
 		Slot:SetScript('OnMouseUp', OnDrop)
@@ -101,7 +120,7 @@ local function AddFauxSlot(Bag)
 		Slot.itemLevel = 0
 
 		local Parent = Bag:GetParent()
-		Parent:GetContainer(1):AddSlot(Slot)
+		Parent:GetContainer(categoryIndex):AddSlot(Slot)
 		Update(Parent)
 	end
 end
