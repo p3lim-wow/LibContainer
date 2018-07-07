@@ -1,7 +1,7 @@
 --[[ Restack:header
-Creates a button that allows the user to sort the bags.  
-Since LibContainer is a category-based bag framework, this functionality doesn't make much sense,
-but it's useful to re-stack items in the bags to save space.
+Creates a button that allows the user to sort the bags or bank.  
+Since LibContainer is a category-based bag framework, sorting functionality doesn't make much sense,
+but it's useful for re-stacking items to save space, hence the name.
 
 Example:
 ```Lua
@@ -18,6 +18,15 @@ end)
 
 local L = LibContainer.locale
 
+local function OnClick(self)
+	local Container = self:GetParent()
+	if(Container:GetParent():GetType() == 'bank') then
+		SortBankBags()
+	else
+		SortBags()
+	end
+end
+
 local function OnEnter(self)
 	GameTooltip:SetOwner(self, 'TOPRIGHT')
 	GameTooltip:AddLine(L['Restack'])
@@ -25,7 +34,7 @@ local function OnEnter(self)
 end
 
 local function Enable(self)
-	self:SetScript('OnClick', SortBags)
+	self:SetScript('OnClick', OnClick)
 	self:SetScript('OnEnter', OnEnter)
 	self:SetScript('OnLeave', GameTooltip_Hide)
 end
