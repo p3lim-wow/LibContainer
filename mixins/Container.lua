@@ -438,16 +438,19 @@ Creates containers for all registered categories for the Parent.
 function parentMixin:CreateContainers()
 	self.containers = {}
 
+	local isBank = self:GetType() == 'bank'
 	for categoryIndex, info in next, self:GetCategories() do
-		local Container = Mixin(CreateFrame('Frame', '$parentContainer' .. info.name, self), callbackMixin, containerMixin)
-		Container:SetID(categoryIndex)
-		Container:Hide()
-		Container.slots = {}
-		Container.widgets = {}
+		if(not (not isBank and categoryIndex == 999)) then -- no reagent bank for bags
+			local Container = Mixin(CreateFrame('Frame', '$parentContainer' .. info.name, self), callbackMixin, containerMixin)
+			Container:SetID(categoryIndex)
+			Container:Hide()
+			Container.slots = {}
+			Container.widgets = {}
 
-		self:Fire('PostCreateContainer', Container)
+			self:Fire('PostCreateContainer', Container)
 
-		self.containers[categoryIndex] = Container
+			self.containers[categoryIndex] = Container
+		end
 	end
 end
 
