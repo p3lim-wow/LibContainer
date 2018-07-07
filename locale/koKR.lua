@@ -21,3 +21,4 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 -- L['Toggle auto-vendoring'] = '' -- MISSING TRANSLATION
 L['Restack'] = '정리'
 L['Mark items as known'] = '아이템 분류 별 표시'
+L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT

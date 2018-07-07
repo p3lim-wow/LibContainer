@@ -21,3 +21,4 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 L['Toggle auto-vendoring'] = 'Ativar venda automática'
 L['Restack'] = 'Reorganizar'
 L['Mark items as known'] = 'Marcar itens como conhecidos'
+L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
