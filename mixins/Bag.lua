@@ -28,13 +28,13 @@ function bagMixin:UpdateSlots()
 		self:GetSlot(slotIndex):UpdateVisibility()
 	end
 
-	if(self.size ~= numSlots) then
+	if(self.size > numSlots) then
 		for slotIndex = math.max(numSlots, 1), bagSizes[self:GetID()] do
 			self:GetSlot(slotIndex):Hide()
 		end
-
-		self.size = numSlots
 	end
+
+	self.size = numSlots
 end
 
 --[[ Bag:UpdateCooldowns()
@@ -56,6 +56,7 @@ function parentMixin:CreateBag(bagID)
 	Bag:SetID(bagID)
 	Bag:SetSize(1, 1) -- needs a size for child frames to even show up
 	Bag.slots = {}
+	Bag.size = 0
 
 	if(not self.bags) then
 		self.bags = {}
