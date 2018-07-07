@@ -118,3 +118,16 @@ function LibContainer:GetCategoryByName(name)
 		end
 	end
 end
+
+--[[ LibContainer:GetCategoryIndexByName(name)
+Returns the category index for a category by name.
+
+* name - name of the category (string)
+--]]
+function LibContainer:GetCategoryIndexByName(name)
+	for _, category in next, self:GetCategories() do
+		if(category.name == name) then
+			return category.index
+		end
+	end
+end
