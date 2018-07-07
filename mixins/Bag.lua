@@ -23,8 +23,13 @@ end
 Updates all slots.
 --]]
 function bagMixin:UpdateSlots()
-	for slotIndex = 1, self.size do
+	local numSlots = GetContainerNumSlots(self:GetID())
+	for slotIndex = 1, numSlots do
 		self:GetSlot(slotIndex):UpdateVisibility()
+	end
+
+	for slotIndex = math.max(numSlots, 1), bagSizes[self:GetID()] do
+		self:GetSlot(slotIndex):Hide()
 	end
 end
 
@@ -37,13 +42,6 @@ function bagMixin:UpdateCooldowns()
 	end
 end
 
---[[ Bag:UpdateSize()
-Updates the amount of slots the bag contains.
---]]
-function bagMixin:UpdateSize()
-	self.size = GetContainerNumSlots(self:GetID())
-end
-
 --[[ Parent:CreateBag(bagID)
 Creates and returns a new bag for the Parent.
 
@@ -52,7 +50,6 @@ Creates and returns a new bag for the Parent.
 function parentMixin:CreateBag(bagID)
 	local Bag = Mixin(CreateFrame('Frame', '$parentBag' .. bagID, self), bagMixin)
 	Bag:SetID(bagID)
-	Bag:UpdateSize()
 	Bag:SetSize(1, 1) -- needs a size for child frames to even show up
 	Bag.slots = {}
 

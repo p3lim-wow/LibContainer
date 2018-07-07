@@ -12,6 +12,11 @@ cached in some form, and updates are only done in batches to prevent unnecessary
 Slots are parented to a [Bag](Bag), and are anchored to [Containers](Container).
 --]]
 
+local function OnHide(self)
+	self:Clear()
+	self:RemoveCategory()
+end
+
 local slotMixin = {}
 --[[ Slot:UpdateVisibility()
 Updates the visibility and hides/shows and updates the Slot.  
@@ -22,8 +27,6 @@ function slotMixin:UpdateVisibility()
 
 	if(self:IsItemEmpty()) then
 		self:Hide()
-		self:Clear()
-		self:RemoveCategory()
 	else
 		self:ClearCache()
 		self:ContinueOnItemLoad(function()
@@ -217,6 +220,7 @@ function bagMixin:CreateSlot(slotIndex)
 	Slot:Show()
 	Slot:SetID(slotIndex)
 	Slot:SetItemLocation(ItemLocation:CreateFromBagAndSlot(self:GetID(), slotIndex))
+	Slot:HookScript('OnHide', OnHide)
 	Slot.hasItem = true -- for ContainerFrameItemButton_OnEnter
 
 	-- assign predictable keys for children
