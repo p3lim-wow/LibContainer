@@ -28,8 +28,12 @@ function bagMixin:UpdateSlots()
 		self:GetSlot(slotIndex):UpdateVisibility()
 	end
 
-	for slotIndex = math.max(numSlots, 1), bagSizes[self:GetID()] do
-		self:GetSlot(slotIndex):Hide()
+	if(self.size ~= numSlots) then
+		for slotIndex = math.max(numSlots, 1), bagSizes[self:GetID()] do
+			self:GetSlot(slotIndex):Hide()
+		end
+
+		self.size = numSlots
 	end
 end
 
