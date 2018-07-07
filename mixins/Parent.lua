@@ -135,8 +135,11 @@ local function BAG_UPDATE_COOLDOWN(self)
 end
 
 local function QUEST_ACCEPTED(self)
-	for bagID, Bag in next, self:GetBags() do
-		Bag:UpdateSlots()
+	local bags = self:GetBags()
+	if(bags) then
+		for bagID, Bag in next, bags do
+			Bag:UpdateSlots()
+		end
 	end
 end
 
