@@ -37,7 +37,7 @@ end
 Updates the cooldown frame of all visible slots.
 --]]
 function bagMixin:UpdateCooldowns()
-	for slotIndex = 1, self.size do
+	for slotIndex = 1, GetContainerNumSlots(self:GetID()) do
 		self:GetSlot(slotIndex):UpdateCooldown()
 	end
 end
