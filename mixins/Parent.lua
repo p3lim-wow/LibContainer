@@ -140,6 +140,42 @@ local function MODIFIER_STATE_CHANGED(self)
 	end
 end
 
+local function PLAYERBANKSLOTS_CHANGED(self, slotIndex)
+	local Bag = self:GetBag(BANK_CONTAINER)
+	if(Bag) then
+		if(slotIndex > NUM_BANKGENERIC_SLOTS) then
+			-- a bank bag slot was changed, need to mark it as dirty
+			local bagID = slotIndex - NUM_BANKGENERIC_SLOTS + NUM_BAG_SLOTS
+			self.dirtyBags[bagID] = true
+		else
+			local Slot = Bag:GetSlot(slotIndex)
+			if(Slot) then
+				Slot:UpdateVisibility()
+				self:UpdateContainers()
+			end
+		end
+	end
+end
+
+local function BANKFRAME_OPENED(self)
+	local Bag = self:GetBag(BANK_CONTAINER)
+	if(not Bag) then
+		Bag = self:CreateBag(BANK_CONTAINER)
+	end
+
+	Bag:UpdateSlots()
+	self:UpdateContainers()
+
+	for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
+		-- BAG_UPDATE doesn't fire for bank bags when visiting the bank, so we need to trigger it
+		-- to create and update the bags (marking them as "dirty")
+		self:TriggerEvent('BAG_UPDATE', bagID)
+	end
+
+	-- since the bank bags are now marked as "dirty" we need to update them
+	self:TriggerEvent('BAG_UPDATE_DELAYED')
+end
+
 local parents = {}
 --[[ LibContainer:New(containerType[, name][, parent])
 Creates and returns a new Parent.
@@ -185,11 +221,7 @@ function LibContainer:New(containerType, name, parent)
 
 	if(containerType == 'bank') then
 		Parent:RegisterEvent('PLAYERBANKSLOTS_CHANGED', PLAYERBANKSLOTS_CHANGED)
-		Parent:RegisterEvent('PLAYERBANKBAGSLOTS_CHANGED', PLAYERBANKBAGSLOTS_CHANGED)
-		Parent:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED', PLAYERREAGENTBANKSLOTS_CHANGED)
-		Parent:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
 		Parent:RegisterEvent('BANKFRAME_OPENED', BANKFRAME_OPENED)
-		Parent:RegisterEvent('BANKFRAME_CLOSED', BANKFRAME_CLOSED)
 	end
 
 	Parent.containerType = containerType
