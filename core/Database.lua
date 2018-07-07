@@ -25,15 +25,20 @@ function LibContainer:ResetDatabase()
 end
 
 --[[ LibContainer:SetVariable(key, value)
+Sets the variable value by key.
+
+* key   - savedvariable key (string)
+* value - savedvariable value (string|number|boolean)
 --]]
 function LibContainer:SetVariable(key, value)
-	assert(key ~= nil, 'key argument is invalid.')
+	assert(type(key) == 'string', 'key argument is invalid.')
 	assert(value ~= nil, 'value argument is invalid.')
 
 	LibContainer.db[key] = value
 end
 
 --[[ LibContainer:GetVariable(key)
+Returns the variable value by key.
 --]]
 function LibContainer:GetVariable(key)
 	return LibContainer.db[key]
