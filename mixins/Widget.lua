@@ -14,7 +14,6 @@ The available widgets are:
 - [FreeSlots](FreeSlots)
 - [MarkKnown](MarkKnown)
 - [Money](Money)
-- [Positioning](Positioning)
 - [Restack](Restack)
 - [Search](Search)
 
