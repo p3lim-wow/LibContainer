@@ -133,6 +133,7 @@ local function Create(Container)
 	Editbox:SetScript('OnTextChanged', OnTextChanged)
 	Editbox:SetScript('OnEscapePressed', OnEscapePressed)
 	Editbox:SetAutoFocus(false)
+	Editbox:SetAltArrowKeyMode(true)
 	return Editbox
 end
 
