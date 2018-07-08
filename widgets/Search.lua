@@ -15,7 +15,7 @@ It will match parts of names, which can be specified with multiple words.
 E.g. "fr bag" will match for "Frostweave Bag".
 
 [Slots](Slot) not matched with the text will (by default) be dimmed by 90%, this behavior can be
-altered with [Slot:OverrideSearch()](Slot#slotoverridesearch).
+altered with [Slot:OverrideSearch()](Slot#slotoverridesearchismatched).
 
 Example:
 ```Lua
