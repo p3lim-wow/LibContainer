@@ -21,24 +21,27 @@ The available widgets are:
 See the individual pages for more information.
 --]]
 
---[[ LibContainer:RegisterWidget(name, enableFunc, disableFunc, updateFunc)
+--[[ LibContainer:RegisterWidget(name, enableFunc[, disableFunc][, updateFunc][, createFunc])
 Registers a new widget with the given name.
 
 * name        - name of the new widget (string)
 * enableFunc  - function which is run when the widget is created (function)
 * disableFunc - function which is run when the widget is disabled (function, optional)
 * updateFunc  - function which is run on event updates (function, optional)
+* createFunc  - function which creates and returns the widget (function, optional)
 --]]
-function LibContainer:RegisterWidget(name, enable, disable, update)
+function LibContainer:RegisterWidget(name, enable, disable, update, create)
 	assert(not widgets[name], 'Widget \'' .. name .. '\' already exists.')
 	assert(type(enable) == 'function', 'enable argument must be a function.')
 	assert(disable == nil or type(disable) == 'function', 'disable argument must be a function or nil.')
 	assert(update == nil or type(update) == 'function', 'update argument must be a function or nil.')
+	assert(create == nil or type(create) == 'function', 'create argument must be a function or nil.')
 
 	widgets[name] = {
 		enable = enable,
 		disable = disable or nop,
-		update = update or nop
+		update = update or nop,
+		create = create or nop
 	}
 end
 
@@ -50,7 +53,7 @@ Creates and returns a new object for the widget with the given name.
 function containerMixin:AddWidget(name)
 	assert(widgets[name], 'name argument must be a valid widget name.')
 
-	local obj = CreateFrame('Button', nil, self)
+	local obj = widgets[name].create(self) or CreateFrame('Button', '$parent' .. name .. 'Widget', self)
 	obj:SetScript('OnEvent', widgets[name].update)
 
 	self.widgets[name] = obj
