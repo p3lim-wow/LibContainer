@@ -107,6 +107,16 @@ function itemMixin:GetItemQualityColor() -- variable, requires data load
 	end
 end
 
+--[[ Item:GetItemQualityName()
+Returns the non-empty Item's localized quality name.
+--]]
+function itemMixin:GetItemQualityName()
+	local itemQuality = self:GetItemQuality()
+	if(itemQuality ~= nil) then
+		return _G['ITEM_QUALITY' .. itemQuality .. '_DESC']
+	end
+end
+
 --[[ Item:GetItemLevel()
 Returns the non-empty Item's level.
 --]]
@@ -130,6 +140,58 @@ function itemMixin:GetItemTexture() -- static, requires data load
 		end
 
 		return self.itemTexture
+	end
+end
+
+--[[ Item:GetItemName()
+Returns the non-empty Item's name.
+--]]
+function itemMixin:GetItemName() -- variable, requires data load
+	if(not self:IsItemEmpty()) then
+		if(self.itemName == nil) then
+			self.itemName = C_Item.GetItemName(self:GetItemLocation())
+		end
+
+		return self.itemName
+	end
+end
+
+--[[ Item:GetItemInventoryType()
+Returns the non-empty Item's inventory type ID.
+--]]
+function itemMixin:GetItemInventoryType() -- static
+	if(not self:IsItemEmpty()) then
+		if(self.itemInventoryType == nil) then
+			self.itemInventoryType = C_Item.GetItemInventoryType(self:GetItemLocation())
+		end
+
+		return self.itemInventoryType
+	end
+end
+
+--[[ Item:GetItemInventoryTypeName()
+Returns the non-empty Item's localized inventory type name, if any.
+--]]
+function itemMixin:GetItemInventoryTypeName() -- static
+	if(not self:IsItemEmpty()) then
+		if(self.itemInventoryTypeName == nil) then
+			self.itemInventoryTypeName = _G[(select(4, GetItemInfoInstant(self:GetItemID())))]
+		end
+
+		return self.itemInventoryTypeName
+	end
+end
+
+--[[ Item:IsItemBound()
+Returns true/false if the non-empty Item is bound to the player or not.
+--]]
+function itemMixin:IsItemBound() -- variable, requires data load
+	if(not self:IsItemEmpty()) then
+		if(self.itemBound == nil) then
+			self.itemBound = C_Item.IsBound(self:GetItemLocation())
+		end
+
+		return self.itemBound
 	end
 end
 
@@ -289,6 +351,8 @@ function itemMixin:Clear()
 	self.itemQuestID = nil
 	self.itemClass = nil
 	self.itemSubClass = nil
+	self.itemInventoryType = nil
+	self.itemInventoryTypeName = nil
 
 	self:ClearCache()
 end
@@ -307,6 +371,8 @@ function itemMixin:ClearCache()
 	self.itemQuestActive = nil
 	self.itemBattlePayItem = nil
 	self.itemLevel = nil
+	self.itemBound = nil
+	self.itemName = nil
 end
 
 --[[ Item:ContinueOnItemLoad(callback)
