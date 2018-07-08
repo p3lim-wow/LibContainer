@@ -22,9 +22,9 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local Search = Container:AddWidget('Search')
-	Search:SetPoint('BOTTOM')
-	Search:SetSize(200, 20)
+    local Search = Container:AddWidget('Search')
+    Search:SetPoint('BOTTOM')
+    Search:SetSize(200, 20)
 end)
 ```
 --]]

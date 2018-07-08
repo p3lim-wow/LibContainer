@@ -8,10 +8,10 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local AutoVendor = Container:AddWidget('AutoVendor')
-	AutoVendor:SetPoint('TOPRIGHT')
-	AutoVendor:SetSize(20, 20)
-	AutoVendor:SetTexture(...)
+    local AutoVendor = Container:AddWidget('AutoVendor')
+    AutoVendor:SetPoint('TOPRIGHT')
+    AutoVendor:SetSize(20, 20)
+    AutoVendor:SetTexture(...)
 end)
 ```
 --]]

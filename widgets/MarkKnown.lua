@@ -9,10 +9,10 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local MarkKnown = Container:AddWidget('MarkKnown')
-	MarkKnown:SetPoint('TOPRIGHT')
-	MarkKnown:SetSize(20, 20)
-	MarkKnown:SetTexture(...)
+    local MarkKnown = Container:AddWidget('MarkKnown')
+    MarkKnown:SetPoint('TOPRIGHT')
+    MarkKnown:SetSize(20, 20)
+    MarkKnown:SetTexture(...)
 end)
 ```
 --]]

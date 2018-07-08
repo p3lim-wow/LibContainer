@@ -8,10 +8,10 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local Restack = Container:AddWidget('Restack')
-	Restack:SetPoint('TOPRIGHT')
-	Restack:SetSize(20, 20)
-	Restack:SetTexture(...)
+    local Restack = Container:AddWidget('Restack')
+    Restack:SetPoint('TOPRIGHT')
+    Restack:SetSize(20, 20)
+    Restack:SetTexture(...)
 end)
 ```
 --]]

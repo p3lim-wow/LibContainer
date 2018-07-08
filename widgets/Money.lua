@@ -6,8 +6,8 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local Money = Container:AddWidget('Money')
-	Money:SetPoint('TOPRIGHT')
+    local Money = Container:AddWidget('Money')
+    Money:SetPoint('TOPRIGHT')
 end)
 ```
 --]]

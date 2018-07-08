@@ -8,10 +8,10 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local Deposit = Container:AddWidget('Deposit')
-	Deposit:SetPoint('TOPRIGHT')
-	Deposit:SetSize(20, 20)
-	Deposit:SetTexture(...)
+    local Deposit = Container:AddWidget('Deposit')
+    Deposit:SetPoint('TOPRIGHT')
+    Deposit:SetSize(20, 20)
+    Deposit:SetTexture(...)
 end)
 ```
 --]]

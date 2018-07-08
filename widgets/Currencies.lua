@@ -6,9 +6,9 @@ Example:
 local Bags = LibContainer:New('bags', 'MyBags')
 Bags:SetPoint('CENTER')
 Bags:On('PostCreateContainer', function(Container)
-	local Currencies = Container:AddWidget('Currencies')
-	Currencies:SetPoint('BOTTOMLEFT')
-	Currencies:SetSize(1, 20)
+    local Currencies = Container:AddWidget('Currencies')
+    Currencies:SetPoint('BOTTOMLEFT')
+    Currencies:SetSize(1, 20)
 end)
 ```
 --]]
