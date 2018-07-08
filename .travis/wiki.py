@@ -1,8 +1,8 @@
 import os, re, glob
 
 # compile regex patterns beforehand
-START = re.compile(r'^--\[\[ ?((\w+):(.+))$')
-STOP = re.compile(r'^--\]\]$')
+START = re.compile(r'^\t*--\[\[ ?((\w+):(.+))$')
+STOP = re.compile(r'^\t*--\]\]$')
 
 # create a dictionary to store our pages
 pages = {}
@@ -63,7 +63,9 @@ for file in glob.glob('**/*.lua', recursive=True):
 					continue
 				else:
 					# we're currently in the middle of a block, just store the line
-					textBlock += line
+					# we also need to strip leading tabs, forcing indented text blocks to use
+					# spaces within as whitespace if needed
+					textBlock += line.lstrip('\t')
 
 		if numBlocks > 0:
 			# at the end of a file, if we found some blocks, log it
