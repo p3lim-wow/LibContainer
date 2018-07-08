@@ -51,6 +51,15 @@ function parentMixin:GetType()
 	return self.parentType
 end
 
+--[[ Parent:GetParentOfType(parentType)
+Returns the parent of the given type, see [LibContainer:New()](LibContainer#libcontainernew).
+
+* parentType - parent type (string)
+--]]
+function parentMixin:GetParentOfType(parentType)
+	return parents[parentType]
+end
+
 --[[ Parent:Toggle([force])
 Toggles the visibility of the Parent and its containers.  
 Can be forced to show or hide, or just toggle between the states.
