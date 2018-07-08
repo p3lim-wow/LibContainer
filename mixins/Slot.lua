@@ -1,6 +1,7 @@
 local callbackMixin = LibContainer.mixins.callback
 local itemMixin = LibContainer.mixins.item
 local bagMixin = LibContainer.mixins.bag
+local bagSizes = LibContainer.constants.bagSizes
 
 --[[ Slot:header
 The Slot mixin is the bread and butter of LibContainer, it's the mixin that essentially becomes
@@ -254,7 +255,9 @@ function bagMixin:CreateSlot(slotIndex)
 
 	self:GetParent():Fire('PostCreateSlot', Slot)
 
-	self.slots[slotIndex] = Slot
+	if(slotIndex <= bagSizes[self:GetID()]) then
+		self.slots[slotIndex] = Slot
+	end
 	return Slot
 end
 

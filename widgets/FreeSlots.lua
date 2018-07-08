@@ -71,12 +71,9 @@ local function GetNumFreeSlots(bagID)
 end
 
 local function UpdateCount(Parent, bagID)
-	local Bag = Parent:GetBag(bagID)
-	if(Bag) then
-		local Slot = Bag:GetSlot(99)
-		if(Slot) then
-			Slot.Count:SetText(GetNumFreeSlots(bagID))
-		end
+	local Slot = Parent.freeSlots and Parent.freeSlots[bagID]
+	if(Slot) then
+		Slot.Count:SetText(GetNumFreeSlots(bagID))
 	end
 end
 
@@ -91,13 +88,12 @@ local function Update(Parent)
 end
 
 local function AddFauxSlot(Bag)
-	local categoryIndex
+	local bagID, categoryIndex = Bag:GetID()
 	if(Bag:GetParent():GetType() == 'bags') then
-		if(Bag:GetID() == BACKPACK_CONTAINER) then
+		if(bagID == BACKPACK_CONTAINER) then
 			categoryIndex = 1
 		end
 	else
-		local bagID = Bag:GetID()
 		if(bagID == BANK_CONTAINER) then
 			categoryIndex = 1
 		elseif(bagID == REAGENTBANK_CONTAINER) then
@@ -121,6 +117,12 @@ local function AddFauxSlot(Bag)
 
 		local Parent = Bag:GetParent()
 		Parent:GetContainer(categoryIndex):AddSlot(Slot)
+
+		if(not Parent.freeSlots) then
+			Parent.freeSlots = {}
+		end
+		Parent.freeSlots[bagID] = Slot
+
 		Update(Parent)
 	end
 end
