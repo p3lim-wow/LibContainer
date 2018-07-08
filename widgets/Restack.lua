@@ -18,8 +18,8 @@ end)
 
 local L = LibContainer.locale
 
-local function OnClick(self)
-	local Container = self:GetParent()
+local function OnClick(Widget)
+	local Container = Widget:GetParent()
 	if(Container:GetName() == 'ReagentBank') then
 		SortReagentBankBags()
 	else
@@ -31,33 +31,33 @@ local function OnClick(self)
 	end
 end
 
-local function OnEnter(self)
-	GameTooltip:SetOwner(self, 'TOPRIGHT')
+local function OnEnter(Widget)
+	GameTooltip:SetOwner(Widget, 'TOPRIGHT')
 	GameTooltip:AddLine(L['Restack'])
 	GameTooltip:Show()
 end
 
-local function Update(self, event)
+local function Update(Widget, event)
 	if(event == 'REAGENTBANK_PURCHASED') then
-		self:Show()
-		self:UnregisterEvent(event)
+		Widget:Show()
+		Widget:UnregisterEvent(event)
 	end
 end
 
-local function Enable(self)
-	self:SetScript('OnClick', OnClick)
-	self:SetScript('OnEnter', OnEnter)
-	self:SetScript('OnLeave', GameTooltip_Hide)
+local function Enable(Widget)
+	Widget:SetScript('OnClick', OnClick)
+	Widget:SetScript('OnEnter', OnEnter)
+	Widget:SetScript('OnLeave', GameTooltip_Hide)
 
-	if(self:GetParent():GetID() == 999 and not IsReagentBankUnlocked()) then
-		self:RegisterEvent('REAGENTBANK_PURCHASED')
-		self:Hide()
+	if(Widget:GetParent():GetID() == 999 and not IsReagentBankUnlocked()) then
+		Widget:RegisterEvent('REAGENTBANK_PURCHASED')
+		Widget:Hide()
 	end
 end
 
-local function Disable(self)
-	if(self:IsEventRegistered('REAGENTBANK_PURCHASED')) then
-		self:UnregisterEvent('REAGENTBANK_PURCHASED')
+local function Disable(Widget)
+	if(Widget:IsEventRegistered('REAGENTBANK_PURCHASED')) then
+		Widget:UnregisterEvent('REAGENTBANK_PURCHASED')
 	end
 end
 

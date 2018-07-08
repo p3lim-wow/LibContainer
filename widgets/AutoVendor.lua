@@ -20,19 +20,19 @@ local function OnClick()
 	LibContainer:SetVariable('autoSellJunk', not LibContainer:GetVariable('autoSellJunk'))
 end
 
-local function OnEnter(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
+local function OnEnter(Widget)
+	GameTooltip:SetOwner(Widget, 'ANCHOR_RIGHT')
 	GameTooltip:AddLine(L['Toggle auto-vendoring'])
 	GameTooltip:Show()
 end
 
 local lastNumItems = 0
-local function Update(self, event, ...)
+local function Update(Widget, event, ...)
 	if(LibContainer:GetVariable('autoSellJunk') and not IsShiftKeyDown()) then
 		if(event == 'MERCHANT_SHOW' or lastNumItems > 0) then
 			lastNumItems = 0
 
-			local Container = self:GetParent()
+			local Container = Widget:GetParent()
 			for _, Slot in next, Container:GetSlots() do
 				if(not MerchantFrame:IsShown()) then
 					return
@@ -47,20 +47,20 @@ local function Update(self, event, ...)
 	end
 end
 
-local function Enable(self)
-	self:SetScript('OnClick', OnClick)
-	self:SetScript('OnEnter', OnEnter)
-	self:SetScript('OnLeave', GameTooltip_Hide)
+local function Enable(Widget)
+	Widget:SetScript('OnClick', OnClick)
+	Widget:SetScript('OnEnter', OnEnter)
+	Widget:SetScript('OnLeave', GameTooltip_Hide)
 
-	self:RegisterEvent('MERCHANT_SHOW')
-	self:RegisterEvent('MERCHANT_CLOSED')
-	self:RegisterEvent('BAG_UPDATE_DELAYED')
+	Widget:RegisterEvent('MERCHANT_SHOW')
+	Widget:RegisterEvent('MERCHANT_CLOSED')
+	Widget:RegisterEvent('BAG_UPDATE_DELAYED')
 end
 
-local function Disable(self)
-	self:UnregisterEvent('MERCHANT_SHOW')
-	self:UnregisterEvent('MERCHANT_CLOSED')
-	self:UnregisterEvent('BAG_UPDATE_DELAYED')
+local function Disable(Widget)
+	Widget:UnregisterEvent('MERCHANT_SHOW')
+	Widget:UnregisterEvent('MERCHANT_CLOSED')
+	Widget:UnregisterEvent('BAG_UPDATE_DELAYED')
 end
 
 LibContainer:RegisterWidget('AutoVendor', Enable, Disable, Update)

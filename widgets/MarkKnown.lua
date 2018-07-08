@@ -17,8 +17,8 @@ end)
 ```
 --]]
 
-local function OnClick(self)
-	local Container = self:GetParent()
+local function OnClick(Widget)
+	local Container = Widget:GetParent()
 	local slots = Container:GetSlots()
 
 	-- we have to iterate through this in reverse because the slots table will
@@ -33,16 +33,16 @@ local function OnClick(self)
 	Container:GetParent():UpdateContainers()
 end
 
-local function OnEnter(self)
-	GameTooltip:SetOwner(self, 'TOPRIGHT')
+local function OnEnter(Widget)
+	GameTooltip:SetOwner(Widget, 'TOPRIGHT')
 	GameTooltip:AddLine(L['Mark items as known'])
 	GameTooltip:Show()
 end
 
-local function Enable(self)
-	self:SetScript('OnClick', OnClick)
-	self:SetScript('OnEnter', OnEnter)
-	self:SetScript('OnLeave', GameTooltip_Hide)
+local function Enable(Widget)
+	Widget:SetScript('OnClick', OnClick)
+	Widget:SetScript('OnEnter', OnEnter)
+	Widget:SetScript('OnLeave', GameTooltip_Hide)
 end
 
 LibContainer:RegisterWidget('MarkKnown', Enable, nop, nop)

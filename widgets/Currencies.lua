@@ -13,76 +13,76 @@ end)
 ```
 --]]
 
-local function OnClick(self)
+local function OnClick(Currency)
 	if(IsModifiedClick('CHATLINK')) then
-		HandleModifiedItemClick(GetCurrencyLink(self:GetID(), 1))
+		HandleModifiedItemClick(GetCurrencyLink(Currency:GetID(), 1))
 	end
 end
 
-local function OnEnter(self)
-	GameTooltip:SetOwner(self, 'TOPRIGHT')
-	GameTooltip:SetCurrencyTokenByID(self:GetID())
+local function OnEnter(Currency)
+	GameTooltip:SetOwner(Currency, 'TOPRIGHT')
+	GameTooltip:SetCurrencyTokenByID(Currency:GetID())
 	GameTooltip:Show()
 end
 
-local function Update(self)
-	for index, Button in next, self.buttons do
+local function Update(Widget)
+	for index, Currency in next, Widget.buttons do
 		local name, count, texture, currencyID = GetBackpackCurrencyInfo(index)
 		if(name) then
-			local Label = Button.Label
+			local Label = Currency.Label
 			Label:SetText(count)
 
-			Button.Icon:SetTexture(texture)
-			Button:SetSize(Label:GetWidth() + Button.Icon:GetWidth(), Label:GetHeight())
-			Button:SetID(currencyID)
-			Button:Show()
+			Currency.Icon:SetTexture(texture)
+			Currency:SetSize(Label:GetWidth() + Currency.Icon:GetWidth(), Label:GetHeight())
+			Currency:SetID(currencyID)
+			Currency:Show()
 		else
-			Button:Hide()
+			Currency:Hide()
 		end
 	end
 end
 
-local function Enable(self)
-	if(not self.buttons) then
-		local anchor = self:GetPoint()
+local function Enable(Widget)
+	if(not Widget.buttons) then
+		local anchor = Widget:GetPoint()
 
-		self.buttons = {}
+		Widget.buttons = {}
 		for index = 1, MAX_WATCHED_TOKENS do -- 3
-			local Button = CreateFrame('Button', nil, self)
-			Button:SetID(index)
-			Button:SetScript('OnClick', OnClick)
-			Button:SetScript('OnEnter', OnEnter)
-			Button:SetScript('OnLeave', GameTooltip_Hide)
+			local Currency = CreateFrame('Button', nil, Widget)
+			Currency:SetID(index)
+			Currency:SetScript('OnClick', OnClick)
+			Currency:SetScript('OnEnter', OnEnter)
+			Currency:SetScript('OnLeave', GameTooltip_Hide)
 
 			if(index == 1) then
-				Button:SetPoint('BOTTOMLEFT')
+				Currency:SetPoint('BOTTOMLEFT')
 			else
-				Button:SetPoint('BOTTOMLEFT', self.buttons[index - 1], 'BOTTOMRIGHT', 2, 0)
+				Currency:SetPoint('BOTTOMLEFT', Widget.buttons[index - 1], 'BOTTOMRIGHT', 2, 0)
 			end
 
-			local Icon = Button:CreateTexture(nil, 'ARTWORK')
+			local Icon = Currency:CreateTexture(nil, 'ARTWORK')
 			Icon:SetPoint('LEFT')
 			Icon:SetSize(10, 10)
-			Button.Icon = Icon
+			Currency.Icon = Icon
 
-			local Label = Button:CreateFontString(nil, 'ARTWORK', 'GameFontHighlightSmall')
+			local Label = Currency:CreateFontString(nil, 'ARTWORK', 'GameFontHighlightSmall')
 			Label:SetPoint('LEFT', Icon, 'RIGHT', 2, 0)
-			Button.Label = Label
+			Currency.Label = Label
 
-			self.buttons[index] = Button
+			Widget.buttons[index] = Currency
 		end
 
 		hooksecurefunc('SetCurrencyBackpack', function()
-			Update(self)
+			Update(Widget)
 		end)
 	end
 
 
-	self:RegisterEvent('CURRENCY_DISPLAY_UPDATE')
+	Widget:RegisterEvent('CURRENCY_DISPLAY_UPDATE')
 end
 
-local function Disable(self)
-	self:UnregisterEvent('CURRENCY_DISPLAY_UPDATE')
+local function Disable(Widget)
+	Widget:UnregisterEvent('CURRENCY_DISPLAY_UPDATE')
 end
 
 LibContainer:RegisterWidget('Currencies', Enable, Disable, Update)

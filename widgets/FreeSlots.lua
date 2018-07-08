@@ -70,8 +70,8 @@ local function GetNumFreeSlots(bagID)
 	end
 end
 
-local function UpdateCount(self, bagID)
-	local Bag = self:GetBag(bagID)
+local function UpdateCount(Parent, bagID)
+	local Bag = Parent:GetBag(bagID)
 	if(Bag) then
 		local Slot = Bag:GetSlot(99)
 		if(Slot) then
@@ -80,13 +80,13 @@ local function UpdateCount(self, bagID)
 	end
 end
 
-local function Update(self)
-	local parentType = self:GetType()
+local function Update(Parent)
+	local parentType = Parent:GetType()
 	if(parentType == 'bags') then
-		UpdateCount(self, BACKPACK_CONTAINER)
+		UpdateCount(Parent, BACKPACK_CONTAINER)
 	else
-		UpdateCount(self, BANK_CONTAINER)
-		UpdateCount(self, REAGENTBANK_CONTAINER)
+		UpdateCount(Parent, BANK_CONTAINER)
+		UpdateCount(Parent, REAGENTBANK_CONTAINER)
 	end
 end
 
