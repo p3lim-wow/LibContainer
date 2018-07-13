@@ -161,6 +161,14 @@ function slotMixin:AssignCategory(categoryIndex)
 	self:SetCategory(categoryIndex)
 end
 
+--[[ Slot:ClearCategory()
+Clears any persistent category assigned to the Slot's item.
+--]]
+function slotMixin:ClearCategory()
+	LibContainer.db.KnownItems[self:GetItemID()] = nil
+	self:UpdateCategory()
+end
+
 local reverse = {}
 --[[ Slot:GuessCategory([...])
 Iterates through the available [Categories](Category) and returns the best suited one for the Slot.  
