@@ -8,6 +8,17 @@ anchor point for all the [Slots](Slot) of a given [Category](Category).
 Performance and efficiency are top priorities for this mixin, as it needs to resize and position
 itself, as well as all the [Slots](Slot) that are anchored to it. As such, it's only updated when
 there's been a [Slot](Slot) change.
+
+- Callbacks:
+   - On [Container](Container):
+      - `PreUpdateSize(Container)` - Fires before a container size is changed.
+      - `PostUpdateSize(Container)` - Fires after a container size is changed.
+      - `PreUpdateSlotPositions(Container)` - Fires before a container's slots are positioned.
+      - `PostUpdateSlotPositions(Container)` - Fires after a container's slots are positioned.
+   - On [Parent](Parent):
+      - `PreUpdateContainerPositions(Parent)` - Fires before all visible containers are positioned.
+      - `PostUpdateContainerPositions(Parent)` - Fires after all visible containers are positioned.
+      - `PostCreateContainer(Container)` - Fires after a container is created.
 --]]
 
 local containerMixin = {}
@@ -70,6 +81,7 @@ end
 Updates the size of the Container based on the number of Slots it has attached to itself.
 --]]
 function containerMixin:UpdateSize()
+	self:Fire('PreUpdateSize', self)
 	local numSlots = #self.slots
 	local categoryIndex = self:GetID()
 
@@ -94,6 +106,7 @@ function containerMixin:UpdateSize()
 		self:Hide()
 	end
 
+	self:Fire('PostUpdateSize', self)
 	self:GetParent():UpdateContainerPositions()
 end
 
@@ -101,6 +114,8 @@ end
 Updates the positions of the Slots the Container has attached to itself.
 --]]
 function containerMixin:UpdateSlotPositions()
+	self:Fire('PreUpdateSlotPositions', self)
+
 	local category = LibContainer:GetCategory(self:GetID())
 	table.sort(self.slots, category.sortFunc)
 
@@ -135,6 +150,8 @@ function containerMixin:UpdateSlotPositions()
 		Slot:ClearAllPoints()
 		Slot:SetPoint(slotRelPoint, self, x, y)
 	end
+
+	self:Fire('PostUpdateSlotPositions', self)
 end
 
 --[[ Container:SetMaxColumns(numColumns)
@@ -438,6 +455,7 @@ end
 Updates all (visible) container positions for the Parent.
 --]]
 function parentMixin:UpdateContainerPositions()
+	self:Fire('PreUpdateContainerPositions', self)
 	local visibleContainers = {}
 	for categoryIndex, Container in next, self.containers do
 		if(Container:IsShown()) then
@@ -494,6 +512,7 @@ function parentMixin:UpdateContainerPositions()
 			Container:SetPoint(relPoint, x, y)
 		end
 	end
+	self:Fire('PostUpdateContainerPositions', self)
 end
 
 --[[ Parent:UpdateContainers()
