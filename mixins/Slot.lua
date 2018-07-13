@@ -223,9 +223,7 @@ function bagMixin:CreateSlot(slotIndex)
 	end
 
 	local Slot = Mixin(CreateFrame('Button', '$parentSlot' .. slotIndex, self, template), slotMixin, itemMixin, callbackMixin)
-	Slot:Hide()
 	Slot.parent = self:GetParent()
-	Slot:Show()
 	Slot:SetID(slotIndex)
 	Slot:SetItemLocation(ItemLocation:CreateFromBagAndSlot(self:GetID(), slotIndex))
 	Slot:HookScript('OnHide', OnHide)
