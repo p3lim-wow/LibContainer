@@ -12,13 +12,13 @@ local function defaultSort(slotA, slotB)
 	if(not slotA or not slotB) then
 		return slotA or slotB
 	elseif(slotA:GetItemQuality() ~= slotB:GetItemQuality()) then
-		return slotA.itemQuality > slotB.itemQuality
+		return slotA:GetItemQuality() > slotB:GetItemQuality()
 	elseif(slotA:GetItemLevel() ~= slotB:GetItemLevel()) then
-		return slotA.itemLevel > slotB.itemLevel
+		return slotA:GetItemLevel() > slotB:GetItemLevel()
 	elseif(slotA:GetItemID() ~= slotB:GetItemID()) then
-		return slotA.itemID > slotB.itemID
+		return slotA:GetItemID() > slotB:GetItemID()
 	elseif(slotA:GetItemCount() ~= slotB:GetItemCount()) then
-		return slotA.itemCount > slotB.itemCount
+		return slotA:GetItemCount() > slotB:GetItemCount()
 	else
 		return slotA:GetID() > slotB:GetID()
 	end
