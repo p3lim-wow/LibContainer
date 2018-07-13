@@ -23,3 +23,6 @@ L['Restack'] = '整理'
 L['Mark items as known'] = '标记物品为已知'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
 L['Toggle auto-deposit'] = '启用材料自动存入'
+L['Toggle bag slots'] = '显示背包栏位'
+L['Purchase'] = PURCHASE
+L['Equip Container'] = EQUIP_CONTAINER

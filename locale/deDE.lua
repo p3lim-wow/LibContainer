@@ -23,3 +23,6 @@ L['Restack'] = 'Stapeln'
 L['Mark items as known'] = 'Gegenstände als bekannt markieren'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
 L['Toggle auto-deposit'] = 'Automatische Einlagerung ein-/ausschalten'
+L['Toggle bag slots'] = 'Taschenplätze umschalten'
+L['Purchase'] = PURCHASE
+L['Equip Container'] = EQUIP_CONTAINER

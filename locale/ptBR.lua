@@ -23,3 +23,6 @@ L['Restack'] = 'Reorganizar'
 L['Mark items as known'] = 'Marcar itens como conhecidos'
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
 L['Toggle auto-deposit'] = 'Ativar auto-deposito'
+L['Toggle bag slots'] = 'Mostrar Bolsas'
+L['Purchase'] = PURCHASE
+L['Equip Container'] = EQUIP_CONTAINER

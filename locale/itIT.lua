@@ -23,3 +23,6 @@ L['Trade Goods'] = AUCTION_CATEGORY_TRADE_GOODS
 -- L['Mark items as known'] = '' -- MISSING TRANSLATION
 L['Deposit All Reagents'] = REAGENTBANK_DEPOSIT
 -- L['Toggle auto-deposit'] = '' -- MISSING TRANSLATION
+-- L['Toggle bag slots'] = '' -- MISSING TRANSLATION
+L['Purchase'] = PURCHASE
+L['Equip Container'] = EQUIP_CONTAINER
