@@ -111,6 +111,8 @@ local function AddFauxSlot(Bag)
 
 		-- fake info so it gets sorted last
 		Slot.IsItemEmpty = nop
+		Slot.Clear = nop
+		Slot.ClearCache = nop
 		Slot.itemCount = 0
 		Slot.itemQuality = 0
 		Slot.itemID = 0
