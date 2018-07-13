@@ -9,6 +9,7 @@ The available widgets are:
 - [AutoDeposit](AutoDeposit)
 - [AutoVendor](AutoVendor)
 - [Bags](Bags)
+- [BagSlot](BagSlot)
 - [Currencies](Currencies)
 - [Deposit](Deposit)
 - [FreeSlots](FreeSlots)
