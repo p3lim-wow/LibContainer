@@ -144,6 +144,16 @@ local function BAG_UPDATE_COOLDOWN(self)
 	end
 end
 
+local function BAG_CLOSED(self, bagID)
+	-- this is the only accurate event that fires when a bag slot is moved,
+	-- and we'll need to update all the slots it had, but that information is
+	-- not ready yet, so we mark it as dirty and wait for the delayed update
+	if(bagSlots[self:GetType()][bagID]) then
+		-- we have to make sure the bag is owned by this parent tho'
+		self.dirtyBags[bagID] = true
+	end
+end
+
 local function QUEST_ACCEPTED(self)
 	local bags = self:GetBags()
 	if(bags) then
@@ -286,6 +296,8 @@ function LibContainer:New(parentType, name, parent)
 		Parent:RegisterEvent('REAGENTBANK_PURCHASED', REAGENTBANK_PURCHASED)
 		Parent:RegisterEvent('BANKFRAME_OPENED', BANKFRAME_OPENED)
 		Parent:RegisterEvent('BANKFRAME_CLOSED', BANKFRAME_CLOSED)
+	else
+		Parent:RegisterEvent('BAG_CLOSED', BAG_CLOSED)
 	end
 
 	Parent.parentType = parentType
