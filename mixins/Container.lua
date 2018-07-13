@@ -554,6 +554,9 @@ function parentMixin:CreateContainers()
 	for categoryIndex, info in next, self:GetCategories() do
 		if(not (not isBank and categoryIndex == 999)) then -- no reagent bank for bags
 			local Container = Mixin(CreateFrame('Frame', '$parentContainer' .. info.name, self), callbackMixin, containerMixin)
+			--[[ Container:GetID()
+			Returns the category index for the container.
+			--]]
 			Container:SetID(categoryIndex)
 			Container:Hide()
 			Container.slots = {}

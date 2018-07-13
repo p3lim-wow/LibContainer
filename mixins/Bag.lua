@@ -63,6 +63,9 @@ function parentMixin:CreateBag(bagID)
 	assert(bagID >= -3 and bagID <= 11, 'bagID argument must be a valid bag ID.')
 
 	local Bag = Mixin(CreateFrame('Frame', '$parentBag' .. (tostring(bagID):gsub('-', 'N')), self), bagMixin)
+	--[[ Bag:GetID()
+	Returns the [Bag](Bag)'s ID.
+	--]]
 	Bag:SetID(bagID)
 	Bag:SetSize(1, 1) -- needs a size for child frames to even show up
 	Bag.slots = {}
