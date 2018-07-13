@@ -1,4 +1,3 @@
-local parentMixin = LibContainer.mixins.parent
 --[[ FreeSlots:header
 This widget adds a "fake" [Slot](Slot) to the bags' or bank's Inventory and ReagentBank [Categories](Category).
 This Slot serves two purposes:
@@ -12,6 +11,7 @@ Bags:SetPoint('CENTER')
 Bags:AddFreeSlot()
 ```
 --]]
+local parentMixin = LibContainer.mixins.parent
 
 local function GetContainerEmptySlot(bagID)
 	for slotIndex = 1, GetContainerNumSlots(bagID) do
