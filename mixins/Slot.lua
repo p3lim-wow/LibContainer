@@ -11,6 +11,17 @@ Performance and efficiency is a high priority for this mixin, and as such, most 
 cached in some form, and updates are only done in batches to prevent unnecessary updates.
 
 Slots are parented to a [Bag](Bag), and are anchored to [Containers](Container).
+
+- Callbacks:
+   - On [Slot](Slot):
+      - `PreUpdateVisibility(Slot)` - Fired before a slot has its visibility altered.
+      - `PostUpdateVisibility(Slot)` - Fired after a slot has its visibility altered.
+      - `PreUpdate(Slot)` - Fired before a slot is updated.
+      - `PostUpdate(Slot)` - Fired after a slot is updated.
+      - `PreUpdateCooldown(Slot)` - Fired before a slot has its cooldown update.
+      - `PostUpdateCooldown(Slot)` - Fired after a slot has its cooldown update.
+   - On [Parent](Parent):
+      - `PostCreateSlot(Slot)` - Fired after a slot is created.
 --]]
 
 local function OnHide(self)
