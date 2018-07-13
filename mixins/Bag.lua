@@ -19,6 +19,13 @@ function bagMixin:GetSlot(slotIndex)
 	return self.slots[slotIndex]
 end
 
+--[[ Bag:GetSlots()
+Returns a table of all Slot objects for the Bag.
+--]]
+function bagMixin:GetSlots()
+	return self.slots
+end
+
 --[[ Bag:UpdateSlots()
 Updates all slots.
 --]]
